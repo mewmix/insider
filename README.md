@@ -61,6 +61,12 @@ If you want cheaper, run `/scan/once` on a schedule (cron) and skip the long-run
 
 See `.env.example` for defaults.
 
+Key link configuration:
+
+- `POLYMARKET_MARKET_BASE` for market links (default `https://polymarket.com/market`)
+- `EXPLORER_TX_BASE` for tx links (default `https://polygonscan.com/tx`)
+- `EXPLORER_ADDRESS_BASE` for address links (default `https://polygonscan.com/address`)
+
 ## Notes
 
 - This uses Data API polling; it does not rely on the authenticated CLOB websocket user channel.

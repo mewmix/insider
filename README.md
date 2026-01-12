@@ -109,3 +109,79 @@ Example:
 ```bash
 python3 active_positions_report.py --with-metadata
 ```
+
+## Arbitrum v2 skim scanner
+
+`skim_scanner.py` scans Camelot v2 and Uniswap v2 pairs on Arbitrum for skim
+opportunities by comparing reserves to actual token balances.
+
+Example:
+
+```bash
+python3 skim_scanner.py --dex camelot --max-pairs 200 --min-imbalance 0.05
+```
+
+To crawl and persist all pairs into a sqlite db (batch size 1000, resume supported):
+
+```bash
+python3 skim_scanner.py --dex both --crawl --batch-size 1000 --max-pairs 0 --resume
+```
+
+To scan pairs directly from the sqlite db:
+
+```bash
+python3 skim_scanner.py --dex both --scan-db --max-pairs 0 --rotate-rpc
+```
+
+## Flash swap scanner
+
+`flash_swap_scanner.py` loads Camelot + Uniswap v2 pairs from `skim_pairs.db`,
+pulls reserves on-chain, and simulates optimal two-hop arbitrage to estimate
+potential profit (no transactions sent).
+Default fees: Camelot/Sushi 0.5% (`--fee-camelot`, `--fee-sushiswap`), Uniswap v2 0.3%.
+
+Example:
+
+```bash
+python3 flash_swap_scanner.py --top 25 --min-profit 0.01 --max-trade-frac 0.3
+```
+
+The scanner also estimates USD profit using on-chain reserves (stablecoins/WETH).
+You can focus on high-liquidity and high-volume pairs:
+
+```bash
+python3 flash_swap_scanner.py --focus-top-reserve 200 --focus-top-volume 200
+```
+
+Scan multiple v2 DEXes (default: uniswapv2, camelot, sushiswapv2):
+
+```bash
+python3 flash_swap_scanner.py --dexes uniswapv2,camelot,sushiswapv2
+```
+
+## Flash swap gas simulation
+
+`flash_swap_sim.py` compiles a minimal flash-swap executor contract and can
+estimate deployment + execution gas. Use `--deploy` to deploy and then estimate
+`execute` gas.
+
+Example (gas estimate only, no deploy):
+
+```bash
+python3 flash_swap_sim.py --pair-borrow <PAIR> --pair-swap <PAIR> --token-borrow <TOKEN> --amount-borrow <RAW>
+```
+
+Example (deploy + estimate execute):
+
+```bash
+python3 flash_swap_sim.py --deploy --pair-borrow <PAIR> --pair-swap <PAIR> --token-borrow <TOKEN> --amount-borrow <RAW>
+```
+
+Environment overrides:
+
+- `ARBITRUM_RPC_URL` (defaults to a public Arbitrum RPC)
+- `ARBITRUM_RPC_URLS` (comma-separated RPC URLs to rotate across)
+- `CAMELOT_V2_SUBGRAPH`
+- `UNISWAP_V2_SUBGRAPH`
+- `SUSHISWAP_V2_SUBGRAPH`
+- `GRAPH_API_KEY` (required for The Graph gateway endpoints)

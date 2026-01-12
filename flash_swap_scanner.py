@@ -1,0 +1,546 @@
+import argparse
+import os
+import sqlite3
+import sys
+import time
+from dataclasses import dataclass
+from decimal import Decimal, getcontext
+from typing import Dict, List, Optional, Tuple
+
+import httpx
+from dotenv import load_dotenv
+
+from skim_scanner import normalize_rpc_url
+
+
+load_dotenv()
+getcontext().prec = 60
+
+UNISWAP_V2_SUBGRAPH = os.getenv(
+    "UNISWAP_V2_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/CStW6CSQbHoXsgKuVCrk3uShGA4JX3CAzzv2x9zaGf8w",
+)
+CAMELOT_V2_SUBGRAPH = os.getenv(
+    "CAMELOT_V2_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/8zagLSufxk5cVhzkzai3tyABwJh53zxn9tmUYJcJxijG",
+)
+SUSHISWAP_V2_SUBGRAPH = os.getenv(
+    "SUSHISWAP_V2_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/8yBXBTMfdhsoE5QCf7KnoPmQb7QAWtRzESfYjiCjGEM9",
+)
+GRAPH_API_KEY = os.getenv("GRAPH_API_KEY")
+
+WETH = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+STABLES = {
+    "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",  # USDC.e
+    "0xaf88d065e77c8cc2239327c5edb3a432268e5831",  # USDC
+    "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",  # USDT
+    "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",  # DAI
+}
+
+
+@dataclass
+class PairData:
+    dex: str
+    pair_id: str
+    token0: str
+    token1: str
+    token0_symbol: str
+    token1_symbol: str
+    token0_decimals: int
+    token1_decimals: int
+    reserve0: Decimal
+    reserve1: Decimal
+
+
+BALANCE_OF_SIG = "70a08231"
+GET_RESERVES_SIG = "0902f1ac"
+
+
+def build_rpc_pool(rpc_urls: str) -> List[str]:
+    if rpc_urls:
+        urls = [normalize_rpc_url(url.strip()) for url in rpc_urls.split(",") if url.strip()]
+        return [url for url in urls if url]
+    env_url = normalize_rpc_url(os.getenv("ARBITRUM_RPC_URL", "https://arb1.arbitrum.io/rpc"))
+    if env_url:
+        return [env_url]
+    return [
+        "https://arb1.arbitrum.io/rpc",
+        "https://1rpc.io/arb",
+        "https://arbitrum.drpc.org",
+        "https://arbitrum-one-rpc.publicnode.com",
+    ]
+
+
+def rpc_call(url: str, method: str, params: List[object]) -> str:
+    with httpx.Client(timeout=20) as client:
+        resp = client.post(
+            url,
+            json={"jsonrpc": "2.0", "id": 1, "method": method, "params": params},
+        )
+    resp.raise_for_status()
+    payload = resp.json()
+    if "error" in payload:
+        raise RuntimeError(payload["error"])
+    return payload["result"]
+
+
+def decode_uint256(hexdata: str) -> int:
+    if hexdata.startswith("0x"):
+        hexdata = hexdata[2:]
+    return int(hexdata or "0", 16)
+
+
+def fetch_reserves_raw(rpc_url: str, pair: str) -> Tuple[int, int]:
+    result = rpc_call(rpc_url, "eth_call", [{"to": pair, "data": "0x" + GET_RESERVES_SIG}, "latest"])
+    raw = result[2:]
+    if len(raw) < 128:
+        raise RuntimeError("Unexpected getReserves response")
+    return int(raw[0:64], 16), int(raw[64:128], 16)
+
+
+def fetch_reserves_with_rotation(
+    rpc_urls: List[str], pair: str, start_idx: int
+) -> Tuple[int, int]:
+    last_exc = None
+    for offset in range(len(rpc_urls)):
+        rpc_url = rpc_urls[(start_idx + offset) % len(rpc_urls)]
+        try:
+            return fetch_reserves_raw(rpc_url, pair)
+        except Exception as exc:
+            last_exc = exc
+            continue
+    raise RuntimeError(last_exc)
+
+
+def gql_post(url: str, query: str, variables: Dict[str, object]) -> Dict[str, object]:
+    headers: Dict[str, str] = {"Content-Type": "application/json"}
+    if "gateway.thegraph.com" in url:
+        if not GRAPH_API_KEY:
+            raise RuntimeError("GRAPH_API_KEY is required for gateway.thegraph.com")
+        headers["Authorization"] = f"Bearer {GRAPH_API_KEY}"
+    with httpx.Client(timeout=30) as client:
+        resp = client.post(url, json={"query": query, "variables": variables}, headers=headers)
+    resp.raise_for_status()
+    payload = resp.json()
+    if "errors" in payload:
+        raise RuntimeError(payload["errors"])
+    return payload["data"]
+
+
+def fetch_top_pairs(subgraph: str, order_by: str, first: int) -> List[Tuple[str, str]]:
+    query = """
+    query TopPairs($first: Int!) {
+      pairs(first: $first, orderBy: %s, orderDirection: desc) {
+        token0 { id }
+        token1 { id }
+      }
+    }
+    """ % order_by
+    data = gql_post(subgraph, query, {"first": first})
+    pairs = []
+    for row in data.get("pairs", []):
+        pairs.append((row["token0"]["id"].lower(), row["token1"]["id"].lower()))
+    return pairs
+
+
+def to_decimal(raw: int, decimals: int) -> Decimal:
+    return Decimal(raw) / (Decimal(10) ** decimals)
+
+
+def load_pairs(conn: sqlite3.Connection, dex: str, limit: int) -> List[PairData]:
+    sql = """
+        SELECT pair_id, token0, token1, token0_symbol, token1_symbol, token0_decimals, token1_decimals
+        FROM pairs
+        WHERE dex = ?
+        ORDER BY pair_id ASC
+    """
+    params: List[object] = [dex]
+    if limit > 0:
+        sql += " LIMIT ?"
+        params.append(limit)
+    rows = conn.execute(sql, params).fetchall()
+    pairs = []
+    for row in rows:
+        pairs.append(
+            PairData(
+                dex=dex,
+                pair_id=row[0],
+                token0=row[1],
+                token1=row[2],
+                token0_symbol=row[3] or "UNKNOWN",
+                token1_symbol=row[4] or "UNKNOWN",
+                token0_decimals=int(row[5] or 18),
+                token1_decimals=int(row[6] or 18),
+                reserve0=Decimal(0),
+                reserve1=Decimal(0),
+            )
+        )
+    return pairs
+
+
+def build_pair_index(pairs: List[PairData]) -> Dict[Tuple[str, str], List[PairData]]:
+    index: Dict[Tuple[str, str], List[PairData]] = {}
+    for pair in pairs:
+        key = tuple(sorted([pair.token0.lower(), pair.token1.lower()]))
+        index.setdefault(key, []).append(pair)
+    return index
+
+
+def price_from_reserves(
+    token: str,
+    token_decimals: int,
+    other: str,
+    other_decimals: int,
+    reserve_token: int,
+    reserve_other: int,
+) -> Optional[Decimal]:
+    if reserve_token <= 0 or reserve_other <= 0:
+        return None
+    amt_token = to_decimal(reserve_token, token_decimals)
+    amt_other = to_decimal(reserve_other, other_decimals)
+    if amt_token <= 0:
+        return None
+    return amt_other / amt_token
+
+
+def find_best_price_pair(
+    token: str,
+    other_tokens: List[str],
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    rpc_urls: List[str],
+    start_idx: int,
+) -> Tuple[Optional[Decimal], Optional[str]]:
+    best_price = None
+    best_other = None
+    best_liq = Decimal(0)
+    for other in other_tokens:
+        key = tuple(sorted([token.lower(), other.lower()]))
+        if key not in pair_index:
+            continue
+        for pair in pair_index[key]:
+            try:
+                r0, r1 = fetch_reserves_with_rotation(rpc_urls, pair.pair_id, start_idx)
+            except Exception:
+                continue
+            if pair.token0.lower() == token.lower():
+                price = price_from_reserves(
+                    token,
+                    pair.token0_decimals,
+                    other,
+                    pair.token1_decimals,
+                    r0,
+                    r1,
+                )
+                liquidity = to_decimal(r1, pair.token1_decimals)
+            else:
+                price = price_from_reserves(
+                    token,
+                    pair.token1_decimals,
+                    other,
+                    pair.token0_decimals,
+                    r1,
+                    r0,
+                )
+                liquidity = to_decimal(r0, pair.token0_decimals)
+            if price is None:
+                continue
+            if liquidity > best_liq:
+                best_liq = liquidity
+                best_price = price
+                best_other = other
+    return best_price, best_other
+
+
+def token_price_usd(
+    token: str,
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    rpc_urls: List[str],
+    start_idx: int,
+    weth_price: Optional[Decimal],
+) -> Optional[Decimal]:
+    token = token.lower()
+    if token in STABLES:
+        return Decimal(1)
+    if token == WETH.lower():
+        return weth_price
+    stable_list = list(STABLES)
+    price, _ = find_best_price_pair(token, stable_list, pair_index, rpc_urls, start_idx)
+    if price is not None:
+        return price
+    if weth_price is None:
+        return None
+    price_in_weth, _ = find_best_price_pair(token, [WETH], pair_index, rpc_urls, start_idx)
+    if price_in_weth is None:
+        return None
+    return price_in_weth * weth_price
+
+
+def swap_out(amount_in: Decimal, reserve_in: Decimal, reserve_out: Decimal, fee: Decimal) -> Decimal:
+    if amount_in <= 0 or reserve_in <= 0 or reserve_out <= 0:
+        return Decimal(0)
+    amount_in_with_fee = amount_in * (Decimal(1) - fee)
+    return (amount_in_with_fee * reserve_out) / (reserve_in + amount_in_with_fee)
+
+
+def ternary_search(
+    reserve_in: Decimal,
+    reserve_out: Decimal,
+    reserve_in_2: Decimal,
+    reserve_out_2: Decimal,
+    fee_in: Decimal,
+    fee_out: Decimal,
+    max_in: Decimal,
+) -> Tuple[Decimal, Decimal]:
+    lo = Decimal(0)
+    hi = max_in
+    best_in = Decimal(0)
+    best_profit = Decimal(0)
+    for _ in range(50):
+        m1 = lo + (hi - lo) / Decimal(3)
+        m2 = hi - (hi - lo) / Decimal(3)
+        p1 = profit_for_amount(
+            m1, reserve_in, reserve_out, reserve_in_2, reserve_out_2, fee_in, fee_out
+        )
+        p2 = profit_for_amount(
+            m2, reserve_in, reserve_out, reserve_in_2, reserve_out_2, fee_in, fee_out
+        )
+        if p1 > p2:
+            hi = m2
+        else:
+            lo = m1
+        if p1 > best_profit:
+            best_profit = p1
+            best_in = m1
+        if p2 > best_profit:
+            best_profit = p2
+            best_in = m2
+    return best_in, best_profit
+
+
+def profit_for_amount(
+    amount_in: Decimal,
+    reserve_in: Decimal,
+    reserve_out: Decimal,
+    reserve_in_2: Decimal,
+    reserve_out_2: Decimal,
+    fee_in: Decimal,
+    fee_out: Decimal,
+) -> Decimal:
+    out_1 = swap_out(amount_in, reserve_in, reserve_out, fee_in)
+    out_2 = swap_out(out_1, reserve_in_2, reserve_out_2, fee_out)
+    return out_2 - amount_in
+
+
+def best_arb_for_token0(
+    pool_a: PairData,
+    pool_b: PairData,
+    fee_a: Decimal,
+    fee_b: Decimal,
+    max_trade_frac: Decimal,
+) -> Tuple[Decimal, Decimal, str]:
+    max_in = pool_a.reserve0 * max_trade_frac
+    if max_in <= 0:
+        return Decimal(0), Decimal(0), ""
+    amt_in, profit = ternary_search(
+        pool_a.reserve0,
+        pool_a.reserve1,
+        pool_b.reserve1,
+        pool_b.reserve0,
+        fee_a,
+        fee_b,
+        max_in,
+    )
+    return amt_in, profit, "token0"
+
+
+def best_arb_for_token1(
+    pool_a: PairData,
+    pool_b: PairData,
+    fee_a: Decimal,
+    fee_b: Decimal,
+    max_trade_frac: Decimal,
+) -> Tuple[Decimal, Decimal, str]:
+    max_in = pool_a.reserve1 * max_trade_frac
+    if max_in <= 0:
+        return Decimal(0), Decimal(0), ""
+    amt_in, profit = ternary_search(
+        pool_a.reserve1,
+        pool_a.reserve0,
+        pool_b.reserve0,
+        pool_b.reserve1,
+        fee_a,
+        fee_b,
+        max_in,
+    )
+    return amt_in, profit, "token1"
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Flash swap arbitrage scanner (Camelot v2 vs Uniswap v2).")
+    parser.add_argument("--db-path", default="skim_pairs.db", help="SQLite DB with pairs.")
+    parser.add_argument("--max-pairs", type=int, default=0, help="Limit pairs per dex (0 = all).")
+    parser.add_argument("--top", type=int, default=25, help="Top opportunities to print.")
+    parser.add_argument("--min-profit", type=Decimal, default=Decimal("0"), help="Minimum profit in input token.")
+    parser.add_argument("--max-trade-frac", type=Decimal, default=Decimal("0.3"), help="Max trade size as fraction of reserve.")
+    parser.add_argument("--fee-uniswap", type=Decimal, default=Decimal("0.003"), help="Uniswap v2 fee.")
+    parser.add_argument("--fee-camelot", type=Decimal, default=Decimal("0.005"), help="Camelot v2 fee.")
+    parser.add_argument("--fee-sushiswap", type=Decimal, default=Decimal("0.005"), help="Sushi v2 fee.")
+    parser.add_argument(
+        "--dexes",
+        default="uniswapv2,camelot,sushiswapv2",
+        help="Comma-separated dex list to compare.",
+    )
+    parser.add_argument("--focus-top-reserve", type=int, default=0, help="Limit scan to top pairs by reserveUSD.")
+    parser.add_argument("--focus-top-volume", type=int, default=0, help="Limit scan to top pairs by volumeUSD.")
+    parser.add_argument(
+        "--rpc-urls",
+        default=os.getenv("ARBITRUM_RPC_URLS", ""),
+        help="Comma-separated RPC URLs to rotate across.",
+    )
+    args = parser.parse_args()
+
+    dexes = [d.strip() for d in args.dexes.split(",") if d.strip()]
+    dex_aliases = {"sushiswap": "sushiswapv2"}
+    dexes = [dex_aliases.get(d, d) for d in dexes]
+
+    conn = sqlite3.connect(args.db_path)
+    pairs_by_dex: Dict[str, List[PairData]] = {}
+    for dex in dexes:
+        pairs_by_dex[dex] = load_pairs(conn, dex, args.max_pairs)
+
+    by_tokens: Dict[Tuple[str, str], Dict[str, PairData]] = {}
+    for dex_pairs in pairs_by_dex.values():
+        for pair in dex_pairs:
+            key = tuple(sorted([pair.token0.lower(), pair.token1.lower()]))
+            by_tokens.setdefault(key, {})[pair.dex] = pair
+
+    focus_keys: Optional[set] = None
+    if args.focus_top_reserve or args.focus_top_volume:
+        if not GRAPH_API_KEY and "gateway.thegraph.com" in UNISWAP_V2_SUBGRAPH:
+            print("GRAPH_API_KEY required for focus scan", file=sys.stderr)
+            sys.exit(1)
+        focus_keys = set()
+        subgraphs = {
+            "uniswapv2": UNISWAP_V2_SUBGRAPH,
+            "camelot": CAMELOT_V2_SUBGRAPH,
+            "sushiswapv2": SUSHISWAP_V2_SUBGRAPH,
+        }
+        for dex in dexes:
+            if dex not in subgraphs:
+                continue
+            subgraph = subgraphs[dex]
+            if args.focus_top_reserve:
+                try:
+                    pairs = fetch_top_pairs(subgraph, "reserveUSD", args.focus_top_reserve)
+                    focus_keys.update(tuple(sorted(p)) for p in pairs)
+                except Exception as exc:
+                    print(f"focus reserve fetch failed {dex}: {exc}", file=sys.stderr)
+            if args.focus_top_volume:
+                try:
+                    pairs = fetch_top_pairs(subgraph, "volumeUSD", args.focus_top_volume)
+                    focus_keys.update(tuple(sorted(p)) for p in pairs)
+                except Exception as exc:
+                    print(f"focus volume fetch failed {dex}: {exc}", file=sys.stderr)
+
+    rpc_urls = build_rpc_pool(args.rpc_urls)
+    if not rpc_urls:
+        print("no RPC URLs available", file=sys.stderr)
+        sys.exit(1)
+
+    all_pairs: List[PairData] = []
+    for dex_pairs in pairs_by_dex.values():
+        all_pairs.extend(dex_pairs)
+    pair_index = build_pair_index(all_pairs)
+    weth_price, weth_pair = find_best_price_pair(
+        WETH, list(STABLES), pair_index, rpc_urls, 0
+    )
+    if weth_price is None:
+        print("warn: could not derive WETH/USD price", file=sys.stderr)
+
+    results = []
+    keys = [
+        k
+        for k, v in by_tokens.items()
+        if sum(1 for dex in dexes if dex in v) >= 2
+    ]
+    if focus_keys is not None:
+        keys = [k for k in keys if k in focus_keys]
+    for idx, key in enumerate(keys):
+        available = {dex: by_tokens[key][dex] for dex in dexes if dex in by_tokens[key]}
+        fee_by_dex = {
+            "uniswapv2": args.fee_uniswap,
+            "camelot": args.fee_camelot,
+            "sushiswapv2": args.fee_sushiswap,
+        }
+
+        # Fetch reserves for each available dex.
+        bad_dexes = set()
+        for dex_idx, (dex, pair) in enumerate(list(available.items())):
+            try:
+                r0, r1 = fetch_reserves_with_rotation(rpc_urls, pair.pair_id, idx + dex_idx)
+                pair.reserve0 = to_decimal(r0, pair.token0_decimals)
+                pair.reserve1 = to_decimal(r1, pair.token1_decimals)
+            except Exception as exc:
+                print(f"skip {pair.pair_id} err={exc}", file=sys.stderr)
+                bad_dexes.add(dex)
+        for dex in bad_dexes:
+            available.pop(dex, None)
+        if len(available) < 2:
+            continue
+
+        candidates = []
+        dex_list = list(available.keys())
+        for i in range(len(dex_list)):
+            for j in range(len(dex_list)):
+                if i == j:
+                    continue
+                dex_a = dex_list[i]
+                dex_b = dex_list[j]
+                pair_a = available[dex_a]
+                pair_b = available[dex_b]
+                fee_a = fee_by_dex.get(dex_a, args.fee_uniswap)
+                fee_b = fee_by_dex.get(dex_b, args.fee_uniswap)
+
+                amt_in0, profit0, token0 = best_arb_for_token0(
+                    pair_a, pair_b, fee_a, fee_b, args.max_trade_frac
+                )
+                amt_in1, profit1, token1 = best_arb_for_token1(
+                    pair_a, pair_b, fee_a, fee_b, args.max_trade_frac
+                )
+                candidates.append((f"{dex_a}->{dex_b}", amt_in0, profit0, token0, pair_a, pair_b))
+                candidates.append((f"{dex_a}->{dex_b}", amt_in1, profit1, token1, pair_a, pair_b))
+
+        best = max(candidates, key=lambda c: c[2])
+        if best[2] <= args.min_profit:
+            continue
+        _, amount_in, profit, input_token, pair_a, pair_b = best
+        input_token_addr = pair_a.token0 if input_token == "token0" else pair_a.token1
+        input_token_symbol = pair_a.token0_symbol if input_token == "token0" else pair_a.token1_symbol
+        price_usd = token_price_usd(input_token_addr, pair_index, rpc_urls, idx, weth_price)
+        profit_usd = price_usd * profit if price_usd is not None else None
+
+        results.append(
+            {
+                "pair_key": key,
+                "route": best[0],
+                "input_token": input_token,
+                "amount_in": str(amount_in),
+                "profit": str(profit),
+                "profit_usd": str(profit_usd) if profit_usd is not None else None,
+                "input_token_symbol": input_token_symbol,
+                "input_token_address": input_token_addr,
+                "pair_a": pair_a.pair_id,
+                "pair_b": pair_b.pair_id,
+                "token0": f"{pair_a.token0_symbol}/{pair_a.token0}",
+                "token1": f"{pair_a.token1_symbol}/{pair_a.token1}",
+            }
+        )
+
+    results.sort(key=lambda r: Decimal(r["profit"]), reverse=True)
+    for item in results[: args.top]:
+        print(item)
+
+
+if __name__ == "__main__":
+    main()

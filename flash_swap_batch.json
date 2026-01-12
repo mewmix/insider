@@ -1,0 +1,42 @@
+[
+  {
+    "name": "SIZE/WETH camelot->sushi",
+    "pair_borrow": "0x19d51dc52e52407656b40b197b1bbe14294b955b",
+    "pair_swap": "0x90bfecaef10aeedcd26c57a5232e9fccd5d8ce1b",
+    "token_borrow": "0x939727d85d99d0ac339bf1b76dfe30ca27c19067",
+    "amount_borrow": 369859232953160699920,
+    "fee_borrow_bps": 50,
+    "fee_swap_bps": 50,
+    "min_profit": 0
+  },
+  {
+    "name": "USDT/USDC sushi->camelot",
+    "pair_borrow": "0x8165c70b01b7807351ef0c5ffd3ef010cabc16fb",
+    "pair_swap": "0x1c31fb3359357f6436565ccb3e982bc6bf4189ae",
+    "token_borrow": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "amount_borrow": 235324350,
+    "fee_borrow_bps": 50,
+    "fee_swap_bps": 50,
+    "min_profit": 0
+  },
+  {
+    "name": "Bunium/WETH camelot->sushi",
+    "pair_borrow": "0xff818c4284e05d8ae8d356868fab81694d199249",
+    "pair_swap": "0xb49d264e248d4bedd088cd0f288a11a46e0f84d5",
+    "token_borrow": "0x32195a1664a87cafc3bfddb02d68e47ace2609c5",
+    "amount_borrow": 23340188906197630326,
+    "fee_borrow_bps": 50,
+    "fee_swap_bps": 50,
+    "min_profit": 0
+  },
+  {
+    "name": "AIDOGE/USDC camelot->sushi",
+    "pair_borrow": "0x89a6a01f58fb5dbed9fb1c10140f7a096c4430a0",
+    "pair_swap": "0x6576a4018f418c65e693dc2f73705860d7be3b65",
+    "token_borrow": "0xd083b4a21edee20a07db7a5953efd509a6b389c4",
+    "amount_borrow": 11445485791727595814432941940000,
+    "fee_borrow_bps": 50,
+    "fee_swap_bps": 50,
+    "min_profit": 0
+  }
+]

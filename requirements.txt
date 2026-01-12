@@ -3,3 +3,5 @@ httpx
 pydantic
 python-dotenv
 uvicorn
+web3
+py-solc-x

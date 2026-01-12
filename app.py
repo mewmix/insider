@@ -1,4 +1,5 @@
 import asyncio
+import json
 import os
 import sqlite3
 import time
@@ -28,6 +29,13 @@ POLL_SECONDS = int(os.getenv("POLL_SECONDS", "15"))
 BIG_USDC = float(os.getenv("BIG_USDC", "5000"))
 FRESH_MAX_AGE_SECONDS = int(os.getenv("FRESH_MAX_AGE_SECONDS", "259200"))
 FRESH_MAX_FIRST_SEEN_ONLY = os.getenv("FRESH_MAX_FIRST_SEEN_ONLY", "true").lower() == "true"
+MARKET_REFRESH_SECONDS = int(os.getenv("MARKET_REFRESH_SECONDS", "3600"))
+MARKET_POLL_SECONDS = int(os.getenv("MARKET_POLL_SECONDS", "300"))
+POLYGONSCAN_API_KEY = os.getenv("POLYGONSCAN_API_KEY", "").strip()
+FUNDED_MAX_AGE_SECONDS = int(os.getenv("FUNDED_MAX_AGE_SECONDS", "604800"))
+FUNDED_MIN_NOTIONAL = float(os.getenv("FUNDED_MIN_NOTIONAL", "10000"))
+FUNDING_POLL_SECONDS = int(os.getenv("FUNDING_POLL_SECONDS", "900"))
+FUNDING_REFRESH_SECONDS = int(os.getenv("FUNDING_REFRESH_SECONDS", "86400"))
 
 SQLITE_PATH = os.getenv("SQLITE_PATH", "scanner.db")
 
@@ -80,9 +88,38 @@ def init_db() -> None:
         )
         conn.execute(
             """
+            CREATE TABLE IF NOT EXISTS wallet_funding (
+              address TEXT PRIMARY KEY,
+              first_funded_ts INTEGER,
+              source TEXT,
+              updated_at_ts INTEGER
+            )
+            """
+        )
+        conn.execute(
+            """
             CREATE TABLE IF NOT EXISTS kv (
               k TEXT PRIMARY KEY,
               v TEXT NOT NULL
+            )
+            """
+        )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS markets (
+              condition_id TEXT PRIMARY KEY,
+              slug TEXT,
+              title TEXT,
+              category TEXT,
+              icon TEXT,
+              outcomes_json TEXT,
+              outcome_prices_json TEXT,
+              winner_outcome_index INTEGER,
+              winner_outcome TEXT,
+              resolution_status TEXT,
+              resolved_by TEXT,
+              resolved INTEGER NOT NULL DEFAULT 0,
+              updated_at_ts INTEGER
             )
             """
         )
@@ -272,7 +309,206 @@ def is_fresh(first_seen_ts: Optional[int], now_ts: int) -> bool:
     return age <= FRESH_MAX_AGE_SECONDS
 
 
-def format_alert(t: Trade, first_seen_ts: Optional[int]) -> str:
+def parse_json_list(raw: Optional[str]) -> List[str]:
+    if not raw:
+        return []
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return []
+    if isinstance(data, list):
+        return [str(x) for x in data]
+    return []
+
+
+def infer_winner_index(outcomes: List[str], outcome_prices: List[str]) -> Optional[int]:
+    if not outcomes or not outcome_prices or len(outcomes) != len(outcome_prices):
+        return None
+    try:
+        prices = [float(x) for x in outcome_prices]
+    except ValueError:
+        return None
+    max_price = max(prices)
+    if max_price < 0.99:
+        return None
+    return prices.index(max_price)
+
+
+def get_market_metadata(condition_id: str) -> Optional[Dict[str, Any]]:
+    conn = db()
+    try:
+        row = conn.execute(
+            """
+            SELECT slug, title, category, icon, outcomes_json, outcome_prices_json,
+                   winner_outcome_index, winner_outcome, resolution_status, resolved,
+                   updated_at_ts
+            FROM markets
+            WHERE condition_id = ?
+            """,
+            (condition_id,),
+        ).fetchone()
+        if not row:
+            return None
+        return {
+            "slug": row[0],
+            "title": row[1],
+            "category": row[2],
+            "icon": row[3],
+            "outcomes_json": row[4],
+            "outcome_prices_json": row[5],
+            "winner_outcome_index": row[6],
+            "winner_outcome": row[7],
+            "resolution_status": row[8],
+            "resolved": bool(row[9]),
+            "updated_at_ts": row[10],
+        }
+    finally:
+        conn.close()
+
+
+async def fetch_market_by_condition_id(condition_id: str) -> Optional[Dict[str, Any]]:
+    params = {"conditionId": condition_id}
+    async with httpx.AsyncClient(timeout=20) as client:
+        r = await client.get(f"{GAMMA_API_BASE}/markets", params=params)
+        r.raise_for_status()
+        data = r.json()
+    if not data:
+        return None
+    return data[0]
+
+
+async def upsert_market_from_gamma(condition_id: str) -> Optional[Dict[str, Any]]:
+    market = await fetch_market_by_condition_id(condition_id)
+    if not market:
+        return None
+
+    outcomes_raw = str(market.get("outcomes") or "")
+    outcome_prices_raw = str(market.get("outcomePrices") or "")
+    outcomes = parse_json_list(outcomes_raw)
+    outcome_prices = parse_json_list(outcome_prices_raw)
+    winner_index = infer_winner_index(outcomes, outcome_prices)
+    winner_outcome = outcomes[winner_index] if winner_index is not None else None
+    resolved = 1 if winner_index is not None else 0
+
+    conn = db()
+    try:
+        conn.execute(
+            """
+            INSERT INTO markets (
+              condition_id, slug, title, category, icon, outcomes_json, outcome_prices_json,
+              winner_outcome_index, winner_outcome, resolution_status, resolved_by, resolved,
+              updated_at_ts
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(condition_id) DO UPDATE SET
+              slug=excluded.slug,
+              title=excluded.title,
+              category=excluded.category,
+              icon=excluded.icon,
+              outcomes_json=excluded.outcomes_json,
+              outcome_prices_json=excluded.outcome_prices_json,
+              winner_outcome_index=excluded.winner_outcome_index,
+              winner_outcome=excluded.winner_outcome,
+              resolution_status=excluded.resolution_status,
+              resolved_by=excluded.resolved_by,
+              resolved=excluded.resolved,
+              updated_at_ts=excluded.updated_at_ts
+            """,
+            (
+                condition_id,
+                market.get("slug"),
+                market.get("question") or market.get("title"),
+                market.get("category"),
+                market.get("icon"),
+                outcomes_raw,
+                outcome_prices_raw,
+                winner_index,
+                winner_outcome,
+                market.get("umaResolutionStatus"),
+                market.get("resolvedBy"),
+                resolved,
+                int(time.time()),
+            ),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    return get_market_metadata(condition_id)
+
+
+async def ensure_market_metadata(condition_id: str) -> Optional[Dict[str, Any]]:
+    row = get_market_metadata(condition_id)
+    if row is None:
+        return await upsert_market_from_gamma(condition_id)
+    updated_at_ts = row.get("updated_at_ts")
+    if updated_at_ts is None:
+        return await upsert_market_from_gamma(condition_id)
+    if (int(time.time()) - int(updated_at_ts)) >= MARKET_REFRESH_SECONDS:
+        return await upsert_market_from_gamma(condition_id)
+    return row
+
+
+async def fetch_first_funded_ts(address: str) -> Optional[int]:
+    if not POLYGONSCAN_API_KEY:
+        return None
+    params = {
+        "module": "account",
+        "action": "txlist",
+        "address": address,
+        "startblock": "0",
+        "endblock": "99999999",
+        "page": "1",
+        "offset": "100",
+        "sort": "asc",
+        "apikey": POLYGONSCAN_API_KEY,
+    }
+    async with httpx.AsyncClient(timeout=20) as client:
+        r = await client.get("https://api.polygonscan.com/api", params=params)
+        r.raise_for_status()
+        data = r.json()
+    if data.get("status") == "0" and "No transactions" in str(data.get("message", "")):
+        return None
+    result = data.get("result") or []
+    if not isinstance(result, list) or not result:
+        return None
+    address_l = address.lower()
+    first_inbound = None
+    for tx in result:
+        to_addr = str(tx.get("to", "")).lower()
+        value = int(tx.get("value", "0") or 0)
+        if to_addr == address_l and value > 0:
+            first_inbound = tx
+            break
+    tx = first_inbound or result[0]
+    ts = int(tx.get("timeStamp", 0) or 0)
+    return ts if ts > 0 else None
+
+
+def upsert_wallet_funding(address: str, first_funded_ts: Optional[int]) -> None:
+    conn = db()
+    try:
+        conn.execute(
+            """
+            INSERT INTO wallet_funding (
+              address, first_funded_ts, source, updated_at_ts
+            ) VALUES (?, ?, ?, ?)
+            ON CONFLICT(address) DO UPDATE SET
+              first_funded_ts=excluded.first_funded_ts,
+              source=excluded.source,
+              updated_at_ts=excluded.updated_at_ts
+            """,
+            (address, first_funded_ts, "polygonscan", int(time.time())),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def format_alert(
+    t: Trade,
+    first_seen_ts: Optional[int],
+    market_meta: Optional[Dict[str, Any]],
+) -> str:
     now_ts = int(time.time())
     age_s = None if first_seen_ts is None else max(0, now_ts - first_seen_ts)
     age_h = None if age_s is None else round(age_s / 3600, 2)
@@ -292,6 +528,11 @@ def format_alert(t: Trade, first_seen_ts: Optional[int]) -> str:
         "💰 " + link(f"Value: ${t.notional_usdc_est:,.2f}", tx_url),
         "🧾 " + link(f"Tx: {t.tx_hash}", tx_url),
     ]
+    if market_meta:
+        if market_meta.get("category"):
+            lines.append("🏷️ " + html.escape(f"Category: {market_meta['category']}"))
+        if market_meta.get("icon"):
+            lines.append("🖼️ " + link("Icon", market_meta["icon"]))
     if age_h is None:
         age_label = "First-seen: unknown"
     else:
@@ -305,6 +546,83 @@ def format_alert(t: Trade, first_seen_ts: Optional[int]) -> str:
 
 scanner_task: Optional[asyncio.Task] = None
 scanner_stop_evt = asyncio.Event()
+market_sync_task: Optional[asyncio.Task] = None
+market_sync_stop_evt = asyncio.Event()
+funding_sync_task: Optional[asyncio.Task] = None
+funding_sync_stop_evt = asyncio.Event()
+
+
+def get_conditions_needing_refresh(limit: int) -> List[str]:
+    now_ts = int(time.time())
+    cutoff_ts = now_ts - MARKET_REFRESH_SECONDS
+    conn = db()
+    try:
+        rows = conn.execute(
+            """
+            SELECT DISTINCT t.condition_id
+            FROM trades t
+            LEFT JOIN markets m ON t.condition_id = m.condition_id
+            WHERE m.condition_id IS NULL
+               OR m.resolved = 0
+               OR m.updated_at_ts IS NULL
+               OR m.updated_at_ts < ?
+            LIMIT ?
+            """,
+            (cutoff_ts, limit),
+        ).fetchall()
+        return [r[0] for r in rows if r[0]]
+    finally:
+        conn.close()
+
+
+async def market_sync_loop() -> None:
+    market_sync_stop_evt.clear()
+    while not market_sync_stop_evt.is_set():
+        condition_ids = get_conditions_needing_refresh(limit=50)
+        for condition_id in condition_ids:
+            try:
+                await upsert_market_from_gamma(condition_id)
+            except Exception:
+                continue
+        await asyncio.sleep(MARKET_POLL_SECONDS)
+
+
+def get_wallets_needing_funding(limit: int) -> List[str]:
+    now_ts = int(time.time())
+    cutoff_ts = now_ts - FUNDING_REFRESH_SECONDS
+    conn = db()
+    try:
+        rows = conn.execute(
+            """
+            SELECT DISTINCT t.proxy_wallet
+            FROM trades t
+            LEFT JOIN wallet_funding f ON t.proxy_wallet = f.address
+            WHERE f.address IS NULL
+               OR f.updated_at_ts IS NULL
+               OR f.updated_at_ts < ?
+            LIMIT ?
+            """,
+            (cutoff_ts, limit),
+        ).fetchall()
+        return [r[0] for r in rows if r[0]]
+    finally:
+        conn.close()
+
+
+async def funding_sync_loop() -> None:
+    funding_sync_stop_evt.clear()
+    while not funding_sync_stop_evt.is_set():
+        if not POLYGONSCAN_API_KEY:
+            await asyncio.sleep(FUNDING_POLL_SECONDS)
+            continue
+        addresses = get_wallets_needing_funding(limit=25)
+        for address in addresses:
+            try:
+                funded_ts = await fetch_first_funded_ts(address)
+                upsert_wallet_funding(address, funded_ts)
+            except Exception:
+                continue
+        await asyncio.sleep(FUNDING_POLL_SECONDS)
 
 
 async def scan_once() -> Dict[str, Any]:
@@ -359,7 +677,11 @@ async def scan_once() -> Dict[str, Any]:
             mark_tx(t.tx_hash, t.timestamp)
             continue
 
-        await telegram_send(format_alert(t, first_seen))
+        try:
+            market_meta = await ensure_market_metadata(t.condition_id)
+        except Exception:
+            market_meta = None
+        await telegram_send(format_alert(t, first_seen, market_meta))
         emitted += 1
         mark_tx(t.tx_hash, t.timestamp)
 
@@ -413,7 +735,19 @@ async def healthz() -> Dict[str, Any]:
         "data_api_base": DATA_API_BASE,
         "gamma_api_base": GAMMA_API_BASE,
         "scanner_running": scanner_task is not None and not scanner_task.done(),
+        "market_sync_running": market_sync_task is not None and not market_sync_task.done(),
+        "funding_sync_running": funding_sync_task is not None and not funding_sync_task.done(),
     }
+
+
+@app.on_event("startup")
+async def startup_tasks() -> None:
+    global market_sync_task
+    global funding_sync_task
+    if market_sync_task is None or market_sync_task.done():
+        market_sync_task = asyncio.create_task(market_sync_loop())
+    if funding_sync_task is None or funding_sync_task.done():
+        funding_sync_task = asyncio.create_task(funding_sync_loop())
 
 
 @app.post("/scan/once", response_model=ScanResponse)
@@ -464,6 +798,7 @@ async def scan_test() -> Dict[str, Any]:
                 tx_hash="0x9a395b45127220c9a8815caf0aa8fb458362a7d34f0b5f37d63390f6b20b71b2",
             ),
             int(time.time()) - 38 * 3600,
+            None,
         )
     )
     return {"sent": True}
@@ -477,31 +812,163 @@ def report_insiders() -> Dict[str, Any]:
     """
     conn = db()
     try:
-        # Example query: Wallets with > 1 trade, sorted by total volume
-        rows = conn.execute(
+        now_ts = int(time.time())
+        fresh_rows = conn.execute(
             """
             SELECT 
-                t.proxy_wallet, 
-                COUNT(*) as trade_count, 
+                w.address,
+                w.first_seen_ts,
+                COUNT(t.tx_hash) as trade_count,
+                SUM(t.notional_usdc) as total_vol
+            FROM wallets w
+            LEFT JOIN trades t ON t.proxy_wallet = w.address
+            WHERE w.first_seen_ts IS NOT NULL
+              AND w.first_seen_ts >= ?
+            GROUP BY w.address
+            HAVING trade_count > 0
+            ORDER BY w.first_seen_ts DESC, total_vol DESC
+            LIMIT 50
+            """,
+            (now_ts - FRESH_MAX_AGE_SECONDS,),
+        ).fetchall()
+
+        smart_rows = conn.execute(
+            """
+            SELECT 
+                t.proxy_wallet,
+                COUNT(*) as trade_count,
                 SUM(t.notional_usdc) as total_vol,
-                w.first_seen_ts
+                w.first_seen_ts,
+                SUM(CASE WHEN m.winner_outcome_index IS NOT NULL THEN 1 ELSE 0 END) as resolved_trades,
+                SUM(
+                  CASE
+                    WHEN m.winner_outcome_index IS NOT NULL
+                     AND t.outcome_index = m.winner_outcome_index
+                    THEN 1 ELSE 0 END
+                ) as wins,
+                SUM(
+                  CASE
+                    WHEN m.winner_outcome_index IS NULL THEN 0
+                    WHEN t.side = 'BUY' AND t.outcome_index = m.winner_outcome_index
+                      THEN t.size * (1 - t.price)
+                    WHEN t.side = 'BUY'
+                      THEN -t.size * t.price
+                    WHEN t.side = 'SELL' AND t.outcome_index = m.winner_outcome_index
+                      THEN -t.size * (1 - t.price)
+                    WHEN t.side = 'SELL'
+                      THEN t.size * t.price
+                    ELSE 0
+                  END
+                ) as realized_pnl
             FROM trades t
             LEFT JOIN wallets w ON t.proxy_wallet = w.address
+            LEFT JOIN markets m ON t.condition_id = m.condition_id
             GROUP BY t.proxy_wallet
             HAVING trade_count > 0
-            ORDER BY total_vol DESC
-            LIMIT 50
             """
         ).fetchall()
-        
-        results = []
-        for r in rows:
-            results.append({
-                "wallet": r[0],
-                "count": r[1],
-                "volume": r[2],
-                "first_seen_ts": r[3]
-            })
-        return {"insiders": results}
+
+        suspicious_rows = conn.execute(
+            """
+            SELECT
+                t.proxy_wallet,
+                w.first_seen_ts,
+                f.first_funded_ts,
+                COUNT(*) as trade_count,
+                SUM(t.notional_usdc) as total_vol,
+                MAX(t.notional_usdc) as max_trade
+            FROM trades t
+            LEFT JOIN wallets w ON t.proxy_wallet = w.address
+            LEFT JOIN wallet_funding f ON t.proxy_wallet = f.address
+            WHERE f.first_funded_ts IS NOT NULL
+              AND f.first_funded_ts >= ?
+            GROUP BY t.proxy_wallet
+            HAVING max_trade >= ?
+            ORDER BY max_trade DESC, total_vol DESC
+            LIMIT 50
+            """,
+            (now_ts - FUNDED_MAX_AGE_SECONDS, FUNDED_MIN_NOTIONAL),
+        ).fetchall()
+
+        fresh_wallets = []
+        for r in fresh_rows:
+            fresh_wallets.append(
+                {
+                    "wallet": r[0],
+                    "first_seen_ts": r[1],
+                    "count": r[2],
+                    "volume": r[3],
+                }
+            )
+
+        smart_insiders = []
+        for r in smart_rows:
+            resolved_trades = int(r[4] or 0)
+            wins = int(r[5] or 0)
+            win_rate = (wins / resolved_trades) if resolved_trades > 0 else None
+            realized_pnl = float(r[6] or 0.0)
+            if resolved_trades < 2 and realized_pnl < 1000.0:
+                continue
+            smart_insiders.append(
+                {
+                    "wallet": r[0],
+                    "count": r[1],
+                    "volume": r[2],
+                    "first_seen_ts": r[3],
+                    "resolved_trades": resolved_trades,
+                    "wins": wins,
+                    "win_rate": win_rate,
+                    "realized_pnl_est": realized_pnl,
+                }
+            )
+        smart_insiders.sort(
+            key=lambda x: (
+                x["win_rate"] if x["win_rate"] is not None else -1.0,
+                x["realized_pnl_est"],
+            ),
+            reverse=True,
+        )
+        smart_insiders = smart_insiders[:50]
+
+        suspicious_accounts = []
+        for r in suspicious_rows:
+            suspicious_accounts.append(
+                {
+                    "wallet": r[0],
+                    "first_seen_ts": r[1],
+                    "first_funded_ts": r[2],
+                    "count": r[3],
+                    "volume": r[4],
+                    "max_trade": r[5],
+                }
+            )
+
+        return {
+            "meta": {
+                "fresh_wallets": {
+                    "first_seen_within_seconds": FRESH_MAX_AGE_SECONDS,
+                    "description": "Wallets first seen via Polymarket activity within the freshness window.",
+                },
+                "smart_insiders": {
+                    "min_resolved_trades": 2,
+                    "min_realized_pnl": 1000,
+                    "rank": "win_rate desc, realized_pnl_est desc",
+                    "description": "Wallets with resolved outcomes or high realized PnL.",
+                },
+                "suspicious_accounts": {
+                    "funded_within_seconds": FUNDED_MAX_AGE_SECONDS,
+                    "min_single_trade_notional": FUNDED_MIN_NOTIONAL,
+                    "description": "Recently funded wallets placing large bets.",
+                },
+            },
+            "fresh_wallets": fresh_wallets,
+            "smart_insiders": smart_insiders,
+            "suspicious_accounts": suspicious_accounts,
+        }
     finally:
         conn.close()
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

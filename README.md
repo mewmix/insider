@@ -8,6 +8,9 @@ Minimal FastAPI service that polls Polymarket Data API for large trades, checks 
 - `POST /scan/once`
 - `POST /scan/start`
 - `POST /scan/stop`
+- `GET /report/insiders` (fresh wallets, smart insiders, suspicious accounts)
+
+`/report/insiders` includes a `meta` block describing the thresholds used for each category.
 
 ## Runbook
 
@@ -66,8 +69,31 @@ Key link configuration:
 - `POLYMARKET_MARKET_BASE` for market links (default `https://polymarket.com/market`)
 - `EXPLORER_TX_BASE` for tx links (default `https://polygonscan.com/tx`)
 - `EXPLORER_ADDRESS_BASE` for address links (default `https://polygonscan.com/address`)
+- `MARKET_REFRESH_SECONDS` for Gamma metadata refresh interval
+- `MARKET_POLL_SECONDS` for the background resolution poll interval
+- `POLYGONSCAN_API_KEY` for funding timestamp lookups
+- `FUNDED_MAX_AGE_SECONDS` and `FUNDED_MIN_NOTIONAL` for suspicious accounts
+- `FUNDING_POLL_SECONDS` and `FUNDING_REFRESH_SECONDS` for funding refresh cadence
 
 ## Notes
 
 - This uses Data API polling; it does not rely on the authenticated CLOB websocket user channel.
 - Use `BIG_USDC`, `FRESH_MAX_AGE_SECONDS`, and `POLL_SECONDS` to tune sensitivity and load.
+- Gamma metadata is cached in the `markets` table and used for resolution tracking and alert enrichment.
+
+## Subgraph scanner (deeper data)
+
+The script `subgraph_scanner.py` scans the public Polymarket subgraphs to pull
+order fills and map token IDs to condition IDs for a given address.
+
+Example:
+
+```bash
+python3 subgraph_scanner.py --address 0xd90edE33043f26859ADb1Dcbd79d45EB125d1aB3
+```
+
+You can also follow continuously:
+
+```bash
+python3 subgraph_scanner.py --address 0xd90edE33043f26859ADb1Dcbd79d45EB125d1aB3 --follow
+```

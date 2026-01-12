@@ -236,7 +236,7 @@ def format_alert(t: Trade, first_seen_ts: Optional[int]) -> str:
     else:
         age_label = f"First-seen age: {age_h} hours"
     lines.append(link(age_label, tx_url))
-    return "\n".join(lines)
+    return "<br/>".join(lines)
 
 
 # ---- Scanner loop ----

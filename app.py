@@ -53,6 +53,33 @@ def init_db() -> None:
         )
         conn.execute(
             """
+            CREATE TABLE IF NOT EXISTS trades (
+              tx_hash TEXT PRIMARY KEY,
+              proxy_wallet TEXT NOT NULL,
+              side TEXT,
+              condition_id TEXT,
+              size REAL,
+              price REAL,
+              timestamp INTEGER,
+              title TEXT,
+              slug TEXT,
+              outcome TEXT,
+              outcome_index INTEGER,
+              notional_usdc REAL
+            )
+            """
+        )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS wallets (
+              address TEXT PRIMARY KEY,
+              first_seen_ts INTEGER,
+              label TEXT
+            )
+            """
+        )
+        conn.execute(
+            """
             CREATE TABLE IF NOT EXISTS kv (
               k TEXT PRIMARY KEY,
               v TEXT NOT NULL
@@ -67,8 +94,43 @@ def init_db() -> None:
 def seen_tx(tx_hash: str) -> bool:
     conn = db()
     try:
+        # Check both old seen_trades and new trades table
         row = conn.execute("SELECT 1 FROM seen_trades WHERE tx_hash = ?", (tx_hash,)).fetchone()
+        if row:
+            return True
+        row = conn.execute("SELECT 1 FROM trades WHERE tx_hash = ?", (tx_hash,)).fetchone()
         return row is not None
+    finally:
+        conn.close()
+
+
+def save_trade(t: Any) -> None:
+    # t is a Trade dataclass
+    conn = db()
+    try:
+        conn.execute(
+            """
+            INSERT OR IGNORE INTO trades (
+                tx_hash, proxy_wallet, side, condition_id, size, price, 
+                timestamp, title, slug, outcome, outcome_index, notional_usdc
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                t.tx_hash,
+                t.proxy_wallet,
+                t.side,
+                t.condition_id,
+                t.size,
+                t.price,
+                t.timestamp,
+                t.title,
+                t.slug,
+                t.outcome,
+                t.outcome_index,
+                t.notional_usdc_est,
+            ),
+        )
+        conn.commit()
     finally:
         conn.close()
 
@@ -223,19 +285,18 @@ def format_alert(t: Trade, first_seen_ts: Optional[int]) -> str:
         return f'<a href="{html.escape(url, quote=True)}">{html.escape(label)}</a>'
 
     lines = [
-        "<b>" + link("Polymarket: big trade from fresh account", tx_url) + "</b>",
-        "• " + link(f"Wallet: {t.proxy_wallet}", addr_url),
-        "• " + link(f"Market: {t.title} ({t.slug})", market_url),
-        "• " + link(f"Side: {t.side} | Outcome: {t.outcome} (idx {t.outcome_index})", tx_url),
-        "• " + link(f"Notional (est): {t.notional_usdc_est:,.2f} USDC", tx_url),
-        "• " + link(f"ConditionId: {t.condition_id}", tx_url),
-        "• " + link(f"Tx: {t.tx_hash}", tx_url),
+        "🚨 <b>" + link("Polymarket Whale Alert", tx_url) + "</b> 🚨",
+        "👤 " + link(f"Wallet: {t.proxy_wallet}", addr_url),
+        "🔮 " + link(f"Market: {t.title}", market_url),
+        "⚖️ " + link(f"Side: {t.side} | Outcome: {t.outcome}", tx_url),
+        "💰 " + link(f"Value: ${t.notional_usdc_est:,.2f}", tx_url),
+        "🧾 " + link(f"Tx: {t.tx_hash}", tx_url),
     ]
     if age_h is None:
-        age_label = "First-seen: unknown (treat as fresh)"
+        age_label = "First-seen: unknown"
     else:
-        age_label = f"First-seen age: {age_h} hours"
-    lines.append("• " + link(age_label, tx_url))
+        age_label = f"First-seen: {age_h}h ago"
+    lines.append("⏳ " + link(age_label, tx_url))
     return "\n".join(lines)
 
 
@@ -267,14 +328,31 @@ async def scan_once() -> Dict[str, Any]:
         new_max_ts = max(new_max_ts, t.timestamp)
         if seen_tx(t.tx_hash):
             continue
+        
+        # Save every trade we see for historical analysis
+        save_trade(t)
 
         considered += 1
 
         if t.notional_usdc_est < BIG_USDC:
+            # We already saved it to 'trades', so just ensuring we don't re-process
             mark_tx(t.tx_hash, t.timestamp)
             continue
 
         first_seen = await fetch_first_seen_ts(t.proxy_wallet)
+        
+        # Update wallet DB
+        if first_seen is not None:
+            conn = db()
+            try:
+                conn.execute(
+                    "INSERT OR IGNORE INTO wallets(address, first_seen_ts) VALUES(?, ?)",
+                    (t.proxy_wallet, first_seen),
+                )
+                conn.commit()
+            finally:
+                conn.close()
+
         fresh = is_fresh(first_seen, now_ts)
 
         if FRESH_MAX_FIRST_SEEN_ONLY and not fresh:
@@ -389,3 +467,41 @@ async def scan_test() -> Dict[str, Any]:
         )
     )
     return {"sent": True}
+
+
+@app.get("/report/insiders")
+def report_insiders() -> Dict[str, Any]:
+    """
+    Experimental: Find wallets that have 'high win rate' or 'high profit' if we could calculate it.
+    For now, let's find wallets with high volume or frequent large trades that are 'fresh'.
+    """
+    conn = db()
+    try:
+        # Example query: Wallets with > 1 trade, sorted by total volume
+        rows = conn.execute(
+            """
+            SELECT 
+                t.proxy_wallet, 
+                COUNT(*) as trade_count, 
+                SUM(t.notional_usdc) as total_vol,
+                w.first_seen_ts
+            FROM trades t
+            LEFT JOIN wallets w ON t.proxy_wallet = w.address
+            GROUP BY t.proxy_wallet
+            HAVING trade_count > 0
+            ORDER BY total_vol DESC
+            LIMIT 50
+            """
+        ).fetchall()
+        
+        results = []
+        for r in rows:
+            results.append({
+                "wallet": r[0],
+                "count": r[1],
+                "volume": r[2],
+                "first_seen_ts": r[3]
+            })
+        return {"insiders": results}
+    finally:
+        conn.close()

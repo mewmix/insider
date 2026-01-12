@@ -71,7 +71,7 @@ Key link configuration:
 - `EXPLORER_ADDRESS_BASE` for address links (default `https://polygonscan.com/address`)
 - `MARKET_REFRESH_SECONDS` for Gamma metadata refresh interval
 - `MARKET_POLL_SECONDS` for the background resolution poll interval
-- `POLYGONSCAN_API_KEY` for funding timestamp lookups
+- `ALCHEMY_RPC_URL` for funding timestamp lookups
 - `FUNDED_MAX_AGE_SECONDS` and `FUNDED_MIN_NOTIONAL` for suspicious accounts
 - `FUNDING_POLL_SECONDS` and `FUNDING_REFRESH_SECONDS` for funding refresh cadence
 
@@ -80,7 +80,7 @@ Key link configuration:
 - This uses Data API polling; it does not rely on the authenticated CLOB websocket user channel.
 - Use `BIG_USDC`, `FRESH_MAX_AGE_SECONDS`, and `POLL_SECONDS` to tune sensitivity and load.
 - Gamma metadata is cached in the `markets` table and used for resolution tracking and alert enrichment.
-- Alerts include funding age when `POLYGONSCAN_API_KEY` is set.
+- Alerts include funding age when `ALCHEMY_RPC_URL` is set.
 
 ## Subgraph scanner (deeper data)
 
@@ -97,4 +97,15 @@ You can also follow continuously:
 
 ```bash
 python3 subgraph_scanner.py --address 0xd90edE33043f26859ADb1Dcbd79d45EB125d1aB3 --follow
+```
+
+## Active positions report
+
+`active_positions_report.py` builds a daily snapshot of active traders and their
+current positions, plus overlap/contrary summaries by market.
+
+Example:
+
+```bash
+python3 active_positions_report.py --with-metadata
 ```

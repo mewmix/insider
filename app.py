@@ -223,20 +223,20 @@ def format_alert(t: Trade, first_seen_ts: Optional[int]) -> str:
         return f'<a href="{html.escape(url, quote=True)}">{html.escape(label)}</a>'
 
     lines = [
-        link("Polymarket: big trade from fresh account", tx_url),
-        link(f"Wallet: {t.proxy_wallet}", addr_url),
-        link(f"Market: {t.title} ({t.slug})", market_url),
-        link(f"Side: {t.side} | Outcome: {t.outcome} (idx {t.outcome_index})", tx_url),
-        link(f"Notional (est): {t.notional_usdc_est:,.2f} USDC", tx_url),
-        link(f"ConditionId: {t.condition_id}", tx_url),
-        link(f"Tx: {t.tx_hash}", tx_url),
+        "<b>" + link("Polymarket: big trade from fresh account", tx_url) + "</b>",
+        "• " + link(f"Wallet: {t.proxy_wallet}", addr_url),
+        "• " + link(f"Market: {t.title} ({t.slug})", market_url),
+        "• " + link(f"Side: {t.side} | Outcome: {t.outcome} (idx {t.outcome_index})", tx_url),
+        "• " + link(f"Notional (est): {t.notional_usdc_est:,.2f} USDC", tx_url),
+        "• " + link(f"ConditionId: {t.condition_id}", tx_url),
+        "• " + link(f"Tx: {t.tx_hash}", tx_url),
     ]
     if age_h is None:
         age_label = "First-seen: unknown (treat as fresh)"
     else:
         age_label = f"First-seen age: {age_h} hours"
-    lines.append(link(age_label, tx_url))
-    return "<br/>".join(lines)
+    lines.append("• " + link(age_label, tx_url))
+    return "\n".join(lines)
 
 
 # ---- Scanner loop ----
@@ -366,3 +366,26 @@ async def scan_stop() -> Dict[str, Any]:
     if scanner_task:
         await asyncio.sleep(0)
     return {"stopped": True}
+
+
+@app.post("/scan/test")
+async def scan_test() -> Dict[str, Any]:
+    await telegram_send(
+        format_alert(
+            Trade(
+                proxy_wallet="0xd1d51797c9d038af763bbc313c2aacdc4ed08845",
+                side="BUY",
+                condition_id="0xd47d23abc3dcdcfcf7eca3b88d7ff5769fd143e90c7cce4de2a2380869900b2e",
+                size=1000.0,
+                price=81.01575,
+                timestamp=int(time.time()),
+                title="Bitcoin Up or Down - January 11, 6:00PM-6:15PM ET",
+                slug="btc-updown-15m-1768172400",
+                outcome="Up",
+                outcome_index=-1,
+                tx_hash="0x9a395b45127220c9a8815caf0aa8fb458362a7d34f0b5f37d63390f6b20b71b2",
+            ),
+            int(time.time()) - 38 * 3600,
+        )
+    )
+    return {"sent": True}

@@ -63,13 +63,23 @@ def build_rpc_pool(rpc_urls: str) -> List[str]:
         urls = [normalize_rpc_url(url.strip()) for url in rpc_urls.split(",") if url.strip()]
         return [url for url in urls if url]
     env_url = normalize_rpc_url(os.getenv("ARBITRUM_RPC_URL", "https://arb1.arbitrum.io/rpc"))
-    if env_url:
-        return [env_url]
-    return [
-        normalize_rpc_url(url)
-        for url in RPC_ENDPOINTS.values()
-        if url.startswith("http") and normalize_rpc_url(url)
+    # Use many fallbacks from RPC_ENDPOINTS
+    fallbacks = [
+        "https://arb1.arbitrum.io/rpc",
+        "https://1rpc.io/arb",
+        "https://arbitrum.drpc.org",
+        "https://arbitrum-one-rpc.publicnode.com",
     ]
+    for name, url in RPC_ENDPOINTS.items():
+        if url and not url.startswith("wss://") and "${" not in url:
+            if url not in fallbacks:
+                fallbacks.append(url)
+    
+    urls = [normalize_rpc_url(u) for u in fallbacks if normalize_rpc_url(u)]
+    if env_url and env_url not in urls:
+        urls.insert(0, env_url)
+    return urls
+
 
 
 def rpc_call(url: str, method: str, params: List[object]) -> str:
@@ -360,20 +370,66 @@ def settle_profit(
     start_idx: int,
     reserve_cache: Dict[str, Tuple[int, int]],
     fee_bps: Decimal,
-) -> Optional[Decimal]:
-    if token_in.lower() == settle_token.lower():
-        return amount_in
-    best = choose_best_pool(token_in, settle_token, pair_index, rpc_urls, start_idx, reserve_cache)
-    if not best:
-        return None
-    pair, r0, r1 = best
-    if pair.token0.lower() == token_in.lower():
-        reserve_in = to_decimal(r0, pair.token0_decimals)
-        reserve_out = to_decimal(r1, pair.token1_decimals)
-    else:
-        reserve_in = to_decimal(r1, pair.token1_decimals)
-        reserve_out = to_decimal(r0, pair.token0_decimals)
-    return swap_out_simple(amount_in, reserve_in, reserve_out, fee_bps)
+) -> Tuple[Optional[Decimal], str]:
+    token_in_lower = token_in.lower()
+    settle_lower = settle_token.lower()
+    weth_lower = WETH.lower()
+
+    if token_in_lower == settle_lower:
+        return amount_in, "direct"
+
+    # Direct path
+    direct_out = Decimal(0)
+    best_direct = choose_best_pool(
+        token_in, settle_token, pair_index, rpc_urls, start_idx, reserve_cache
+    )
+    if best_direct:
+        pair, r0, r1 = best_direct
+        if pair.token0.lower() == token_in_lower:
+            r_in = to_decimal(r0, pair.token0_decimals)
+            r_out = to_decimal(r1, pair.token1_decimals)
+        else:
+            r_in = to_decimal(r1, pair.token1_decimals)
+            r_out = to_decimal(r0, pair.token0_decimals)
+        direct_out = swap_out_simple(amount_in, r_in, r_out, fee_bps)
+
+    # Multi-hop via WETH
+    multihop_out = Decimal(0)
+    if token_in_lower != weth_lower and settle_lower != weth_lower:
+        # Step 1: token_in -> WETH
+        step1 = choose_best_pool(
+            token_in, WETH, pair_index, rpc_urls, start_idx, reserve_cache
+        )
+        if step1:
+            pair1, r0_1, r1_1 = step1
+            if pair1.token0.lower() == token_in_lower:
+                r_in1 = to_decimal(r0_1, pair1.token0_decimals)
+                r_out1 = to_decimal(r1_1, pair1.token1_decimals)
+            else:
+                r_in1 = to_decimal(r1_1, pair1.token1_decimals)
+                r_out1 = to_decimal(r0_1, pair1.token0_decimals)
+            weth_amt = swap_out_simple(amount_in, r_in1, r_out1, fee_bps)
+
+            # Step 2: WETH -> settle_token
+            step2 = choose_best_pool(
+                WETH, settle_token, pair_index, rpc_urls, start_idx, reserve_cache
+            )
+            if step2:
+                pair2, r0_2, r1_2 = step2
+                if pair2.token0.lower() == weth_lower:
+                    r_in2 = to_decimal(r0_2, pair2.token0_decimals)
+                    r_out2 = to_decimal(r1_2, pair2.token1_decimals)
+                else:
+                    r_in2 = to_decimal(r1_2, pair2.token1_decimals)
+                    r_out2 = to_decimal(r0_2, pair2.token0_decimals)
+                multihop_out = swap_out_simple(weth_amt, r_in2, r_out2, fee_bps)
+
+    if direct_out <= 0 and multihop_out <= 0:
+        return None, ""
+
+    if multihop_out > direct_out:
+        return multihop_out, "multihop"
+    return direct_out, "direct"
 
 
 def swap_out(amount_in: Decimal, reserve_in: Decimal, reserve_out: Decimal, fee: Decimal) -> Decimal:
@@ -600,6 +656,7 @@ def main() -> None:
         bad_dexes = set()
         for dex_idx, (dex, pair) in enumerate(list(available.items())):
             try:
+                time.sleep(0.1)
                 r0, r1 = fetch_reserves_with_rotation(rpc_urls, pair.pair_id, idx + dex_idx)
                 reserve_cache[pair.pair_id] = (r0, r1)
                 pair.reserve0 = to_decimal(r0, pair.token0_decimals)
@@ -645,9 +702,10 @@ def main() -> None:
 
         settle_token = args.settle_token
         settle_amount = None
+        settle_route = None
         if settle_token != "none":
             target_token = WETH if settle_token == "weth" else "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
-            settle_amount = settle_profit(
+            settle_result = settle_profit(
                 input_token_addr,
                 profit,
                 target_token,
@@ -657,8 +715,9 @@ def main() -> None:
                 reserve_cache,
                 args.settle_fee_bps,
             )
-            if settle_amount is None:
+            if settle_result is None:
                 continue
+            settle_amount, settle_route = settle_result
             if settle_token == "usdc":
                 profit_usd = settle_amount
             elif settle_token == "weth" and weth_price is not None:
@@ -683,6 +742,7 @@ def main() -> None:
                 "net_profit_usd": str(net_profit_usd) if net_profit_usd is not None else None,
                 "settle_token": settle_token,
                 "settle_amount": str(settle_amount) if settle_amount is not None else None,
+                "settle_route": settle_route,
                 "input_token_symbol": input_token_symbol,
                 "input_token_address": input_token_addr,
                 "pair_a": pair_a.pair_id,
@@ -693,6 +753,8 @@ def main() -> None:
         )
 
     results.sort(key=lambda r: Decimal(r["profit"]), reverse=True)
+    if not results:
+        print("no results found")
     for item in results[: args.top]:
         print(item)
 

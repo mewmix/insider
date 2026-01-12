@@ -5,6 +5,7 @@ import time
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
+import html
 import httpx
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -114,7 +115,7 @@ async def telegram_send(text: str) -> None:
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
         "disable_web_page_preview": True,
-        "parse_mode": "MarkdownV2",
+        "parse_mode": "HTML",
     }
     async with httpx.AsyncClient(timeout=15) as client:
         r = await client.post(url, json=payload)
@@ -214,43 +215,27 @@ def format_alert(t: Trade, first_seen_ts: Optional[int]) -> str:
     age_s = None if first_seen_ts is None else max(0, now_ts - first_seen_ts)
     age_h = None if age_s is None else round(age_s / 3600, 2)
 
-    def md_escape(val: str) -> str:
-        # Telegram MarkdownV2 escaping.
-        special = r"_*[]()~`>#+-=|{}.!"
-        out = []
-        for ch in val:
-            if ch in special:
-                out.append("\\" + ch)
-            else:
-                out.append(ch)
-        return "".join(out)
-
     market_url = f"{POLYMARKET_MARKET_BASE}/{t.slug}" if t.slug else POLYMARKET_MARKET_BASE
     tx_url = f"{EXPLORER_TX_BASE}/{t.tx_hash}"
     addr_url = f"{EXPLORER_ADDRESS_BASE}/{t.proxy_wallet}"
 
-    title = md_escape("Polymarket: big trade from fresh account")
-    wallet_label = md_escape(f"Wallet: {t.proxy_wallet}")
-    market_label = md_escape(f"Market: {t.title} ({t.slug})")
-    side_label = md_escape(f"Side: {t.side} | Outcome: {t.outcome} (idx {t.outcome_index})")
-    notional_label = md_escape(f"Notional (est): {t.notional_usdc_est:,.2f} USDC")
-    condition_label = md_escape(f"ConditionId: {t.condition_id}")
-    tx_label = md_escape(f"Tx: {t.tx_hash}")
+    def link(label: str, url: str) -> str:
+        return f'<a href="{html.escape(url, quote=True)}">{html.escape(label)}</a>'
 
     lines = [
-        f"[{title}]({tx_url})",
-        f"[{wallet_label}]({addr_url})",
-        f"[{market_label}]({market_url})",
-        f"[{side_label}]({tx_url})",
-        f"[{notional_label}]({tx_url})",
-        f"[{condition_label}]({tx_url})",
-        f"[{tx_label}]({tx_url})",
+        link("Polymarket: big trade from fresh account", tx_url),
+        link(f"Wallet: {t.proxy_wallet}", addr_url),
+        link(f"Market: {t.title} ({t.slug})", market_url),
+        link(f"Side: {t.side} | Outcome: {t.outcome} (idx {t.outcome_index})", tx_url),
+        link(f"Notional (est): {t.notional_usdc_est:,.2f} USDC", tx_url),
+        link(f"ConditionId: {t.condition_id}", tx_url),
+        link(f"Tx: {t.tx_hash}", tx_url),
     ]
     if age_h is None:
-        age_label = md_escape("First-seen: unknown (treat as fresh)")
+        age_label = "First-seen: unknown (treat as fresh)"
     else:
-        age_label = md_escape(f"First-seen age: {age_h} hours")
-    lines.append(f"[{age_label}]({tx_url})")
+        age_label = f"First-seen age: {age_h} hours"
+    lines.append(link(age_label, tx_url))
     return "\n".join(lines)
 
 

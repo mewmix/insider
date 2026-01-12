@@ -80,11 +80,12 @@ Key link configuration:
 - This uses Data API polling; it does not rely on the authenticated CLOB websocket user channel.
 - Use `BIG_USDC`, `FRESH_MAX_AGE_SECONDS`, and `POLL_SECONDS` to tune sensitivity and load.
 - Gamma metadata is cached in the `markets` table and used for resolution tracking and alert enrichment.
+- Alerts include funding age when `POLYGONSCAN_API_KEY` is set.
 
 ## Subgraph scanner (deeper data)
 
 The script `subgraph_scanner.py` scans the public Polymarket subgraphs to pull
-order fills and map token IDs to condition IDs for a given address.
+order fills, map token IDs to condition IDs, and summarize PNL/redemptions/open interest.
 
 Example:
 

@@ -504,14 +504,29 @@ def upsert_wallet_funding(address: str, first_funded_ts: Optional[int]) -> None:
         conn.close()
 
 
+def get_wallet_funding_ts(address: str) -> Optional[int]:
+    conn = db()
+    try:
+        row = conn.execute(
+            "SELECT first_funded_ts FROM wallet_funding WHERE address = ?",
+            (address,),
+        ).fetchone()
+        return int(row[0]) if row and row[0] is not None else None
+    finally:
+        conn.close()
+
+
 def format_alert(
     t: Trade,
     first_seen_ts: Optional[int],
     market_meta: Optional[Dict[str, Any]],
+    first_funded_ts: Optional[int],
 ) -> str:
     now_ts = int(time.time())
     age_s = None if first_seen_ts is None else max(0, now_ts - first_seen_ts)
     age_h = None if age_s is None else round(age_s / 3600, 2)
+    funded_s = None if first_funded_ts is None else max(0, now_ts - first_funded_ts)
+    funded_h = None if funded_s is None else round(funded_s / 3600, 2)
 
     market_url = f"{POLYMARKET_MARKET_BASE}/{t.slug}" if t.slug else POLYMARKET_MARKET_BASE
     tx_url = f"{EXPLORER_TX_BASE}/{t.tx_hash}"
@@ -533,6 +548,8 @@ def format_alert(
             lines.append("🏷️ " + html.escape(f"Category: {market_meta['category']}"))
         if market_meta.get("icon"):
             lines.append("🖼️ " + link("Icon", market_meta["icon"]))
+    if funded_h is not None:
+        lines.append("💳 " + link(f"Funded: {funded_h}h ago", addr_url))
     if age_h is None:
         age_label = "First-seen: unknown"
     else:
@@ -677,11 +694,19 @@ async def scan_once() -> Dict[str, Any]:
             mark_tx(t.tx_hash, t.timestamp)
             continue
 
+        funded_ts = get_wallet_funding_ts(t.proxy_wallet)
+        if funded_ts is None and POLYGONSCAN_API_KEY:
+            try:
+                funded_ts = await fetch_first_funded_ts(t.proxy_wallet)
+                upsert_wallet_funding(t.proxy_wallet, funded_ts)
+            except Exception:
+                funded_ts = None
+
         try:
             market_meta = await ensure_market_metadata(t.condition_id)
         except Exception:
             market_meta = None
-        await telegram_send(format_alert(t, first_seen, market_meta))
+        await telegram_send(format_alert(t, first_seen, market_meta, funded_ts))
         emitted += 1
         mark_tx(t.tx_hash, t.timestamp)
 
@@ -798,6 +823,7 @@ async def scan_test() -> Dict[str, Any]:
                 tx_hash="0x9a395b45127220c9a8815caf0aa8fb458362a7d34f0b5f37d63390f6b20b71b2",
             ),
             int(time.time()) - 38 * 3600,
+            None,
             None,
         )
     )

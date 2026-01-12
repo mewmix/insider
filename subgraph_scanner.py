@@ -100,6 +100,15 @@ query Redemptions($redeemer: String!) {
 }
 """
 
+OPEN_INTEREST_QUERY = """
+query MarketOpenInterests($ids: [ID!]) {
+  marketOpenInterests(where: { id_in: $ids }) {
+    id
+    amount
+  }
+}
+"""
+
 
 def chunked(values: Sequence[str], size: int) -> Iterable[List[str]]:
     for i in range(0, len(values), size):
@@ -174,6 +183,14 @@ def init_db(path: str) -> sqlite3.Connection:
           redeemer TEXT NOT NULL,
           condition_id TEXT NOT NULL,
           payout TEXT NOT NULL
+        )
+        """
+    )
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS open_interest (
+          condition_id TEXT PRIMARY KEY,
+          amount TEXT NOT NULL
         )
         """
     )
@@ -310,6 +327,11 @@ def summarize_conditions(conn: sqlite3.Connection) -> List[Tuple[str, int, int]]
     ).fetchall()
 
 
+def get_condition_ids(conn: sqlite3.Connection) -> List[str]:
+    rows = conn.execute("SELECT DISTINCT condition_id FROM token_conditions").fetchall()
+    return [r[0] for r in rows if r[0]]
+
+
 def fetch_redemptions(redeemer: str) -> List[Dict[str, object]]:
     data = gql_post(ACTIVITY_SUBGRAPH, REDEMPTIONS_QUERY, {"redeemer": redeemer})
     return data["redemptions"]
@@ -335,6 +357,22 @@ def store_redemptions(conn: sqlite3.Connection, redemptions: List[Dict[str, obje
     )
 
 
+def fetch_open_interest(condition_ids: Sequence[str]) -> List[Dict[str, object]]:
+    data = gql_post(OI_SUBGRAPH, OPEN_INTEREST_QUERY, {"ids": condition_ids})
+    return data["marketOpenInterests"]
+
+
+def store_open_interest(conn: sqlite3.Connection, rows: List[Dict[str, object]]) -> None:
+    conn.executemany(
+        """
+        INSERT OR REPLACE INTO open_interest (
+          condition_id, amount
+        ) VALUES (?, ?)
+        """,
+        [(r["id"], r["amount"]) for r in rows],
+    )
+
+
 def summarize_pnl(conn: sqlite3.Connection) -> float:
     row = conn.execute("SELECT SUM(CAST(realized_pnl AS REAL)) FROM user_positions").fetchone()
     return (row[0] or 0.0) / USDC_DECIMALS
@@ -343,6 +381,11 @@ def summarize_pnl(conn: sqlite3.Connection) -> float:
 def summarize_redemptions(conn: sqlite3.Connection) -> Tuple[int, float]:
     row = conn.execute("SELECT COUNT(*), SUM(CAST(payout AS REAL)) FROM redemptions").fetchone()
     return (row[0] or 0, (row[1] or 0.0) / USDC_DECIMALS)
+
+
+def summarize_open_interest(conn: sqlite3.Connection) -> float:
+    row = conn.execute("SELECT SUM(CAST(amount AS REAL)) FROM open_interest").fetchone()
+    return (row[0] or 0.0) / USDC_DECIMALS
 
 
 def run_once(
@@ -382,6 +425,13 @@ def run_once(
             rows = fetch_token_conditions(batch)
             store_token_conditions(conn, rows)
         conn.commit()
+
+    condition_ids = get_condition_ids(conn)
+    if condition_ids:
+        for batch in chunked(condition_ids, 200):
+            rows = fetch_open_interest(batch)
+            store_open_interest(conn, rows)
+        conn.commit()
     return total
 
 
@@ -404,7 +454,18 @@ def main() -> None:
             conditions = summarize_conditions(conn)
             total_pnl = summarize_pnl(conn)
             red_count, red_total = summarize_redemptions(conn)
-            print(f"new_fills={new_events} conditions={len(conditions)} pnl=${total_pnl:,.2f} redemptions={red_count} (${red_total:,.2f})")
+            total_oi = summarize_open_interest(conn)
+            print(
+                "new_fills={fills} conditions={conditions} pnl=${pnl:,.2f} "
+                "redemptions={red_count} (${red_total:,.2f}) oi=${oi:,.2f}".format(
+                    fills=new_events,
+                    conditions=len(conditions),
+                    pnl=total_pnl,
+                    red_count=red_count,
+                    red_total=red_total,
+                    oi=total_oi,
+                )
+            )
             for condition_id, outcome_index, fills in conditions[:10]:
                 print(f"{condition_id} outcome={outcome_index} fills={fills}")
             if not args.follow:

@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import sqlite3
 import sys
@@ -10,7 +11,7 @@ from typing import Dict, List, Optional, Tuple
 import httpx
 from dotenv import load_dotenv
 
-from skim_scanner import normalize_rpc_url
+from skim_scanner import RPC_ENDPOINTS, normalize_rpc_url
 
 
 load_dotenv()
@@ -65,10 +66,9 @@ def build_rpc_pool(rpc_urls: str) -> List[str]:
     if env_url:
         return [env_url]
     return [
-        "https://arb1.arbitrum.io/rpc",
-        "https://1rpc.io/arb",
-        "https://arbitrum.drpc.org",
-        "https://arbitrum-one-rpc.publicnode.com",
+        normalize_rpc_url(url)
+        for url in RPC_ENDPOINTS.values()
+        if url.startswith("http") and normalize_rpc_url(url)
     ]
 
 
@@ -179,6 +179,40 @@ def load_pairs(conn: sqlite3.Connection, dex: str, limit: int) -> List[PairData]
     return pairs
 
 
+def load_pairs_from_watchlist(
+    conn: sqlite3.Connection, watchlist_path: str
+) -> List[PairData]:
+    with open(watchlist_path, "r") as f:
+        addresses = json.load(f)
+    if not addresses:
+        return []
+
+    placeholders = ",".join("?" for _ in addresses)
+    sql = f"""
+        SELECT pair_id, token0, token1, token0_symbol, token1_symbol, token0_decimals, token1_decimals, dex
+        FROM pairs
+        WHERE pair_id IN ({placeholders})
+    """
+    rows = conn.execute(sql, addresses).fetchall()
+    pairs = []
+    for row in rows:
+        pairs.append(
+            PairData(
+                dex=row[7],
+                pair_id=row[0],
+                token0=row[1],
+                token1=row[2],
+                token0_symbol=row[3] or "UNKNOWN",
+                token1_symbol=row[4] or "UNKNOWN",
+                token0_decimals=int(row[5] or 18),
+                token1_decimals=int(row[6] or 18),
+                reserve0=Decimal(0),
+                reserve1=Decimal(0),
+            )
+        )
+    return pairs
+
+
 def build_pair_index(pairs: List[PairData]) -> Dict[Tuple[str, str], List[PairData]]:
     index: Dict[Tuple[str, str], List[PairData]] = {}
     for pair in pairs:
@@ -274,6 +308,72 @@ def token_price_usd(
     if price_in_weth is None:
         return None
     return price_in_weth * weth_price
+
+
+def choose_best_pool(
+    token_a: str,
+    token_b: str,
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    rpc_urls: List[str],
+    start_idx: int,
+    reserve_cache: Dict[str, Tuple[int, int]],
+) -> Optional[Tuple[PairData, int, int]]:
+    key = tuple(sorted([token_a.lower(), token_b.lower()]))
+    if key not in pair_index:
+        return None
+    best = None
+    best_liq = Decimal(0)
+    for pair in pair_index[key]:
+        if pair.pair_id in reserve_cache:
+            r0, r1 = reserve_cache[pair.pair_id]
+        else:
+            r0, r1 = fetch_reserves_with_rotation(rpc_urls, pair.pair_id, start_idx)
+            reserve_cache[pair.pair_id] = (r0, r1)
+        if pair.token0.lower() == token_b.lower():
+            liq = to_decimal(r0, pair.token0_decimals)
+        else:
+            liq = to_decimal(r1, pair.token1_decimals)
+        if liq > best_liq:
+            best_liq = liq
+            best = (pair, r0, r1)
+    return best
+
+
+def swap_out_simple(
+    amount_in: Decimal,
+    reserve_in: Decimal,
+    reserve_out: Decimal,
+    fee_bps: Decimal,
+) -> Decimal:
+    if amount_in <= 0 or reserve_in <= 0 or reserve_out <= 0:
+        return Decimal(0)
+    amount_in_with_fee = amount_in * (Decimal(10000) - fee_bps)
+    return (amount_in_with_fee * reserve_out) / (reserve_in * Decimal(10000) + amount_in_with_fee)
+
+
+def settle_profit(
+    token_in: str,
+    amount_in: Decimal,
+    settle_token: str,
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    rpc_urls: List[str],
+    start_idx: int,
+    reserve_cache: Dict[str, Tuple[int, int]],
+    fee_bps: Decimal,
+) -> Optional[Decimal]:
+    if token_in.lower() == settle_token.lower():
+        return amount_in
+    best = choose_best_pool(token_in, settle_token, pair_index, rpc_urls, start_idx, reserve_cache)
+    if not best:
+        return None
+    pair, r0, r1 = best
+    if pair.token0.lower() == token_in.lower():
+        reserve_in = to_decimal(r0, pair.token0_decimals)
+        reserve_out = to_decimal(r1, pair.token1_decimals)
+    else:
+        reserve_in = to_decimal(r1, pair.token1_decimals)
+        reserve_out = to_decimal(r0, pair.token0_decimals)
+    return swap_out_simple(amount_in, reserve_in, reserve_out, fee_bps)
 
 
 def swap_out(amount_in: Decimal, reserve_in: Decimal, reserve_out: Decimal, fee: Decimal) -> Decimal:
@@ -387,6 +487,16 @@ def main() -> None:
     parser.add_argument("--fee-camelot", type=Decimal, default=Decimal("0.005"), help="Camelot v2 fee.")
     parser.add_argument("--fee-sushiswap", type=Decimal, default=Decimal("0.005"), help="Sushi v2 fee.")
     parser.add_argument(
+        "--settle-token",
+        choices=["none", "weth", "usdc"],
+        default="none",
+        help="Settle profits into WETH or USDC via an extra hop.",
+    )
+    parser.add_argument("--settle-fee-bps", type=Decimal, default=Decimal("30"), help="Fee bps for settle hop.")
+    parser.add_argument("--gas-units", type=int, default=200000, help="Gas units for net profit filter.")
+    parser.add_argument("--gas-price-gwei", type=Decimal, default=Decimal("0.1"), help="Gas price in gwei.")
+    parser.add_argument("--min-net-profit-usd", type=Decimal, default=Decimal("0"), help="Minimum net profit in USD.")
+    parser.add_argument(
         "--dexes",
         default="uniswapv2,camelot,sushiswapv2",
         help="Comma-separated dex list to compare.",
@@ -398,6 +508,11 @@ def main() -> None:
         default=os.getenv("ARBITRUM_RPC_URLS", ""),
         help="Comma-separated RPC URLs to rotate across.",
     )
+    parser.add_argument(
+        "--watchlist",
+        default="",
+        help="JSON file with list of pair addresses to scan.",
+    )
     args = parser.parse_args()
 
     dexes = [d.strip() for d in args.dexes.split(",") if d.strip()]
@@ -405,9 +520,15 @@ def main() -> None:
     dexes = [dex_aliases.get(d, d) for d in dexes]
 
     conn = sqlite3.connect(args.db_path)
-    pairs_by_dex: Dict[str, List[PairData]] = {}
-    for dex in dexes:
-        pairs_by_dex[dex] = load_pairs(conn, dex, args.max_pairs)
+    if args.watchlist:
+        all_loaded_pairs = load_pairs_from_watchlist(conn, args.watchlist)
+        pairs_by_dex: Dict[str, List[PairData]] = {}
+        for p in all_loaded_pairs:
+            pairs_by_dex.setdefault(p.dex, []).append(p)
+    else:
+        pairs_by_dex: Dict[str, List[PairData]] = {}
+        for dex in dexes:
+            pairs_by_dex[dex] = load_pairs(conn, dex, args.max_pairs)
 
     by_tokens: Dict[Tuple[str, str], Dict[str, PairData]] = {}
     for dex_pairs in pairs_by_dex.values():
@@ -452,6 +573,7 @@ def main() -> None:
     for dex_pairs in pairs_by_dex.values():
         all_pairs.extend(dex_pairs)
     pair_index = build_pair_index(all_pairs)
+    reserve_cache: Dict[str, Tuple[int, int]] = {}
     weth_price, weth_pair = find_best_price_pair(
         WETH, list(STABLES), pair_index, rpc_urls, 0
     )
@@ -479,6 +601,7 @@ def main() -> None:
         for dex_idx, (dex, pair) in enumerate(list(available.items())):
             try:
                 r0, r1 = fetch_reserves_with_rotation(rpc_urls, pair.pair_id, idx + dex_idx)
+                reserve_cache[pair.pair_id] = (r0, r1)
                 pair.reserve0 = to_decimal(r0, pair.token0_decimals)
                 pair.reserve1 = to_decimal(r1, pair.token1_decimals)
             except Exception as exc:
@@ -520,6 +643,35 @@ def main() -> None:
         price_usd = token_price_usd(input_token_addr, pair_index, rpc_urls, idx, weth_price)
         profit_usd = price_usd * profit if price_usd is not None else None
 
+        settle_token = args.settle_token
+        settle_amount = None
+        if settle_token != "none":
+            target_token = WETH if settle_token == "weth" else "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+            settle_amount = settle_profit(
+                input_token_addr,
+                profit,
+                target_token,
+                pair_index,
+                rpc_urls,
+                idx,
+                reserve_cache,
+                args.settle_fee_bps,
+            )
+            if settle_amount is None:
+                continue
+            if settle_token == "usdc":
+                profit_usd = settle_amount
+            elif settle_token == "weth" and weth_price is not None:
+                profit_usd = settle_amount * weth_price
+
+        net_profit_usd = None
+        if profit_usd is not None and weth_price is not None:
+            gas_cost_eth = (Decimal(args.gas_units) * args.gas_price_gwei) / Decimal(1e9)
+            gas_cost_usd = gas_cost_eth * weth_price
+            net_profit_usd = profit_usd - gas_cost_usd
+            if net_profit_usd < args.min_net_profit_usd:
+                continue
+
         results.append(
             {
                 "pair_key": key,
@@ -528,6 +680,9 @@ def main() -> None:
                 "amount_in": str(amount_in),
                 "profit": str(profit),
                 "profit_usd": str(profit_usd) if profit_usd is not None else None,
+                "net_profit_usd": str(net_profit_usd) if net_profit_usd is not None else None,
+                "settle_token": settle_token,
+                "settle_amount": str(settle_amount) if settle_amount is not None else None,
                 "input_token_symbol": input_token_symbol,
                 "input_token_address": input_token_addr,
                 "pair_a": pair_a.pair_id,

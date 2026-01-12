@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import sqlite3
 import sys
@@ -350,8 +351,27 @@ def format_amount(raw: int, decimals: int) -> Decimal:
 
 def build_rpc_pool(rpc_urls: Optional[str]) -> List[str]:
     if rpc_urls:
-        return [normalize_rpc_url(url.strip()) for url in rpc_urls.split(",") if url.strip()]
-    return [normalize_rpc_url(ARBITRUM_RPC_URL)]
+        urls = [normalize_rpc_url(url.strip()) for url in rpc_urls.split(",") if url.strip()]
+    else:
+        env_url = normalize_rpc_url(ARBITRUM_RPC_URL)
+        urls = []
+        if env_url:
+            urls.append(env_url)
+        urls.extend(
+            normalize_rpc_url(url)
+            for url in RPC_ENDPOINTS.values()
+            if url.startswith("http")
+        )
+    deduped: List[str] = []
+    seen = set()
+    for url in urls:
+        if not url:
+            continue
+        if url in seen:
+            continue
+        deduped.append(url)
+        seen.add(url)
+    return deduped
 
 
 def scan_pairs(
@@ -424,6 +444,43 @@ def load_pairs_from_db(
         sql += " LIMIT ?"
         params.append(limit)
     rows = conn.execute(sql, params).fetchall()
+    pairs: List[PairInfo] = []
+    for row in rows:
+        pairs.append(
+            PairInfo(
+                address=row[0],
+                token0=TokenInfo(
+                    address=row[1],
+                    symbol=row[3] or "UNKNOWN",
+                    decimals=int(row[5] or 18),
+                ),
+                token1=TokenInfo(
+                    address=row[2],
+                    symbol=row[4] or "UNKNOWN",
+                    decimals=int(row[6] or 18),
+                ),
+                reserve0=Decimal(0),
+                reserve1=Decimal(0),
+            )
+        )
+    return pairs
+
+
+def load_pairs_from_watchlist(
+    conn: sqlite3.Connection, watchlist_path: str
+) -> List[PairInfo]:
+    with open(watchlist_path, "r") as f:
+        addresses = json.load(f)
+    if not addresses:
+        return []
+    
+    placeholders = ",".join("?" for _ in addresses)
+    sql = f"""
+        SELECT pair_id, token0, token1, token0_symbol, token1_symbol, token0_decimals, token1_decimals
+        FROM pairs
+        WHERE pair_id IN ({placeholders})
+    """
+    rows = conn.execute(sql, addresses).fetchall()
     pairs: List[PairInfo] = []
     for row in rows:
         pairs.append(
@@ -553,6 +610,11 @@ def main() -> None:
         action="store_true",
         help="Rotate across RPC URLs when set.",
     )
+    parser.add_argument(
+        "--watchlist",
+        default="",
+        help="JSON file with list of pair addresses to scan.",
+    )
     args = parser.parse_args()
 
     if args.crawl:
@@ -586,9 +648,12 @@ def main() -> None:
             )
         return
 
-    if args.scan_db:
+    if args.watchlist:
         conn = init_pairs_db(args.db_path)
-        pairs: List[PairInfo] = []
+        pairs = load_pairs_from_watchlist(conn, args.watchlist)
+    elif args.scan_db:
+        conn = init_pairs_db(args.db_path)
+        pairs = []
         if args.dex in ("camelot", "both", "all"):
             pairs.extend(load_pairs_from_db(conn, "camelot", args.max_pairs))
         if args.dex in ("uniswapv2", "both", "all"):

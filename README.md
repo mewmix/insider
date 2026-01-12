@@ -153,6 +153,13 @@ You can focus on high-liquidity and high-volume pairs:
 python3 flash_swap_scanner.py --focus-top-reserve 200 --focus-top-volume 200
 ```
 
+Multi-hop settlement and gas filtering:
+
+```bash
+python3 flash_swap_scanner.py --settle-token usdc --settle-fee-bps 30 \
+  --gas-units 200000 --gas-price-gwei 0.1 --min-net-profit-usd 5
+```
+
 Scan multiple v2 DEXes (default: uniswapv2, camelot, sushiswapv2):
 
 ```bash

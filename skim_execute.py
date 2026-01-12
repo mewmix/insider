@@ -25,18 +25,24 @@ PAIR_ABI = [
 def build_rpc_pool(rpc_urls: str) -> List[str]:
     if rpc_urls:
         urls = [normalize_rpc_url(url.strip()) for url in rpc_urls.split(",") if url.strip()]
-        return [url for url in urls if url]
-    env_url = normalize_rpc_url(os.getenv("ARBITRUM_RPC_URL", "https://arb1.arbitrum.io/rpc"))
-    if env_url:
-        return [env_url]
-    # Fallback to a small subset of HTTP endpoints.
-    fallback = [
-        "https://arb1.arbitrum.io/rpc",
-        "https://1rpc.io/arb",
-        "https://arbitrum.drpc.org",
-        "https://arbitrum-one-rpc.publicnode.com",
-    ]
-    return [normalize_rpc_url(url) for url in fallback if normalize_rpc_url(url)]
+    else:
+        env_url = normalize_rpc_url(os.getenv("ARBITRUM_RPC_URL", "https://arb1.arbitrum.io/rpc"))
+        urls = []
+        if env_url:
+            urls.append(env_url)
+        urls.extend(
+            normalize_rpc_url(url)
+            for url in RPC_ENDPOINTS.values()
+            if url.startswith("http")
+        )
+    deduped: List[str] = []
+    seen = set()
+    for url in urls:
+        if not url or url in seen:
+            continue
+        deduped.append(url)
+        seen.add(url)
+    return deduped
 
 
 def send_skim(rpc_urls: List[str], pair: str, to_addr: str, private_key: str) -> None:

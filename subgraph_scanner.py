@@ -284,8 +284,60 @@ def store_token_conditions(conn: sqlite3.Connection, rows: List[Dict[str, object
 
 
 def fetch_user_positions(user: str) -> List[Dict[str, object]]:
-    data = gql_post(PNL_SUBGRAPH, USER_POSITIONS_QUERY, {"user": user})
-    return data["userPositions"]
+    all_positions = []
+    last_id = ""
+    while True:
+        query = """
+        query UserPositions($user: String!, $lastId: ID!) {
+          userPositions(first: 1000, where: { user: $user, id_gt: $lastId }, orderBy: id) {
+            id
+            user
+            tokenId
+            amount
+            avgPrice
+            realizedPnl
+            totalBought
+          }
+        }
+        """
+        data = gql_post(PNL_SUBGRAPH, query, {"user": user, "lastId": last_id})
+        batch = data["userPositions"]
+        if not batch:
+            break
+        all_positions.extend(batch)
+        last_id = batch[-1]["id"]
+        # Safety break for massive accounts to avoid infinite loops in this context
+        if len(all_positions) > 10000: 
+             print("Warning: limit reached for user positions")
+             break
+    return all_positions
+
+
+def fetch_redemptions(redeemer: str) -> List[Dict[str, object]]:
+    all_redemptions = []
+    last_id = ""
+    while True:
+        query = """
+        query Redemptions($redeemer: String!, $lastId: ID!) {
+          redemptions(first: 1000, where: { redeemer: $redeemer, id_gt: $lastId }, orderBy: id) {
+            id
+            timestamp
+            redeemer
+            condition
+            payout
+          }
+        }
+        """
+        data = gql_post(ACTIVITY_SUBGRAPH, query, {"redeemer": redeemer, "lastId": last_id})
+        batch = data["redemptions"]
+        if not batch:
+            break
+        all_redemptions.extend(batch)
+        last_id = batch[-1]["id"]
+        if len(all_redemptions) > 10000:
+            print("Warning: limit reached for redemptions")
+            break
+    return all_redemptions
 
 
 def store_user_positions(conn: sqlite3.Connection, positions: List[Dict[str, object]]) -> None:

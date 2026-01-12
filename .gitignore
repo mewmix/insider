@@ -1,4 +1,7 @@
 .env
+*.db
+*.db-*
+*.log
 scanner.db
 scanner.db-shm
 scanner.db-wal

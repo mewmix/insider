@@ -11,6 +11,8 @@ ORDERBOOK_SUBGRAPH = "https://api.goldsky.com/api/public/project_cl6mb8i9h0003e2
 POSITIONS_SUBGRAPH = "https://api.goldsky.com/api/public/project_cl6mb8i9h0003e201j6li0diw/subgraphs/positions-subgraph/0.0.7/gn"
 GAMMA_API_BASE = "https://gamma-api.polymarket.com"
 
+DEFAULT_TIMEOUT = 30.0
+
 USDC_DECIMALS = 1e6
 
 
@@ -52,10 +54,15 @@ def chunked(values: Sequence[str], size: int) -> Iterable[List[str]]:
         yield list(values[i : i + size])
 
 
-def gql_post(url: str, query: str, variables: Dict[str, object]) -> Dict[str, object]:
+def gql_post(
+    url: str,
+    query: str,
+    variables: Dict[str, object],
+    timeout: float,
+) -> Dict[str, object]:
     for attempt in range(5):
         try:
-            with httpx.Client(timeout=20) as client:
+            with httpx.Client(timeout=httpx.Timeout(timeout)) as client:
                 resp = client.post(url, json={"query": query, "variables": variables})
             resp.raise_for_status()
             payload = resp.json()
@@ -73,6 +80,7 @@ def fetch_active_addresses(
     since_ts: int,
     page_size: int,
     max_events: int,
+    timeout: float,
 ) -> List[str]:
     last_id = ""
     seen = set()
@@ -82,6 +90,7 @@ def fetch_active_addresses(
             ORDERBOOK_SUBGRAPH,
             ORDER_FILLED_QUERY,
             {"since": since_ts, "lastId": last_id, "first": page_size},
+            timeout,
         )
         events = data["orderFilledEvents"]
         if not events:
@@ -100,14 +109,14 @@ def fetch_active_addresses(
     return sorted(seen)
 
 
-def fetch_user_balances(user: str) -> List[Dict[str, object]]:
-    data = gql_post(POSITIONS_SUBGRAPH, USER_BALANCES_QUERY, {"user": user})
+def fetch_user_balances(user: str, timeout: float) -> List[Dict[str, object]]:
+    data = gql_post(POSITIONS_SUBGRAPH, USER_BALANCES_QUERY, {"user": user}, timeout)
     return data["userBalances"]
 
 
-def fetch_market_metadata(condition_id: str) -> Dict[str, str]:
+def fetch_market_metadata(condition_id: str, timeout: float) -> Dict[str, str]:
     params = {"conditionId": condition_id}
-    with httpx.Client(timeout=20) as client:
+    with httpx.Client(timeout=httpx.Timeout(timeout)) as client:
         resp = client.get(f"{GAMMA_API_BASE}/markets", params=params)
     resp.raise_for_status()
     data = resp.json()
@@ -164,12 +173,18 @@ def main() -> None:
     parser.add_argument("--max-events", type=int, default=2000, help="Max events to scan")
     parser.add_argument("--contrary-min-share", type=float, default=0.2, help="Min share per outcome to mark contrary")
     parser.add_argument("--with-metadata", action="store_true", help="Fetch Gamma titles for top markets")
+    parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT, help="HTTP timeout seconds")
     args = parser.parse_args()
 
     now_ts = int(time.time())
     since_ts = args.since_ts if args.since_ts is not None else utc_day_start(now_ts)
 
-    active_addresses = fetch_active_addresses(since_ts, args.page_size, args.max_events)
+    active_addresses = fetch_active_addresses(
+        since_ts,
+        args.page_size,
+        args.max_events,
+        args.timeout,
+    )
     if not active_addresses:
         print("No active traders found for today.")
         return
@@ -177,7 +192,7 @@ def main() -> None:
 
     user_positions: Dict[str, List[Dict[str, object]]] = {}
     for user in candidates:
-        balances = fetch_user_balances(user)
+        balances = fetch_user_balances(user, args.timeout)
         user_positions[user] = balances
 
     total_by_user, by_condition = summarize_positions(user_positions)
@@ -206,7 +221,7 @@ def main() -> None:
     if args.with_metadata:
         for condition_id, _ in top_conditions:
             try:
-                metadata_cache[condition_id] = fetch_market_metadata(condition_id)
+                metadata_cache[condition_id] = fetch_market_metadata(condition_id, args.timeout)
             except Exception:
                 metadata_cache[condition_id] = {}
 

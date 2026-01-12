@@ -3,6 +3,7 @@ import json
 import os
 import sqlite3
 import time
+from datetime import datetime, timezone
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
@@ -31,7 +32,7 @@ FRESH_MAX_AGE_SECONDS = int(os.getenv("FRESH_MAX_AGE_SECONDS", "259200"))
 FRESH_MAX_FIRST_SEEN_ONLY = os.getenv("FRESH_MAX_FIRST_SEEN_ONLY", "true").lower() == "true"
 MARKET_REFRESH_SECONDS = int(os.getenv("MARKET_REFRESH_SECONDS", "3600"))
 MARKET_POLL_SECONDS = int(os.getenv("MARKET_POLL_SECONDS", "300"))
-POLYGONSCAN_API_KEY = os.getenv("POLYGONSCAN_API_KEY", "").strip()
+ALCHEMY_RPC_URL = os.getenv("ALCHEMY_RPC_URL", "").strip()
 FUNDED_MAX_AGE_SECONDS = int(os.getenv("FUNDED_MAX_AGE_SECONDS", "604800"))
 FUNDED_MIN_NOTIONAL = float(os.getenv("FUNDED_MIN_NOTIONAL", "10000"))
 FUNDING_POLL_SECONDS = int(os.getenv("FUNDING_POLL_SECONDS", "900"))
@@ -449,39 +450,42 @@ async def ensure_market_metadata(condition_id: str) -> Optional[Dict[str, Any]]:
 
 
 async def fetch_first_funded_ts(address: str) -> Optional[int]:
-    if not POLYGONSCAN_API_KEY:
+    if not ALCHEMY_RPC_URL:
         return None
-    params = {
-        "module": "account",
-        "action": "txlist",
-        "address": address,
-        "startblock": "0",
-        "endblock": "99999999",
-        "page": "1",
-        "offset": "100",
-        "sort": "asc",
-        "apikey": POLYGONSCAN_API_KEY,
+    payload = {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "alchemy_getAssetTransfers",
+        "params": [
+            {
+                "fromBlock": "0x0",
+                "toBlock": "latest",
+                "toAddress": address,
+                "maxCount": "0x64",
+                "category": ["external", "erc20", "internal"],
+                "withMetadata": True,
+                "order": "asc",
+            }
+        ],
     }
     async with httpx.AsyncClient(timeout=20) as client:
-        r = await client.get("https://api.polygonscan.com/api", params=params)
+        r = await client.post(ALCHEMY_RPC_URL, json=payload)
         r.raise_for_status()
         data = r.json()
-    if data.get("status") == "0" and "No transactions" in str(data.get("message", "")):
+    result = data.get("result") or {}
+    transfers = result.get("transfers") or []
+    if not transfers:
         return None
-    result = data.get("result") or []
-    if not isinstance(result, list) or not result:
+    first = transfers[0]
+    metadata = first.get("metadata") or {}
+    ts = metadata.get("blockTimestamp")
+    if not ts:
         return None
-    address_l = address.lower()
-    first_inbound = None
-    for tx in result:
-        to_addr = str(tx.get("to", "")).lower()
-        value = int(tx.get("value", "0") or 0)
-        if to_addr == address_l and value > 0:
-            first_inbound = tx
-            break
-    tx = first_inbound or result[0]
-    ts = int(tx.get("timeStamp", 0) or 0)
-    return ts if ts > 0 else None
+    try:
+        dt = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+    return int(dt.timestamp())
 
 
 def upsert_wallet_funding(address: str, first_funded_ts: Optional[int]) -> None:
@@ -497,7 +501,7 @@ def upsert_wallet_funding(address: str, first_funded_ts: Optional[int]) -> None:
               source=excluded.source,
               updated_at_ts=excluded.updated_at_ts
             """,
-            (address, first_funded_ts, "polygonscan", int(time.time())),
+            (address, first_funded_ts, "alchemy", int(time.time())),
         )
         conn.commit()
     finally:
@@ -629,7 +633,7 @@ def get_wallets_needing_funding(limit: int) -> List[str]:
 async def funding_sync_loop() -> None:
     funding_sync_stop_evt.clear()
     while not funding_sync_stop_evt.is_set():
-        if not POLYGONSCAN_API_KEY:
+        if not ALCHEMY_RPC_URL:
             await asyncio.sleep(FUNDING_POLL_SECONDS)
             continue
         addresses = get_wallets_needing_funding(limit=25)
@@ -695,7 +699,7 @@ async def scan_once() -> Dict[str, Any]:
             continue
 
         funded_ts = get_wallet_funding_ts(t.proxy_wallet)
-        if funded_ts is None and POLYGONSCAN_API_KEY:
+        if funded_ts is None and ALCHEMY_RPC_URL:
             try:
                 funded_ts = await fetch_first_funded_ts(t.proxy_wallet)
                 upsert_wallet_funding(t.proxy_wallet, funded_ts)

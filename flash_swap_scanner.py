@@ -10,6 +10,7 @@ from typing import Dict, List, Optional, Tuple
 
 import httpx
 from dotenv import load_dotenv
+from web3 import Web3
 
 from skim_scanner import RPC_ENDPOINTS, normalize_rpc_url
 
@@ -56,6 +57,24 @@ class PairData:
 
 BALANCE_OF_SIG = "70a08231"
 GET_RESERVES_SIG = "0902f1ac"
+
+FLASH_ARB_ABI = [
+    {
+        "inputs": [
+            {"internalType": "address", "name": "pairBorrow", "type": "address"},
+            {"internalType": "address", "name": "pairSwap", "type": "address"},
+            {"internalType": "address", "name": "tokenBorrow", "type": "address"},
+            {"internalType": "uint256", "name": "amountBorrow", "type": "uint256"},
+            {"internalType": "uint256", "name": "feeBorrowBps", "type": "uint256"},
+            {"internalType": "uint256", "name": "feeSwapBps", "type": "uint256"},
+            {"internalType": "uint256", "name": "minProfit", "type": "uint256"},
+        ],
+        "name": "execute",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+    }
+]
 
 
 def build_rpc_pool(rpc_urls: str) -> List[str]:
@@ -532,6 +551,45 @@ def best_arb_for_token1(
     return amt_in, profit, "token1"
 
 
+def verify_opportunity(
+    rpc_url: str,
+    contract_address: str,
+    pair_borrow: str,
+    pair_swap: str,
+    token_borrow: str,
+    amount_borrow: int,
+    fee_borrow_bps: int,
+    fee_swap_bps: int,
+    min_profit: int,
+) -> Tuple[bool, int, str]:
+    try:
+        w3 = Web3(Web3.HTTPProvider(rpc_url))
+        contract = w3.eth.contract(address=Web3.to_checksum_address(contract_address), abi=FLASH_ARB_ABI)
+        # Use a random from address or one that has funds if needed (for gas)
+        # For estimate_gas, usually just needs to be a valid format
+        from_addr = "0x0000000000000000000000000000000000000001"
+
+        tx = contract.functions.execute(
+            Web3.to_checksum_address(pair_borrow),
+            Web3.to_checksum_address(pair_swap),
+            Web3.to_checksum_address(token_borrow),
+            amount_borrow,
+            fee_borrow_bps,
+            fee_swap_bps,
+            min_profit
+        ).build_transaction({
+            "from": from_addr,
+            "nonce": 0,
+            "gasPrice": 0, # Ignored for estimate
+            "chainId": 42161
+        })
+
+        gas_estimate = w3.eth.estimate_gas(tx)
+        return True, gas_estimate, ""
+    except Exception as e:
+        return False, 0, str(e)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Flash swap arbitrage scanner (Camelot v2 vs Uniswap v2).")
     parser.add_argument("--db-path", default="skim_pairs.db", help="SQLite DB with pairs.")
@@ -569,7 +627,25 @@ def main() -> None:
         default="",
         help="JSON file with list of pair addresses to scan.",
     )
+    parser.add_argument(
+        "--verify",
+        action="store_true",
+        help="Verify opportunities using on-chain simulation with deployed contract.",
+    )
     args = parser.parse_args()
+
+    arb_contract_address = ""
+    if args.verify:
+        try:
+            with open("arb_contracts.json", "r") as f:
+                cdata = json.load(f)
+                arb_contract_address = cdata.get("flash_arb_executor", "")
+            if not arb_contract_address:
+                print("No flash_arb_executor in arb_contracts.json", file=sys.stderr)
+                sys.exit(1)
+        except Exception as e:
+            print(f"Failed to load arb_contracts.json: {e}", file=sys.stderr)
+            sys.exit(1)
 
     dexes = [d.strip() for d in args.dexes.split(",") if d.strip()]
     dex_aliases = {"sushiswap": "sushiswapv2"}
@@ -635,6 +711,17 @@ def main() -> None:
     )
     if weth_price is None:
         print("warn: could not derive WETH/USD price", file=sys.stderr)
+
+    # Cache gas price for verification
+    current_gas_price_wei = 0
+    if args.verify:
+        try:
+            # Simple fetch from first RPC
+            with httpx.Client(timeout=10) as client:
+                resp = client.post(rpc_urls[0], json={"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":1})
+                current_gas_price_wei = decode_uint256(resp.json()["result"])
+        except:
+            pass
 
     results = []
     keys = [
@@ -724,12 +811,58 @@ def main() -> None:
                 profit_usd = settle_amount * weth_price
 
         net_profit_usd = None
+        sim_status = "UNCHECKED"
+        sim_gas_used = 0
+
+        # Initial estimate with static gas
         if profit_usd is not None and weth_price is not None:
             gas_cost_eth = (Decimal(args.gas_units) * args.gas_price_gwei) / Decimal(1e9)
             gas_cost_usd = gas_cost_eth * weth_price
             net_profit_usd = profit_usd - gas_cost_usd
-            if net_profit_usd < args.min_net_profit_usd:
-                continue
+
+        # Verify if requested
+        if args.verify and arb_contract_address:
+            # Need fee BPS
+            fee_a_bps = int(fee_by_dex.get(best[4].dex, args.fee_uniswap) * 10000)
+            fee_b_bps = int(fee_by_dex.get(best[5].dex, args.fee_uniswap) * 10000)
+
+            # Identify borrow vs swap pair
+            # route is dex_a->dex_b. We borrow from A, swap on B?
+            # FlashArb.sol: pairBorrow is where we flash loan.
+            # Logic: We borrow from pair_a (dex_a). We swap on pair_b (dex_b).
+            # Then we repay pair_a.
+
+            # The candidates list stores (route, amt, prof, tok, pair_a, pair_b)
+            # route is "dex_a->dex_b".
+
+            success, gas_est, err = verify_opportunity(
+                rpc_urls[0],
+                arb_contract_address,
+                pair_a.pair_id, # pairBorrow
+                pair_b.pair_id, # pairSwap
+                input_token_addr, # tokenBorrow
+                int(amount_in),
+                fee_a_bps, # feeBorrowBps
+                fee_b_bps, # feeSwapBps
+                0 # minProfit (check pure execution)
+            )
+
+            if success:
+                sim_status = "CONFIRMED"
+                sim_gas_used = gas_est
+                # Update net profit with real gas
+                if weth_price is not None and current_gas_price_wei > 0:
+                     real_gas_cost_eth = Decimal(gas_est * current_gas_price_wei) / Decimal(10**18)
+                     real_gas_cost_usd = real_gas_cost_eth * weth_price
+                     if profit_usd is not None:
+                        net_profit_usd = profit_usd - real_gas_cost_usd
+            else:
+                sim_status = f"FAILED: {err}"
+                # If simulation fails, net profit is effectively -inf or invalid
+                net_profit_usd = None
+
+        if net_profit_usd is not None and net_profit_usd < args.min_net_profit_usd:
+            continue
 
         results.append(
             {
@@ -740,6 +873,8 @@ def main() -> None:
                 "profit": str(profit),
                 "profit_usd": str(profit_usd) if profit_usd is not None else None,
                 "net_profit_usd": str(net_profit_usd) if net_profit_usd is not None else None,
+                "sim_status": sim_status,
+                "sim_gas": sim_gas_used,
                 "settle_token": settle_token,
                 "settle_amount": str(settle_amount) if settle_amount is not None else None,
                 "settle_route": settle_route,

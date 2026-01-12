@@ -70,15 +70,17 @@ query Pairs($lastId: String!, $first: Int!) {
     id
     reserve0
     reserve1
-    token0 { id symbol decimals }
-    token1 { id symbol decimals }
+    token0 { id symbol decimals derivedETH }
+    token1 { id symbol decimals derivedETH }
   }
+  bundle(id: "1") { ethPrice }
   _meta { block { number } }
 }
 """
 
 BALANCE_OF_SIG = "70a08231"
 GET_RESERVES_SIG = "0902f1ac"
+SKIM_SIG = "bc25cf77"
 
 
 @dataclass
@@ -86,6 +88,7 @@ class TokenInfo:
     address: str
     symbol: str
     decimals: int
+    derived_eth: Decimal = Decimal(0)
 
 
 @dataclass
@@ -267,7 +270,7 @@ def fetch_pairs_page(
     subgraph: str,
     last_id: str,
     first: int,
-) -> Tuple[List[PairInfo], Optional[int]]:
+) -> Tuple[List[PairInfo], Optional[int], Decimal]:
     data = gql_post(
         subgraph,
         PAIR_QUERY,
@@ -280,17 +283,24 @@ def fetch_pairs_page(
         block = meta.get("block") or {}
         if "number" in block:
             block_number = int(block["number"])
+
+    eth_price = Decimal(0)
+    if "bundle" in data and data["bundle"]:
+        eth_price = Decimal(data["bundle"].get("ethPrice", "0"))
+
     pairs: List[PairInfo] = []
     for row in batch:
         token0 = TokenInfo(
             address=row["token0"]["id"],
             symbol=row["token0"]["symbol"],
             decimals=int(row["token0"]["decimals"]),
+            derived_eth=Decimal(row["token0"].get("derivedETH", "0")),
         )
         token1 = TokenInfo(
             address=row["token1"]["id"],
             symbol=row["token1"]["symbol"],
             decimals=int(row["token1"]["decimals"]),
+            derived_eth=Decimal(row["token1"].get("derivedETH", "0")),
         )
         pairs.append(
             PairInfo(
@@ -301,23 +311,26 @@ def fetch_pairs_page(
                 reserve1=Decimal(row["reserve1"]),
             )
         )
-    return pairs, block_number
+    return pairs, block_number, eth_price
 
 
-def fetch_pairs(subgraph: str, max_pairs: int, page_size: int = 200) -> List[PairInfo]:
+def fetch_pairs(subgraph: str, max_pairs: int, page_size: int = 200) -> Tuple[List[PairInfo], Decimal]:
     pairs: List[PairInfo] = []
     last_id = ""
     limit = max_pairs if max_pairs > 0 else None
+    eth_price = Decimal(0)
     while limit is None or len(pairs) < limit:
         fetch_size = page_size
         if limit is not None:
             fetch_size = min(page_size, limit - len(pairs))
-        batch, _ = fetch_pairs_page(subgraph, last_id, fetch_size)
+        batch, _, price = fetch_pairs_page(subgraph, last_id, fetch_size)
+        if price > 0:
+            eth_price = price
         if not batch:
             break
         pairs.extend(batch)
         last_id = batch[-1].address
-    return pairs
+    return pairs, eth_price
 
 
 def decode_uint256(hexdata: str) -> int:
@@ -343,6 +356,23 @@ def fetch_reserves_raw(rpc_url: str, pair: str) -> Tuple[int, int]:
     reserve0 = int(raw[0:64], 16)
     reserve1 = int(raw[64:128], 16)
     return reserve0, reserve1
+
+
+def estimate_skim_gas(rpc_url: str, pair: str, to_addr: str) -> int:
+    data = encode_call(SKIM_SIG, [addr_to_arg(to_addr)])
+    # Use a dummy from address that looks real
+    from_addr = "0x0000000000000000000000000000000000000001"
+    result = rpc_call(
+        rpc_url,
+        "eth_estimateGas",
+        [{"from": from_addr, "to": pair, "data": data}],
+    )
+    return decode_uint256(result)
+
+
+def fetch_gas_price(rpc_url: str) -> int:
+    result = rpc_call(rpc_url, "eth_gasPrice", [])
+    return decode_uint256(result)
 
 
 def format_amount(raw: int, decimals: int) -> Decimal:
@@ -379,17 +409,30 @@ def scan_pairs(
     pairs: List[PairInfo],
     min_imbalance: Decimal,
     rotate_rpc: bool,
+    simulate: bool,
+    eth_price_usd: Decimal,
 ) -> List[str]:
     results: List[str] = []
     rpc_count = max(len(rpc_urls), 1)
+
+    # Pre-fetch gas price if simulating to avoid many calls
+    current_gas_price = 0
+    if simulate and rpc_urls:
+        try:
+            current_gas_price = fetch_gas_price(rpc_urls[0])
+        except:
+            pass
+
     for pair in pairs:
         last_exc: Optional[Exception] = None
+        used_rpc = rpc_urls[0]
         for attempt in range(rpc_count):
             rpc_url = rpc_urls[(hash(pair.address) + attempt) % rpc_count] if rotate_rpc else rpc_urls[0]
             try:
                 reserve0_raw, reserve1_raw = fetch_reserves_raw(rpc_url, pair.address)
                 balance0_raw = fetch_balance(rpc_url, pair.token0.address, pair.address)
                 balance1_raw = fetch_balance(rpc_url, pair.token1.address, pair.address)
+                used_rpc = rpc_url
                 last_exc = None
                 break
             except Exception as exc:
@@ -407,27 +450,63 @@ def scan_pairs(
         extra1_amt = format_amount(extra1, pair.token1.decimals)
 
         if extra0_amt >= min_imbalance or extra1_amt >= min_imbalance:
-            results.append(
-                "pair={addr} token0={sym0} extra0={extra0} token1={sym1} extra1={extra1}".format(
-                    addr=pair.address,
-                    sym0=pair.token0.symbol,
-                    extra0=extra0_amt,
-                    sym1=pair.token1.symbol,
-                    extra1=extra1_amt,
-                )
+            profit_usd = Decimal(0)
+            if eth_price_usd > 0:
+                val0 = extra0_amt * pair.token0.derived_eth * eth_price_usd
+                val1 = extra1_amt * pair.token1.derived_eth * eth_price_usd
+                profit_usd = val0 + val1
+
+            msg = "pair={addr} token0={sym0} extra0={extra0} token1={sym1} extra1={extra1} value_usd={val:.2f}".format(
+                addr=pair.address,
+                sym0=pair.token0.symbol,
+                extra0=extra0_amt,
+                sym1=pair.token1.symbol,
+                extra1=extra1_amt,
+                val=profit_usd,
             )
+
+            if simulate:
+                try:
+                    # Simulate skim
+                    gas_limit = estimate_skim_gas(used_rpc, pair.address, "0x0000000000000000000000000000000000000001")
+                    if current_gas_price == 0:
+                        current_gas_price = fetch_gas_price(used_rpc)
+
+                    gas_cost_eth = Decimal(gas_limit * current_gas_price) / Decimal(10**18)
+                    gas_cost_usd = gas_cost_eth * eth_price_usd
+                    net_profit = profit_usd - gas_cost_usd
+
+                    msg += " gas_usd={gas:.2f} net_profit={net:.2f}".format(
+                        gas=gas_cost_usd,
+                        net=net_profit
+                    )
+                    if net_profit > 0:
+                        msg = "[CONFIRMED] " + msg
+                    else:
+                         msg = "[UNPROFITABLE] " + msg
+                except Exception as e:
+                    msg += f" [SIM_FAILED: {e}]"
+
+            results.append(msg)
     return results
 
 
-def build_pairs(dex: str, max_pairs: int) -> List[PairInfo]:
+def build_pairs(dex: str, max_pairs: int) -> Tuple[List[PairInfo], Decimal]:
     pairs: List[PairInfo] = []
+    eth_price = Decimal(0)
     if dex in ("camelot", "both", "all"):
-        pairs.extend(fetch_pairs(CAMELOT_V2_SUBGRAPH, max_pairs))
+        p, price = fetch_pairs(CAMELOT_V2_SUBGRAPH, max_pairs)
+        pairs.extend(p)
+        if price > 0: eth_price = price
     if dex in ("uniswapv2", "both", "all"):
-        pairs.extend(fetch_pairs(UNISWAP_V2_SUBGRAPH, max_pairs))
+        p, price = fetch_pairs(UNISWAP_V2_SUBGRAPH, max_pairs)
+        pairs.extend(p)
+        if price > 0: eth_price = price
     if dex in ("sushiswapv2", "sushiswap", "all"):
-        pairs.extend(fetch_pairs(SUSHISWAP_V2_SUBGRAPH, max_pairs))
-    return pairs
+        p, price = fetch_pairs(SUSHISWAP_V2_SUBGRAPH, max_pairs)
+        pairs.extend(p)
+        if price > 0: eth_price = price
+    return pairs, eth_price
 
 
 def load_pairs_from_db(
@@ -615,6 +694,11 @@ def main() -> None:
         default="",
         help="JSON file with list of pair addresses to scan.",
     )
+    parser.add_argument(
+        "--simulate",
+        action="store_true",
+        help="Simulate skim tx to confirm profitability including gas.",
+    )
     args = parser.parse_args()
 
     if args.crawl:
@@ -648,6 +732,9 @@ def main() -> None:
             )
         return
 
+    # Use a rough default eth price if not fetched later
+    eth_price = Decimal(0)
+
     if args.watchlist:
         conn = init_pairs_db(args.db_path)
         pairs = load_pairs_from_watchlist(conn, args.watchlist)
@@ -661,13 +748,17 @@ def main() -> None:
         if args.dex in ("sushiswapv2", "sushiswap", "all"):
             pairs.extend(load_pairs_from_db(conn, "sushiswapv2", args.max_pairs))
     else:
-        pairs = build_pairs(args.dex, args.max_pairs)
+        pairs, eth_price = build_pairs(args.dex, args.max_pairs)
     if not pairs:
         print("no pairs loaded")
         return
 
+    # If we scanned db or watchlist, we might not have eth_price from subgraph
+    # but that's okay, value calculation will just be 0 unless we fetch it separately.
+    # For now we rely on build_pairs returning it.
+
     rpc_urls = build_rpc_pool(args.rpc_urls if args.rpc_urls else args.rpc_url)
-    hits = scan_pairs(rpc_urls, pairs, args.min_imbalance, args.rotate_rpc)
+    hits = scan_pairs(rpc_urls, pairs, args.min_imbalance, args.rotate_rpc, args.simulate, eth_price)
     if not hits:
         print("no skim opportunities found")
         return

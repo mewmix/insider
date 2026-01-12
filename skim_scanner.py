@@ -62,6 +62,14 @@ SUSHISWAP_V2_SUBGRAPH = os.getenv(
     "SUSHISWAP_V2_SUBGRAPH",
     "https://gateway.thegraph.com/api/subgraphs/id/8yBXBTMfdhsoE5QCf7KnoPmQb7QAWtRzESfYjiCjGEM9",
 )
+PANCAKESWAP_V2_SUBGRAPH = os.getenv(
+    "PANCAKESWAP_V2_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/9xVuUfJXupKyg9ksGXHdzFZguQXwJ72uSFSTgpooT7QV",
+)
+UNISWAP_V3_SUBGRAPH = os.getenv(
+    "UNISWAP_V3_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/HyW7A86UEdYVt5b9Lrw8W2F98yKecerHKutZTRbSCX27",
+)
 GRAPH_API_KEY = os.getenv("GRAPH_API_KEY")
 
 PAIR_QUERY = """
@@ -70,6 +78,29 @@ query Pairs($lastId: String!, $first: Int!) {
     id
     reserve0
     reserve1
+    token0 { id symbol decimals }
+    token1 { id symbol decimals }
+  }
+  _meta { block { number } }
+}
+"""
+
+# PancakeSwap V2 subgraph doesn't have symbol or reserves in the entity schema
+MINIMAL_PAIR_QUERY = """
+query Pairs($lastId: String!, $first: Int!) {
+  pairs(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
+    id
+    token0 { id decimals }
+    token1 { id decimals }
+  }
+  _meta { block { number } }
+}
+"""
+
+POOL_QUERY = """
+query Pools($lastId: String!, $first: Int!) {
+  pools(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
+    id
     token0 { id symbol decimals }
     token1 { id symbol decimals }
   }
@@ -267,13 +298,24 @@ def fetch_pairs_page(
     subgraph: str,
     last_id: str,
     first: int,
+    use_pools: bool = False,
+    is_pancake: bool = False,
 ) -> Tuple[List[PairInfo], Optional[int]]:
+    if use_pools:
+        query = POOL_QUERY
+    elif is_pancake:
+        query = MINIMAL_PAIR_QUERY
+    else:
+        query = PAIR_QUERY
+
     data = gql_post(
         subgraph,
-        PAIR_QUERY,
+        query,
         {"lastId": last_id, "first": first},
     )
-    batch = data.get("pairs", [])
+
+    entity_key = "pools" if use_pools else "pairs"
+    batch = data.get(entity_key, [])
     block_number = None
     if "_meta" in data:
         meta = data.get("_meta") or {}
@@ -282,29 +324,43 @@ def fetch_pairs_page(
             block_number = int(block["number"])
     pairs: List[PairInfo] = []
     for row in batch:
+        t0 = row["token0"]
+        t1 = row["token1"]
+
         token0 = TokenInfo(
-            address=row["token0"]["id"],
-            symbol=row["token0"]["symbol"],
-            decimals=int(row["token0"]["decimals"]),
+            address=t0["id"],
+            symbol=t0.get("symbol", "?"),
+            decimals=int(t0["decimals"]),
         )
         token1 = TokenInfo(
-            address=row["token1"]["id"],
-            symbol=row["token1"]["symbol"],
-            decimals=int(row["token1"]["decimals"]),
+            address=t1["id"],
+            symbol=t1.get("symbol", "?"),
+            decimals=int(t1["decimals"]),
         )
+
+        # For V3 pools or Pancake minimal query, reserves might not be present.
+        r0 = Decimal(row.get("reserve0", "0"))
+        r1 = Decimal(row.get("reserve1", "0"))
+
         pairs.append(
             PairInfo(
                 address=row["id"],
                 token0=token0,
                 token1=token1,
-                reserve0=Decimal(row["reserve0"]),
-                reserve1=Decimal(row["reserve1"]),
+                reserve0=r0,
+                reserve1=r1,
             )
         )
     return pairs, block_number
 
 
-def fetch_pairs(subgraph: str, max_pairs: int, page_size: int = 200) -> List[PairInfo]:
+def fetch_pairs(
+    subgraph: str,
+    max_pairs: int,
+    page_size: int = 200,
+    use_pools: bool = False,
+    is_pancake: bool = False,
+) -> List[PairInfo]:
     pairs: List[PairInfo] = []
     last_id = ""
     limit = max_pairs if max_pairs > 0 else None
@@ -312,7 +368,9 @@ def fetch_pairs(subgraph: str, max_pairs: int, page_size: int = 200) -> List[Pai
         fetch_size = page_size
         if limit is not None:
             fetch_size = min(page_size, limit - len(pairs))
-        batch, _ = fetch_pairs_page(subgraph, last_id, fetch_size)
+        batch, _ = fetch_pairs_page(
+            subgraph, last_id, fetch_size, use_pools=use_pools, is_pancake=is_pancake
+        )
         if not batch:
             break
         pairs.extend(batch)
@@ -397,7 +455,8 @@ def scan_pairs(
                 if not rotate_rpc:
                     break
         if last_exc is not None:
-            print(f"skip {pair.address} ({last_exc})", file=sys.stderr)
+            # Silence errors for V3 pools or others that don't implement getReserves
+            # print(f"skip {pair.address} ({last_exc})", file=sys.stderr)
             continue
 
         extra0 = balance0_raw - reserve0_raw
@@ -427,6 +486,10 @@ def build_pairs(dex: str, max_pairs: int) -> List[PairInfo]:
         pairs.extend(fetch_pairs(UNISWAP_V2_SUBGRAPH, max_pairs))
     if dex in ("sushiswapv2", "sushiswap", "all"):
         pairs.extend(fetch_pairs(SUSHISWAP_V2_SUBGRAPH, max_pairs))
+    if dex in ("pancakeswap", "all"):
+        pairs.extend(fetch_pairs(PANCAKESWAP_V2_SUBGRAPH, max_pairs, is_pancake=True))
+    if dex in ("uniswapv3", "all"):
+        pairs.extend(fetch_pairs(UNISWAP_V3_SUBGRAPH, max_pairs, use_pools=True))
     return pairs
 
 
@@ -525,6 +588,8 @@ def crawl_pairs_to_db(
     batch_size: int,
     max_pairs: int,
     resume: bool,
+    use_pools: bool = False,
+    is_pancake: bool = False,
 ) -> int:
     last_id = ""
     if resume:
@@ -537,7 +602,9 @@ def crawl_pairs_to_db(
         fetch_size = batch_size
         if limit is not None:
             fetch_size = min(batch_size, limit - total)
-        batch, block_number = fetch_pairs_page(subgraph, last_id, fetch_size)
+        batch, block_number = fetch_pairs_page(
+            subgraph, last_id, fetch_size, use_pools=use_pools, is_pancake=is_pancake
+        )
         if not batch:
             break
         last_id = batch[-1].address
@@ -549,13 +616,13 @@ def crawl_pairs_to_db(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Minimal v2 pair skim scanner for Arbitrum (Camelot + Uniswap v2 + SushiSwap)."
+        description="Minimal v2 pair skim scanner for Arbitrum (Camelot + Uniswap v2 + SushiSwap + PancakeSwap + Uniswap V3)."
     )
     parser.add_argument(
         "--dex",
-        choices=["camelot", "uniswapv2", "sushiswap", "sushiswapv2", "both", "all"],
+        choices=["camelot", "uniswapv2", "sushiswap", "sushiswapv2", "pancakeswap", "uniswapv3", "both", "all"],
         default="all",
-        help="Which v2 subgraph to scan.",
+        help="Which subgraph to scan.",
     )
     parser.add_argument(
         "--max-pairs",
@@ -646,6 +713,26 @@ def main() -> None:
                 args.max_pairs,
                 args.resume,
             )
+        if args.dex in ("pancakeswap", "all"):
+            crawl_pairs_to_db(
+                "pancakeswap",
+                PANCAKESWAP_V2_SUBGRAPH,
+                conn,
+                args.batch_size,
+                args.max_pairs,
+                args.resume,
+                is_pancake=True,
+            )
+        if args.dex in ("uniswapv3", "all"):
+            crawl_pairs_to_db(
+                "uniswapv3",
+                UNISWAP_V3_SUBGRAPH,
+                conn,
+                args.batch_size,
+                args.max_pairs,
+                args.resume,
+                use_pools=True,
+            )
         return
 
     if args.watchlist:
@@ -660,6 +747,10 @@ def main() -> None:
             pairs.extend(load_pairs_from_db(conn, "uniswapv2", args.max_pairs))
         if args.dex in ("sushiswapv2", "sushiswap", "all"):
             pairs.extend(load_pairs_from_db(conn, "sushiswapv2", args.max_pairs))
+        if args.dex in ("pancakeswap", "all"):
+            pairs.extend(load_pairs_from_db(conn, "pancakeswap", args.max_pairs))
+        if args.dex in ("uniswapv3", "all"):
+            pairs.extend(load_pairs_from_db(conn, "uniswapv3", args.max_pairs))
     else:
         pairs = build_pairs(args.dex, args.max_pairs)
     if not pairs:

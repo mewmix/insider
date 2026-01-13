@@ -388,7 +388,7 @@ def settle_profit(
     start_idx: int,
     reserve_cache: Dict[str, Tuple[int, int]],
     fee_bps: Decimal,
-) -> Tuple[Optional[Decimal], str]:
+) -> Optional[Tuple[Decimal, str]]:
     token_in_lower = token_in.lower()
     settle_lower = settle_token.lower()
     weth_lower = WETH.lower()
@@ -443,7 +443,7 @@ def settle_profit(
                 multihop_out = swap_out_simple(weth_amt, r_in2, r_out2, fee_bps)
 
     if direct_out <= 0 and multihop_out <= 0:
-        return None, ""
+        return None
 
     if multihop_out > direct_out:
         return multihop_out, "multihop"
@@ -504,6 +504,81 @@ def profit_for_amount(
     out_1 = swap_out(amount_in, reserve_in, reserve_out, fee_in)
     out_2 = swap_out(out_1, reserve_in_2, reserve_out_2, fee_out)
     return out_2 - amount_in
+
+
+def ternary_search_generic(
+    max_in: Decimal,
+    profit_fn,
+) -> Tuple[Decimal, Decimal]:
+    lo = Decimal(0)
+    hi = max_in
+    for _ in range(60):
+        m1 = lo + (hi - lo) / Decimal(3)
+        m2 = hi - (hi - lo) / Decimal(3)
+        p1 = profit_fn(m1)
+        p2 = profit_fn(m2)
+        if p1 > p2:
+            hi = m2
+        else:
+            lo = m1
+    best_in = (lo + hi) / 2
+    best_profit = profit_fn(best_in)
+    return best_in, best_profit
+
+
+def swap_out_pair(
+    amount_in: Decimal,
+    token_in: str,
+    pair: PairData,
+    fee: Decimal,
+) -> Decimal:
+    if pair.token0.lower() == token_in.lower():
+        return swap_out(amount_in, pair.reserve0, pair.reserve1, fee)
+    return swap_out(amount_in, pair.reserve1, pair.reserve0, fee)
+
+
+def triangle_out(
+    amount_in: Decimal,
+    start_token: str,
+    token_b: str,
+    token_c: str,
+    pair_ab: PairData,
+    pair_bc: PairData,
+    pair_ca: PairData,
+    fee_by_dex: Dict[str, Decimal],
+) -> Decimal:
+    fee_ab = fee_by_dex.get(pair_ab.dex, Decimal("0.003"))
+    fee_bc = fee_by_dex.get(pair_bc.dex, Decimal("0.003"))
+    fee_ca = fee_by_dex.get(pair_ca.dex, Decimal("0.003"))
+    amt = swap_out_pair(amount_in, start_token, pair_ab, fee_ab)
+    amt = swap_out_pair(amt, token_b, pair_bc, fee_bc)
+    return swap_out_pair(amt, token_c, pair_ca, fee_ca)
+
+
+def best_triangle_arb(
+    start_token: str,
+    token_b: str,
+    token_c: str,
+    pair_ab: PairData,
+    pair_bc: PairData,
+    pair_ca: PairData,
+    fee_by_dex: Dict[str, Decimal],
+    max_trade_frac: Decimal,
+) -> Tuple[Decimal, Decimal]:
+    if pair_ab.token0.lower() == start_token.lower():
+        max_in = pair_ab.reserve0 * max_trade_frac
+    else:
+        max_in = pair_ab.reserve1 * max_trade_frac
+    if max_in <= 0:
+        return Decimal(0), Decimal(0)
+
+    def profit_fn(amount_in: Decimal) -> Decimal:
+        out_amt = triangle_out(
+            amount_in, start_token, token_b, token_c, pair_ab, pair_bc, pair_ca, fee_by_dex
+        )
+        return out_amt - amount_in
+
+    return ternary_search_generic(max_in, profit_fn)
 
 
 def best_arb_for_token0(
@@ -643,12 +718,78 @@ def execute_trade(
         return False
 
 
+def triangular_dry_run(
+    start_token: str,
+    token_b: str,
+    token_c: str,
+    pair_ab: PairData,
+    pair_bc: PairData,
+    pair_ca: PairData,
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    rpc_urls: List[str],
+    start_idx: int,
+    fee_by_dex: Dict[str, Decimal],
+    max_trade_frac: Decimal,
+    weth_price: Optional[Decimal],
+    gas_units: int,
+    gas_price_gwei: Decimal,
+    min_net_profit_usd: Decimal,
+    safety_bps: Decimal,
+) -> bool:
+    for p in [pair_ab, pair_bc, pair_ca]:
+        r0, r1 = fetch_reserves_with_rotation(rpc_urls, p.pair_id, start_idx)
+        p.reserve0 = to_decimal(r0, p.token0_decimals)
+        p.reserve1 = to_decimal(r1, p.token1_decimals)
+
+    amt_in, profit = best_triangle_arb(
+        start_token, token_b, token_c, pair_ab, pair_bc, pair_ca, fee_by_dex, max_trade_frac
+    )
+    if profit <= 0:
+        print("Triangular dry-run failed: no profit after recheck")
+        return False
+
+    amt_out = amt_in + profit
+    safety_mult = (Decimal(10000) - safety_bps) / Decimal(10000)
+    amt_out_safe = amt_out * safety_mult
+    profit_safe = amt_out_safe - amt_in
+    if profit_safe <= 0:
+        print("Triangular dry-run failed: safety haircut removed profit")
+        return False
+
+    price_usd = token_price_usd(start_token, pair_index, rpc_urls, start_idx, weth_price)
+    profit_usd = None if price_usd is None else profit_safe * price_usd
+    net_profit_usd = None
+    if profit_usd is not None and weth_price is not None:
+        gas_cost_eth = (Decimal(gas_units) * gas_price_gwei) / Decimal(1e9)
+        gas_cost_usd = gas_cost_eth * weth_price
+        net_profit_usd = profit_usd - gas_cost_usd
+
+    if min_net_profit_usd > 0 and (net_profit_usd is None or net_profit_usd < min_net_profit_usd):
+        print("Triangular dry-run failed: net profit below threshold")
+        return False
+
+    net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
+    print(
+        f"TRIANGULAR DRY RUN PASS: {start_token}->{token_b}->{token_c}->{start_token} "
+        f"| in={amt_in:.6f} out={amt_out_safe:.6f} | {net_note}"
+    )
+    return True
+
+
 def triangular_scan(
     pairs: List[PairData],
     pair_index: Dict[Tuple[str, str], List[PairData]],
     rpc_urls: List[str],
     start_idx: int,
-    reserve_cache: Dict[str, Tuple[int, int]]
+    reserve_cache: Dict[str, Tuple[int, int]],
+    weth_price: Optional[Decimal],
+    gas_units: int,
+    gas_price_gwei: Decimal,
+    min_net_profit_usd: Decimal,
+    fee_by_dex: Dict[str, Decimal],
+    max_trade_frac: Decimal,
+    auto_execute: bool,
+    safety_bps: Decimal,
 ) -> None:
     # Basic graph: token -> neighbor_token -> pair
     adj: Dict[str, List[Tuple[str, PairData]]] = {}
@@ -687,29 +828,49 @@ def triangular_scan(
                                     p.reserve0 = to_decimal(r0, p.token0_decimals)
                                     p.reserve1 = to_decimal(r1, p.token1_decimals)
 
-                            # Simple Profit Check: 1 unit input
-                            # A -> B
-                            amt = Decimal(1)
-                            if pair_ab.token0.lower() == start_token:
-                                amt = swap_out(amt, pair_ab.reserve0, pair_ab.reserve1, Decimal("0.003"))
-                            else:
-                                amt = swap_out(amt, pair_ab.reserve1, pair_ab.reserve0, Decimal("0.003"))
+                            amt_in, profit = best_triangle_arb(
+                                start_token, b, c, pair_ab, pair_bc, pair_ca, fee_by_dex, max_trade_frac
+                            )
+                            if profit <= 0:
+                                continue
 
-                            # B -> C
-                            if pair_bc.token0.lower() == b:
-                                amt = swap_out(amt, pair_bc.reserve0, pair_bc.reserve1, Decimal("0.003"))
-                            else:
-                                amt = swap_out(amt, pair_bc.reserve1, pair_bc.reserve0, Decimal("0.003"))
+                            amt_out = amt_in + profit
+                            price_usd = token_price_usd(start_token, pair_index, rpc_urls, start_idx, weth_price)
+                            profit_usd = None if price_usd is None else profit * price_usd
+                            net_profit_usd = None
+                            if profit_usd is not None and weth_price is not None:
+                                gas_cost_eth = (Decimal(gas_units) * gas_price_gwei) / Decimal(1e9)
+                                gas_cost_usd = gas_cost_eth * weth_price
+                                net_profit_usd = profit_usd - gas_cost_usd
 
-                            # C -> A
-                            if pair_ca.token0.lower() == c:
-                                amt = swap_out(amt, pair_ca.reserve0, pair_ca.reserve1, Decimal("0.003"))
-                            else:
-                                amt = swap_out(amt, pair_ca.reserve1, pair_ca.reserve0, Decimal("0.003"))
+                            if min_net_profit_usd > 0 and (net_profit_usd is None or net_profit_usd < min_net_profit_usd):
+                                continue
 
-                            if amt > Decimal("1.01"): # > 1% profit
-                                print(f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} | Output: {amt} | (Cannot execute with current contract)")
-                                count += 1
+                            net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
+                            print(
+                                f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} | "
+                                f"in={amt_in:.6f} out={amt_out:.6f} | {net_note} | (Cannot execute with current contract)"
+                            )
+                            count += 1
+                            if auto_execute:
+                                triangular_dry_run(
+                                    start_token,
+                                    b,
+                                    c,
+                                    pair_ab,
+                                    pair_bc,
+                                    pair_ca,
+                                    pair_index,
+                                    rpc_urls,
+                                    start_idx + 1,
+                                    fee_by_dex,
+                                    max_trade_frac,
+                                    weth_price,
+                                    gas_units,
+                                    gas_price_gwei,
+                                    min_net_profit_usd,
+                                    safety_bps,
+                                )
                         except Exception:
                             pass
         if count > 5: break # limit results
@@ -728,8 +889,8 @@ def main() -> None:
     parser.add_argument("--settle-token", choices=["none", "weth", "usdc"], default="none")
     parser.add_argument("--settle-fee-bps", type=Decimal, default=Decimal("30"), help="Fee bps for settle hop.")
     parser.add_argument("--gas-units", type=int, default=200000, help="Gas units for net profit filter.")
-    parser.add_argument("--gas-price-gwei", type=Decimal, default=Decimal("0.1"), help="Gas price in gwei.")
-    parser.add_argument("--min-net-profit-usd", type=Decimal, default=Decimal("0"), help="Minimum net profit in USD.")
+    parser.add_argument("--gas-price-gwei", type=Decimal, default=Decimal("0.02"), help="Gas price in gwei.")
+    parser.add_argument("--min-net-profit-usd", type=Decimal, default=Decimal("1.00"), help="Minimum net profit in USD.")
     parser.add_argument("--dexes", default="uniswapv2,camelot,sushiswapv2")
     parser.add_argument("--focus-top-reserve", type=int, default=0)
     parser.add_argument("--focus-top-volume", type=int, default=0)
@@ -738,6 +899,8 @@ def main() -> None:
     parser.add_argument("--loop", action="store_true", help="Run in a continuous loop.")
     parser.add_argument("--auto-execute", action="store_true", help="Simulate and execute profitable opportunities.")
     parser.add_argument("--triangular", action="store_true", help="Scan for triangular arbitrage (A->B->C->A).")
+    parser.add_argument("--triangular-auto-execute", action="store_true", help="Dry-run simulate triangular routes after discovery.")
+    parser.add_argument("--triangular-safety-bps", type=Decimal, default=Decimal("50"), help="Safety haircut bps for triangular dry-run.")
     args = parser.parse_args()
 
     dexes = [d.strip() for d in args.dexes.split(",") if d.strip()]
@@ -790,6 +953,12 @@ def main() -> None:
         print("no RPC URLs available", file=sys.stderr)
         sys.exit(1)
 
+    fee_by_dex = {
+        "uniswapv2": args.fee_uniswap,
+        "camelot": args.fee_camelot,
+        "sushiswapv2": args.fee_sushiswap,
+    }
+
     all_pairs: List[PairData] = []
     for dex_pairs in pairs_by_dex.values():
         all_pairs.extend(dex_pairs)
@@ -801,13 +970,26 @@ def main() -> None:
         print(f"--- Scan Iteration {iteration} ---")
         reserve_cache: Dict[str, Tuple[int, int]] = {}
 
-        # Triangular Scan
-        if args.triangular:
-            triangular_scan(all_pairs, pair_index, rpc_urls, iteration, reserve_cache)
-
         weth_price, weth_pair = find_best_price_pair(
             WETH, list(STABLES), pair_index, rpc_urls, iteration
         )
+        # Triangular Scan
+        if args.triangular:
+            triangular_scan(
+                all_pairs,
+                pair_index,
+                rpc_urls,
+                iteration,
+                reserve_cache,
+                weth_price,
+                args.gas_units,
+                args.gas_price_gwei,
+                args.min_net_profit_usd,
+                fee_by_dex,
+                args.max_trade_frac,
+                args.triangular_auto_execute,
+                args.triangular_safety_bps,
+            )
 
         keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]
         if focus_keys is not None:
@@ -816,11 +998,6 @@ def main() -> None:
         results = []
         for idx, key in enumerate(keys):
             available = {dex: by_tokens[key][dex] for dex in dexes if dex in by_tokens[key]}
-            fee_by_dex = {
-                "uniswapv2": args.fee_uniswap,
-                "camelot": args.fee_camelot,
-                "sushiswapv2": args.fee_sushiswap,
-            }
 
             # Fetch reserves
             bad_dexes = set()
@@ -866,15 +1043,20 @@ def main() -> None:
             # Settle logic
             settle_token = args.settle_token
             settle_amount = None
+            settle_route = None
             if settle_token != "none":
                 target_token = WETH if settle_token == "weth" else "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
                 settle_result = settle_profit(
                     input_token_addr, profit, target_token, pair_index, rpc_urls, idx, reserve_cache, args.settle_fee_bps
                 )
                 if settle_result:
-                    settle_amount, _ = settle_result
-                    if settle_token == "usdc": profit_usd = settle_amount
-                    elif settle_token == "weth" and weth_price: profit_usd = settle_amount * weth_price
+                    settle_amount, settle_route = settle_result
+                    if settle_amount is None:
+                        continue
+                    if settle_token == "usdc":
+                        profit_usd = settle_amount
+                    elif settle_token == "weth" and weth_price is not None:
+                        profit_usd = settle_amount * weth_price
 
             net_profit_usd = None
             if profit_usd is not None and weth_price is not None:
@@ -893,6 +1075,9 @@ def main() -> None:
                 "profit": profit,
                 "profit_usd": profit_usd,
                 "net_profit_usd": net_profit_usd,
+                "settle_token": settle_token,
+                "settle_amount": settle_amount,
+                "settle_route": settle_route,
                 "pair_a": pair_a,
                 "pair_b": pair_b,
                 "fee_a_bps": int(fee_a_dec * 10000),

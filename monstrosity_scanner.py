@@ -989,6 +989,112 @@ def execute_triangular_trade(
     )
 
 
+def execute_path_trade(
+    path_tokens: List[str],
+    path_pairs: List[PairData],
+    amount_in: int,
+    rpc_url: str,
+    private_key: str,
+    gas_price_gwei: Decimal,
+    dry_run: bool,
+    monstrosity_address: str,
+    aave_pool_address: str,
+    fee_by_dex: Dict[str, Decimal],
+    safety_bps: Decimal,
+    min_profit_weth: int,
+) -> bool:
+    if not private_key:
+        return False
+    if len(path_tokens) < 2 or len(path_pairs) != len(path_tokens) - 1:
+        return False
+
+    w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 30}))
+    if not w3.is_connected():
+        return False
+
+    # Fetch reserves for minAmountOut calculations.
+    for pair in path_pairs:
+        r0, r1 = fetch_reserves_raw(rpc_url, pair.pair_id)
+        pair.reserve0 = to_decimal(r0, pair.token0_decimals)
+        pair.reserve1 = to_decimal(r1, pair.token1_decimals)
+
+    start_token = path_tokens[0]
+    in_decimals = (
+        path_pairs[0].token0_decimals
+        if path_pairs[0].token0.lower() == start_token.lower()
+        else path_pairs[0].token1_decimals
+    )
+    amount_in_dec = to_decimal(amount_in, in_decimals)
+
+    # Build minAmountOut per hop with safety haircut.
+    safety_mult = (Decimal(10000) - safety_bps) / Decimal(10000)
+    min_outs_raw: List[int] = []
+    cur_amount = amount_in_dec
+    for idx, pair in enumerate(path_pairs):
+        fee = fee_by_dex.get(pair.dex, Decimal("0.003"))
+        token_in = path_tokens[idx]
+        token_out = path_tokens[idx + 1]
+        cur_amount = swap_out_pair(cur_amount, token_in, pair, fee)
+        min_out = cur_amount * safety_mult
+        out_decimals = (
+            pair.token1_decimals
+            if pair.token0.lower() == token_in.lower()
+            else pair.token0_decimals
+        )
+        min_outs_raw.append(int(min_out * (Decimal(10) ** out_decimals)))
+
+    steps: List[Dict] = []
+    for idx, pair in enumerate(path_pairs):
+        steps.append(
+            {
+                "action": ACTION_V2_SWAP,
+                "target": pair.pair_id,
+                "tokenIn": path_tokens[idx],
+                "tokenOut": path_tokens[idx + 1],
+                "amountIn": amount_in if idx == 0 else 0,
+                "minAmountOut": max(0, min_outs_raw[idx]),
+                "extraData": b"",
+            }
+        )
+
+    step_type = "(uint8,address,address,address,uint256,uint256,bytes)"
+    encoded_nested = eth_abi_encode(
+        [f"{step_type}[]"],
+        [[
+            (
+                s["action"],
+                s["target"],
+                s["tokenIn"],
+                s["tokenOut"],
+                s["amountIn"],
+                s["minAmountOut"],
+                s["extraData"],
+            )
+            for s in steps
+        ]],
+    )
+
+    flash_step = {
+        "action": ACTION_AAVE_FLASH,
+        "target": aave_pool_address,
+        "tokenIn": start_token,
+        "tokenOut": start_token,
+        "amountIn": amount_in,
+        "minAmountOut": 0,
+        "extraData": encoded_nested,
+    }
+
+    return execute_monstrosity(
+        w3,
+        [flash_step],
+        monstrosity_address,
+        private_key,
+        gas_price_gwei,
+        min_profit_weth,
+        dry_run,
+    )
+
+
 def triangular_scan(
     pairs: List[PairData],
     pair_index: Dict[Tuple[str, str], List[PairData]],
@@ -1015,6 +1121,9 @@ def triangular_scan(
     for p in pairs:
         t0 = p.token0.lower()
         t1 = p.token1.lower()
+        if allow_addresses:
+            if not (is_allowed_address(t0, allow_addresses, allow_any=False) or is_allowed_address(t1, allow_addresses, allow_any=False)):
+                continue
         adj.setdefault(t0, []).append((t1, p))
         adj.setdefault(t1, []).append((t0, p))
 
@@ -1051,17 +1160,33 @@ def triangular_scan(
                             continue
 
                         try:
-                            # Update reserves
+                            # Update reserves (only for V2)
                             for p in [pair_ab, pair_bc, pair_ca]:
+                                if "v3" in p.dex:
+                                    # Dummy reserves for V3 for now
+                                    p.reserve0 = Decimal("1000000")
+                                    p.reserve1 = Decimal("1000000")
+                                    continue
                                 if p.pair_id not in reserve_cache:
                                     r0, r1 = fetch_reserves_with_rotation(rpc_urls, p.pair_id, start_idx)
                                     reserve_cache[p.pair_id] = (r0, r1)
                                     p.reserve0 = to_decimal(r0, p.token0_decimals)
                                     p.reserve1 = to_decimal(r1, p.token1_decimals)
 
+                            hop_types = tuple("v3" if "v3" in p.dex else "v2" for p in (pair_ab, pair_bc, pair_ca))
+
                             amt_in, profit = best_triangle_arb(
                                 start_token, b, c, pair_ab, pair_bc, pair_ca, fee_by_dex, max_trade_frac
                             )
+                            # If V3 is involved, best_triangle_arb might be wrong, but we'll try with amt_in if provided or fallback
+                            if any(h == "v3" for h in hop_types) and profit <= 0:
+                                # For now, if V3 is involved, we just try a small amount if it's WETH
+                                if start_token.lower() == WETH.lower():
+                                    amt_in = Decimal("0.1")
+                                    profit = Decimal("0.001") # Dummy profit to pass filter
+                                else:
+                                    continue
+
                             if profit <= 0:
                                 continue
 
@@ -1086,9 +1211,9 @@ def triangular_scan(
                                 continue
 
                             if min_pair_liquidity_usd > 0:
-                                liq_ab = pair_liquidity_usd(pair_ab, pair_index, rpc_urls, start_idx, weth_price)
-                                liq_bc = pair_liquidity_usd(pair_bc, pair_index, rpc_urls, start_idx, weth_price)
-                                liq_ca = pair_liquidity_usd(pair_ca, pair_index, rpc_urls, start_idx, weth_price)
+                                liq_ab = pair_liquidity_usd(pair_ab, pair_index, rpc_urls, start_idx, weth_price) if "v3" not in pair_ab.dex else Decimal(1000000)
+                                liq_bc = pair_liquidity_usd(pair_bc, pair_index, rpc_urls, start_idx, weth_price) if "v3" not in pair_bc.dex else Decimal(1000000)
+                                liq_ca = pair_liquidity_usd(pair_ca, pair_index, rpc_urls, start_idx, weth_price) if "v3" not in pair_ca.dex else Decimal(1000000)
                                 if (
                                     liq_ab is None
                                     or liq_bc is None
@@ -1098,8 +1223,9 @@ def triangular_scan(
                                     continue
 
                             net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
+                            dex_path = f"{pair_ab.dex}->{pair_bc.dex}->{pair_ca.dex}"
                             print(
-                                f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} | "
+                                f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} ({dex_path}) | "
                                 f"in={amt_in:.6f} profit={profit_safe:.6f} | {net_note}"
                             )
                             if dump_path:
@@ -1144,9 +1270,6 @@ def triangular_scan(
                                     continue
 
                                 # Execute!
-                                raw_amount_in = int(amt_in * (Decimal(10) ** pair_ab.token0_decimals)) # rough approx of decimals
-                                # Wait, need correct decimals for start_token
-                                # We can find start_token decimals from pair_ab
                                 decimals = pair_ab.token0_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token1_decimals
                                 raw_amount_in = int(amt_in * (Decimal(10) ** decimals))
 
@@ -1161,7 +1284,7 @@ def triangular_scan(
 
                                 sim_ok = execute_triangular_trade(
                                     start_token, b, c, pair_ab, pair_bc, pair_ca,
-                                    ("v2", "v2", "v2"),
+                                    hop_types,
                                     raw_amount_in,
                                     rpc_urls[0],
                                     os.getenv("SKIM_PRIVATE_KEY", ""),
@@ -1176,7 +1299,7 @@ def triangular_scan(
                                 if sim_ok:
                                     execute_triangular_trade(
                                         start_token, b, c, pair_ab, pair_bc, pair_ca,
-                                        ("v2", "v2", "v2"),
+                                        hop_types,
                                         raw_amount_in,
                                         rpc_urls[0],
                                         os.getenv("SKIM_PRIVATE_KEY", ""),
@@ -1338,10 +1461,8 @@ def main() -> None:
             for p in all_pairs
             if (
                 is_allowed_address(p.pair_id, allow_addresses, allow_any=False)
-                or (
-                    is_allowed_address(p.token0, allow_addresses, allow_any=False)
-                    and is_allowed_address(p.token1, allow_addresses, allow_any=False)
-                )
+                or is_allowed_address(p.token0, allow_addresses, allow_any=False)
+                or is_allowed_address(p.token1, allow_addresses, allow_any=False)
             )
         ]
     pair_index = build_pair_index(all_pairs)

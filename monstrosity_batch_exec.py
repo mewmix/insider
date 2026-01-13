@@ -8,7 +8,7 @@ from typing import Dict, Iterator
 from dotenv import load_dotenv
 
 from ignore_list import parse_ignore_addresses, is_ignored_address
-from monstrosity_scanner import PairData, execute_triangular_trade
+from monstrosity_scanner import PairData, execute_triangular_trade, execute_path_trade
 from policy import parse_allow_addresses, is_allowed_address
 
 
@@ -67,17 +67,25 @@ def main() -> None:
         if processed >= args.max:
             break
         start_token = str(opp["start_token"]).lower()
-        token_b = str(opp["token_b"]).lower()
-        token_c = str(opp["token_c"]).lower()
-        pair_ab = str(opp["pair_ab"])
-        pair_bc = str(opp["pair_bc"])
-        pair_ca = str(opp["pair_ca"])
+        token_b = str(opp.get("token_b", "")).lower()
+        token_c = str(opp.get("token_c", "")).lower()
+        pair_ab = str(opp.get("pair_ab", ""))
+        pair_bc = str(opp.get("pair_bc", ""))
+        pair_ca = str(opp.get("pair_ca", ""))
         amount_in_raw = int(opp["amount_in_raw"])
 
-        if any(
-            is_ignored_address(addr, ignore_addresses)
-            for addr in (start_token, token_b, token_c, pair_ab, pair_bc, pair_ca)
-        ):
+        path_tokens = [start_token]
+        path_pairs = []
+        path_token_decimals = []
+        if "path_tokens" in opp and "path_pairs" in opp:
+            path_tokens = [t.lower() for t in opp["path_tokens"]]
+            path_pairs = [str(p) for p in opp["path_pairs"]]
+            path_token_decimals = [int(d) for d in opp.get("path_token_decimals", [])]
+        else:
+            path_tokens = [start_token, token_b, token_c, start_token]
+            path_pairs = [pair_ab, pair_bc, pair_ca]
+
+        if any(is_ignored_address(addr, ignore_addresses) for addr in path_tokens + path_pairs):
             continue
 
         if args.auto_execute and not args.auto_execute_allow_any and not allow_addresses:
@@ -104,37 +112,21 @@ def main() -> None:
         pair_bc_obj = build_pair(pair_bc, token_b, token_c, dex_bc, d_b, d_c)
         pair_ca_obj = build_pair(pair_ca, token_c, start_token, dex_ca, d_c, d_start)
 
-        fee_by_dex = {
-            dex_ab: Decimal(int(opp.get("fee_bps_ab", 30))) / Decimal(10000),
-            dex_bc: Decimal(int(opp.get("fee_bps_bc", 30))) / Decimal(10000),
-            dex_ca: Decimal(int(opp.get("fee_bps_ca", 30))) / Decimal(10000),
-        }
+        fee_by_dex = {}
+        if "fee_bps" in opp and "dexes" in opp:
+            for dex, fee_bps in zip(opp["dexes"], opp["fee_bps"]):
+                fee_by_dex[str(dex)] = Decimal(int(fee_bps)) / Decimal(10000)
+        else:
+            fee_by_dex = {
+                dex_ab: Decimal(int(opp.get("fee_bps_ab", 30))) / Decimal(10000),
+                dex_bc: Decimal(int(opp.get("fee_bps_bc", 30))) / Decimal(10000),
+                dex_ca: Decimal(int(opp.get("fee_bps_ca", 30))) / Decimal(10000),
+            }
         safety_bps = Decimal(int(opp.get("safety_bps", 10)))
         min_profit_weth = int(opp.get("min_profit_weth_raw", 0))
 
-        sim_ok = execute_triangular_trade(
-            start_token=start_token,
-            token_b=token_b,
-            token_c=token_c,
-            pair_ab=pair_ab_obj,
-            pair_bc=pair_bc_obj,
-            pair_ca=pair_ca_obj,
-            hop_types=hop_types,
-            amount_in=amount_in_raw,
-            rpc_url=args.rpc_url,
-            private_key=private_key,
-            gas_price_gwei=args.gas_price_gwei,
-            dry_run=True,
-            monstrosity_address=args.monstrosity_addr,
-            aave_pool_address=args.aave_pool,
-            fee_by_dex=fee_by_dex,
-            safety_bps=safety_bps,
-            min_profit_weth=min_profit_weth,
-        )
-        print(f"sim={sim_ok} start={start_token} b={token_b} c={token_c} in={amount_in_raw}")
-        processed += 1
-        if sim_ok and args.auto_execute and not args.dry_run:
-            exec_ok = execute_triangular_trade(
+        if len(path_pairs) == 3 and len(path_tokens) == 4:
+            sim_ok = execute_triangular_trade(
                 start_token=start_token,
                 token_b=token_b,
                 token_c=token_c,
@@ -146,13 +138,80 @@ def main() -> None:
                 rpc_url=args.rpc_url,
                 private_key=private_key,
                 gas_price_gwei=args.gas_price_gwei,
-                dry_run=False,
+                dry_run=True,
                 monstrosity_address=args.monstrosity_addr,
                 aave_pool_address=args.aave_pool,
                 fee_by_dex=fee_by_dex,
                 safety_bps=safety_bps,
                 min_profit_weth=min_profit_weth,
             )
+        else:
+            pair_objs = []
+            for i, pair_id in enumerate(path_pairs):
+                token_in = path_tokens[i]
+                token_out = path_tokens[i + 1]
+                d_in = path_token_decimals[i] if len(path_token_decimals) > i else 18
+                d_out = path_token_decimals[i + 1] if len(path_token_decimals) > i + 1 else 18
+                pair_objs.append(build_pair(pair_id, token_in, token_out, "", d_in, d_out))
+            sim_ok = execute_path_trade(
+                path_tokens=path_tokens,
+                path_pairs=pair_objs,
+                amount_in=amount_in_raw,
+                rpc_url=args.rpc_url,
+                private_key=private_key,
+                gas_price_gwei=args.gas_price_gwei,
+                dry_run=True,
+                monstrosity_address=args.monstrosity_addr,
+                aave_pool_address=args.aave_pool,
+                fee_by_dex=fee_by_dex,
+                safety_bps=safety_bps,
+                min_profit_weth=min_profit_weth,
+            )
+        print(f"sim={sim_ok} start={start_token} b={token_b} c={token_c} in={amount_in_raw}")
+        processed += 1
+        if sim_ok and args.auto_execute and not args.dry_run:
+            if len(path_pairs) == 3 and len(path_tokens) == 4:
+                exec_ok = execute_triangular_trade(
+                    start_token=start_token,
+                    token_b=token_b,
+                    token_c=token_c,
+                    pair_ab=pair_ab_obj,
+                    pair_bc=pair_bc_obj,
+                    pair_ca=pair_ca_obj,
+                    hop_types=hop_types,
+                    amount_in=amount_in_raw,
+                    rpc_url=args.rpc_url,
+                    private_key=private_key,
+                    gas_price_gwei=args.gas_price_gwei,
+                    dry_run=False,
+                    monstrosity_address=args.monstrosity_addr,
+                    aave_pool_address=args.aave_pool,
+                    fee_by_dex=fee_by_dex,
+                    safety_bps=safety_bps,
+                    min_profit_weth=min_profit_weth,
+                )
+            else:
+                pair_objs = []
+                for i, pair_id in enumerate(path_pairs):
+                    token_in = path_tokens[i]
+                    token_out = path_tokens[i + 1]
+                    d_in = path_token_decimals[i] if len(path_token_decimals) > i else 18
+                    d_out = path_token_decimals[i + 1] if len(path_token_decimals) > i + 1 else 18
+                    pair_objs.append(build_pair(pair_id, token_in, token_out, "", d_in, d_out))
+                exec_ok = execute_path_trade(
+                    path_tokens=path_tokens,
+                    path_pairs=pair_objs,
+                    amount_in=amount_in_raw,
+                    rpc_url=args.rpc_url,
+                    private_key=private_key,
+                    gas_price_gwei=args.gas_price_gwei,
+                    dry_run=False,
+                    monstrosity_address=args.monstrosity_addr,
+                    aave_pool_address=args.aave_pool,
+                    fee_by_dex=fee_by_dex,
+                    safety_bps=safety_bps,
+                    min_profit_weth=min_profit_weth,
+                )
             print(f"execute={exec_ok} start={start_token} b={token_b} c={token_c}")
 
 

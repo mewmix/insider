@@ -874,6 +874,7 @@ def execute_triangular_trade(
     pair_ab: PairData,
     pair_bc: PairData,
     pair_ca: PairData,
+    hop_types: Tuple[str, str, str],
     amount_in: int,
     rpc_url: str,
     private_key: str,
@@ -911,14 +912,14 @@ def execute_triangular_trade(
 
     in_decimals = pair_ab.token0_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token1_decimals
     amount_in_dec = to_decimal(amount_in, in_decimals)
-    out1 = swap_out_pair(amount_in_dec, start_token, pair_ab, fee_ab)
-    out2 = swap_out_pair(out1, token_b, pair_bc, fee_bc)
-    out3 = swap_out_pair(out2, token_c, pair_ca, fee_ca)
+    out1 = swap_out_pair(amount_in_dec, start_token, pair_ab, fee_ab) if hop_types[0] != "v3" else Decimal(0)
+    out2 = swap_out_pair(out1, token_b, pair_bc, fee_bc) if hop_types[1] != "v3" else Decimal(0)
+    out3 = swap_out_pair(out2, token_c, pair_ca, fee_ca) if hop_types[2] != "v3" else Decimal(0)
 
     safety_mult = (Decimal(10000) - safety_bps) / Decimal(10000)
-    min_out1 = out1 * safety_mult
-    min_out2 = out2 * safety_mult
-    min_out3 = out3 * safety_mult
+    min_out1 = out1 * safety_mult if hop_types[0] != "v3" else Decimal(0)
+    min_out2 = out2 * safety_mult if hop_types[1] != "v3" else Decimal(0)
+    min_out3 = out3 * safety_mult if hop_types[2] != "v3" else Decimal(0)
 
     out1_decimals = pair_ab.token1_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token0_decimals
     out2_decimals = pair_bc.token1_decimals if pair_bc.token0.lower() == token_b.lower() else pair_bc.token0_decimals
@@ -928,32 +929,36 @@ def execute_triangular_trade(
     min_out2_raw = int(min_out2 * (Decimal(10) ** out2_decimals))
     min_out3_raw = int(min_out3 * (Decimal(10) ** out3_decimals))
 
+    fee_ab_bps = int(fee_ab * Decimal(10000))
+    fee_bc_bps = int(fee_bc * Decimal(10000))
+    fee_ca_bps = int(fee_ca * Decimal(10000))
+
     step1 = {
-        "action": ACTION_V2_SWAP,
+        "action": ACTION_V3_SWAP if hop_types[0] == "v3" else ACTION_V2_SWAP,
         "target": pair_ab.pair_id,
         "tokenIn": start_token,
         "tokenOut": token_b,
         "amountIn": amount_in,
         "minAmountOut": max(0, min_out1_raw),
-        "extraData": b""
+        "extraData": eth_abi_encode(["uint256"], [fee_ab_bps]) if fee_ab_bps != 30 else b""
     }
     step2 = {
-        "action": ACTION_V2_SWAP,
+        "action": ACTION_V3_SWAP if hop_types[1] == "v3" else ACTION_V2_SWAP,
         "target": pair_bc.pair_id,
         "tokenIn": token_b,
         "tokenOut": token_c,
         "amountIn": 0,
         "minAmountOut": max(0, min_out2_raw),
-        "extraData": b""
+        "extraData": eth_abi_encode(["uint256"], [fee_bc_bps]) if fee_bc_bps != 30 else b""
     }
     step3 = {
-        "action": ACTION_V2_SWAP,
+        "action": ACTION_V3_SWAP if hop_types[2] == "v3" else ACTION_V2_SWAP,
         "target": pair_ca.pair_id,
         "tokenIn": token_c,
         "tokenOut": start_token,
         "amountIn": 0,
         "minAmountOut": max(0, min_out3_raw),
-        "extraData": b""
+        "extraData": eth_abi_encode(["uint256"], [fee_ca_bps]) if fee_ca_bps != 30 else b""
     }
 
     nested_steps = [step1, step2, step3]
@@ -1044,11 +1049,7 @@ def triangular_scan(
                             for p in (pair_ab, pair_bc, pair_ca)
                         ):
                             continue
-                        if allow_addresses and any(
-                            not is_allowed_address(p.pair_id, allow_addresses, allow_any=False)
-                            for p in (pair_ab, pair_bc, pair_ca)
-                        ):
-                            continue
+
                         try:
                             # Update reserves
                             for p in [pair_ab, pair_bc, pair_ca]:
@@ -1141,8 +1142,7 @@ def triangular_scan(
                             if auto_execute:
                                 if not allow_any and not allow_addresses:
                                     continue
-                                if start_token.lower() != WETH.lower():
-                                    continue
+
                                 # Execute!
                                 raw_amount_in = int(amt_in * (Decimal(10) ** pair_ab.token0_decimals)) # rough approx of decimals
                                 # Wait, need correct decimals for start_token
@@ -1161,6 +1161,7 @@ def triangular_scan(
 
                                 sim_ok = execute_triangular_trade(
                                     start_token, b, c, pair_ab, pair_bc, pair_ca,
+                                    ("v2", "v2", "v2"),
                                     raw_amount_in,
                                     rpc_urls[0],
                                     os.getenv("SKIM_PRIVATE_KEY", ""),
@@ -1175,6 +1176,7 @@ def triangular_scan(
                                 if sim_ok:
                                     execute_triangular_trade(
                                         start_token, b, c, pair_ab, pair_bc, pair_ca,
+                                        ("v2", "v2", "v2"),
                                         raw_amount_in,
                                         rpc_urls[0],
                                         os.getenv("SKIM_PRIVATE_KEY", ""),

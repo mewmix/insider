@@ -94,6 +94,7 @@ def main() -> None:
         dex_ab = str(opp.get("dex_ab", ""))
         dex_bc = str(opp.get("dex_bc", ""))
         dex_ca = str(opp.get("dex_ca", ""))
+        hop_types = tuple("v3" if "v3" in dex else "v2" for dex in (dex_ab, dex_bc, dex_ca))
 
         d_start = int(opp.get("start_token_decimals", 18))
         d_b = int(opp.get("token_b_decimals", 18))
@@ -118,6 +119,7 @@ def main() -> None:
             pair_ab=pair_ab_obj,
             pair_bc=pair_bc_obj,
             pair_ca=pair_ca_obj,
+            hop_types=hop_types,
             amount_in=amount_in_raw,
             rpc_url=args.rpc_url,
             private_key=private_key,
@@ -139,6 +141,7 @@ def main() -> None:
                 pair_ab=pair_ab_obj,
                 pair_bc=pair_bc_obj,
                 pair_ca=pair_ca_obj,
+                hop_types=hop_types,
                 amount_in=amount_in_raw,
                 rpc_url=args.rpc_url,
                 private_key=private_key,

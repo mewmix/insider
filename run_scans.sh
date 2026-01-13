@@ -1,33 +1,21 @@
 #!/bin/bash
 
 # Kill existing python processes to avoid duplicates
+pkill -f "universal_scanner.py" || true
 pkill -f "flash_swap_scanner.py" || true
 
-# Narrow/Fast Scan (2-hop)
-# Using defaults: 0.02 Gwei, $1 Min Profit, No max pairs.
-# Focus on top 25 results, loop, auto-execute.
-echo "Starting Narrow Scan..."
-python3 flash_swap_scanner.py \
-    --loop \
+# Global Scanner (Universal)
+# Auto execute, Hunt profit ($1+), Use DB (skim_pairs.db default)
+# Including both 2-hop and Triangular (via --max-hops 3) as per "Wide Hunt" / "Global" implication.
+echo "Starting Global Scanner..."
+python3 universal_scanner.py \
+    --db-path skim_pairs.db \
     --auto-execute \
-    --max-pairs 0 \
-    --gas-price-gwei 0.02 \
     --min-net-profit-usd 1.00 \
-    --settle-token weth \
-    > narrow_scan.log 2>&1 &
-
-# Wide/Triangular Scan
-# Triangular logic, wide search, loop, auto-execute.
-echo "Starting Wide Triangular Scan..."
-python3 flash_swap_scanner.py \
-    --triangular \
-    --triangular-auto-execute \
     --loop \
-    --auto-execute \
-    --max-pairs 0 \
-    --gas-price-gwei 0.02 \
-    --min-net-profit-usd 1.00 \
+    --max-hops 3 \
     --settle-token weth \
-    > wide_scan.log 2>&1 &
+    --gas-price-gwei 0.02 \
+    > global_scan.log 2>&1 &
 
-echo "Scanners running in background. Check narrow_scan.log and wide_scan.log."
+echo "Global scanner running in background. Check global_scan.log."

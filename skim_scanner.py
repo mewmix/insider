@@ -6,7 +6,7 @@ import sys
 import time
 from dataclasses import dataclass
 from decimal import Decimal, getcontext
-from typing import Dict, Iterable, List, Optional, Tuple, Set
+from typing import Dict, Iterable, List, Optional, Tuple, Set, Any
 
 import httpx
 from dotenv import load_dotenv
@@ -52,6 +52,7 @@ RPC_ENDPOINTS = {
     "unifra": "https://arb-mainnet-public.unifra.io",
     "alchemy_demo": "https://arb-mainnet.g.alchemy.com/v2/demo",
 }
+
 CAMELOT_V2_SUBGRAPH = os.getenv(
     "CAMELOT_V2_SUBGRAPH",
     "https://gateway.thegraph.com/api/subgraphs/id/8zagLSufxk5cVhzkzai3tyABwJh53zxn9tmUYJcJxijG",
@@ -62,7 +63,7 @@ UNISWAP_V2_SUBGRAPH = os.getenv(
 )
 SUSHISWAP_V2_SUBGRAPH = os.getenv(
     "SUSHISWAP_V2_SUBGRAPH",
-    "https://gateway.thegraph.com/api/subgraphs/id/8yBXBTMfdhsoE5QCf7KnoPmQb7QAWtRzESfYjiCjGEM9",
+    "https://gateway.thegraph.com/api/subgraphs/id/DC8eAnu4QNLcWGBNkGNwcFPGXHhdzVEzBMNVMhCw8hHD",
 )
 PANCAKESWAP_V2_SUBGRAPH = os.getenv(
     "PANCAKESWAP_V2_SUBGRAPH",
@@ -72,6 +73,23 @@ UNISWAP_V3_SUBGRAPH = os.getenv(
     "UNISWAP_V3_SUBGRAPH",
     "https://gateway.thegraph.com/api/subgraphs/id/HyW7A86UEdYVt5b9Lrw8W2F98yKecerHKutZTRbSCX27",
 )
+BALANCER_V2_SUBGRAPH = os.getenv(
+    "BALANCER_V2_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/98cQDy6tufTJtshDCuhh9z2kWXsQWBHVh2bqnLHsGAeS",
+)
+DODO_SUBGRAPH = os.getenv(
+    "DODO_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/5G1mhjXywQyo482AtNrmhXi6sg75f51QCAFxydP4iEoY",
+)
+INTEGRAL_SUBGRAPH = os.getenv(
+    "INTEGRAL_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/Au6MBfZRrwW38ri2oNTb8CBSMixqki7XVYGy7QMWmwJJ",
+)
+GMX_SUBGRAPH = os.getenv(
+    "GMX_SUBGRAPH",
+    "https://gateway.thegraph.com/api/subgraphs/id/DiR5cWwB3pwXXQWWdus7fDLR2mnFRQLiBFsVmHAH9VAs",
+)
+
 GRAPH_API_KEY = os.getenv("GRAPH_API_KEY")
 
 PAIR_QUERY = """
@@ -87,7 +105,6 @@ query Pairs($lastId: String!, $first: Int!) {
 }
 """
 
-# PancakeSwap V2 subgraph doesn't have symbol or reserves in the entity schema
 MINIMAL_PAIR_QUERY = """
 query Pairs($lastId: String!, $first: Int!) {
   pairs(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
@@ -105,6 +122,37 @@ query Pools($lastId: String!, $first: Int!) {
     id
     token0 { id symbol decimals }
     token1 { id symbol decimals }
+  }
+  _meta { block { number } }
+}
+"""
+
+BALANCER_POOL_QUERY = """
+query Pools($lastId: String!, $first: Int!) {
+  pools(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
+    id
+    tokens { address symbol decimals }
+  }
+  _meta { block { number } }
+}
+"""
+
+DODO_PAIR_QUERY = """
+query Pairs($lastId: String!, $first: Int!) {
+  pairs(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
+    id
+    baseToken { id symbol decimals }
+    quoteToken { id symbol decimals }
+  }
+  _meta { block { number } }
+}
+"""
+
+GMX_POOL_QUERY = """
+query Pools($lastId: String!, $first: Int!) {
+  liquidityPools(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
+    id
+    inputTokens { id symbol decimals }
   }
   _meta { block { number } }
 }
@@ -300,15 +348,26 @@ def fetch_pairs_page(
     subgraph: str,
     last_id: str,
     first: int,
-    use_pools: bool = False,
-    is_pancake: bool = False,
+    query_type: str = "standard_v2",
 ) -> Tuple[List[PairInfo], Optional[int]]:
-    if use_pools:
+    if query_type == "uniswap_v3":
         query = POOL_QUERY
-    elif is_pancake:
+        entity_key = "pools"
+    elif query_type == "pancake_v2":
         query = MINIMAL_PAIR_QUERY
+        entity_key = "pairs"
+    elif query_type == "balancer":
+        query = BALANCER_POOL_QUERY
+        entity_key = "pools"
+    elif query_type == "dodo":
+        query = DODO_PAIR_QUERY
+        entity_key = "pairs"
+    elif query_type == "gmx":
+        query = GMX_POOL_QUERY
+        entity_key = "liquidityPools"
     else:
         query = PAIR_QUERY
+        entity_key = "pairs"
 
     data = gql_post(
         subgraph,
@@ -316,7 +375,6 @@ def fetch_pairs_page(
         {"lastId": last_id, "first": first},
     )
 
-    entity_key = "pools" if use_pools else "pairs"
     batch = data.get(entity_key, [])
     block_number = None
     if "_meta" in data:
@@ -325,34 +383,75 @@ def fetch_pairs_page(
         if "number" in block:
             block_number = int(block["number"])
     pairs: List[PairInfo] = []
+
     for row in batch:
-        t0 = row["token0"]
-        t1 = row["token1"]
+        try:
+            pair_addr = row["id"]
+            if query_type == "dodo":
+                # Filter out composite IDs if any, ensure it looks like address
+                if "-" in pair_addr:
+                    # Some DODO pairs use base-quote ID, but valid ones also exist as addresses?
+                    # Actually logic: if it's not a valid address, skip.
+                    # But if the ID IS the address, great.
+                    # If ID is composite, we can't use it as address for RPC.
+                    continue
 
-        token0 = TokenInfo(
-            address=t0["id"],
-            symbol=t0.get("symbol", "?"),
-            decimals=int(t0["decimals"]),
-        )
-        token1 = TokenInfo(
-            address=t1["id"],
-            symbol=t1.get("symbol", "?"),
-            decimals=int(t1["decimals"]),
-        )
+            # Extract tokens
+            if query_type == "balancer":
+                tokens = row.get("tokens", [])
+                if len(tokens) < 2:
+                    continue
+                # Take first 2 tokens
+                t0_data, t1_data = tokens[0], tokens[1]
+                t0 = {"id": t0_data["address"], "symbol": t0_data.get("symbol", "?"), "decimals": int(t0_data["decimals"])}
+                t1 = {"id": t1_data["address"], "symbol": t1_data.get("symbol", "?"), "decimals": int(t1_data["decimals"])}
+            elif query_type == "gmx":
+                tokens = row.get("inputTokens", [])
+                if len(tokens) < 2:
+                    continue
+                t0_data, t1_data = tokens[0], tokens[1]
+                t0 = {"id": t0_data["id"], "symbol": t0_data.get("symbol", "?"), "decimals": int(t0_data["decimals"])}
+                t1 = {"id": t1_data["id"], "symbol": t1_data.get("symbol", "?"), "decimals": int(t1_data["decimals"])}
+            elif query_type == "dodo":
+                t0_data = row["baseToken"]
+                t1_data = row["quoteToken"]
+                t0 = {"id": t0_data["id"], "symbol": t0_data.get("symbol", "?"), "decimals": int(t0_data["decimals"])}
+                t1 = {"id": t1_data["id"], "symbol": t1_data.get("symbol", "?"), "decimals": int(t1_data["decimals"])}
+            else:
+                # Standard V2/V3
+                t0_data = row["token0"]
+                t1_data = row["token1"]
+                t0 = {"id": t0_data["id"], "symbol": t0_data.get("symbol", "?"), "decimals": int(t0_data["decimals"])}
+                t1 = {"id": t1_data["id"], "symbol": t1_data.get("symbol", "?"), "decimals": int(t1_data["decimals"])}
 
-        # For V3 pools or Pancake minimal query, reserves might not be present.
-        r0 = Decimal(row.get("reserve0", "0"))
-        r1 = Decimal(row.get("reserve1", "0"))
-
-        pairs.append(
-            PairInfo(
-                address=row["id"],
-                token0=token0,
-                token1=token1,
-                reserve0=r0,
-                reserve1=r1,
+            token0 = TokenInfo(
+                address=t0["id"],
+                symbol=t0.get("symbol", "?"),
+                decimals=t0["decimals"],
             )
-        )
+            token1 = TokenInfo(
+                address=t1["id"],
+                symbol=t1.get("symbol", "?"),
+                decimals=t1["decimals"],
+            )
+
+            # Reserves
+            r0 = Decimal(row.get("reserve0", "0"))
+            r1 = Decimal(row.get("reserve1", "0"))
+
+            pairs.append(
+                PairInfo(
+                    address=pair_addr,
+                    token0=token0,
+                    token1=token1,
+                    reserve0=r0,
+                    reserve1=r1,
+                )
+            )
+        except Exception as e:
+            # print(f"Skipping row {row.get('id', '?')}: {e}", file=sys.stderr)
+            continue
+
     return pairs, block_number
 
 
@@ -360,8 +459,7 @@ def fetch_pairs(
     subgraph: str,
     max_pairs: int,
     page_size: int = 200,
-    use_pools: bool = False,
-    is_pancake: bool = False,
+    query_type: str = "standard_v2",
 ) -> List[PairInfo]:
     pairs: List[PairInfo] = []
     last_id = ""
@@ -371,7 +469,7 @@ def fetch_pairs(
         if limit is not None:
             fetch_size = min(page_size, limit - len(pairs))
         batch, _ = fetch_pairs_page(
-            subgraph, last_id, fetch_size, use_pools=use_pools, is_pancake=is_pancake
+            subgraph, last_id, fetch_size, query_type=query_type
         )
         if not batch:
             break
@@ -498,16 +596,34 @@ def scan_pairs(
 
 def build_pairs(dex: str, max_pairs: int) -> List[PairInfo]:
     pairs: List[PairInfo] = []
-    if dex in ("camelot", "both", "all"):
-        pairs.extend(fetch_pairs(CAMELOT_V2_SUBGRAPH, max_pairs))
-    if dex in ("uniswapv2", "both", "all"):
-        pairs.extend(fetch_pairs(UNISWAP_V2_SUBGRAPH, max_pairs))
-    if dex in ("sushiswapv2", "sushiswap", "all"):
-        pairs.extend(fetch_pairs(SUSHISWAP_V2_SUBGRAPH, max_pairs))
-    if dex in ("pancakeswap", "all"):
-        pairs.extend(fetch_pairs(PANCAKESWAP_V2_SUBGRAPH, max_pairs, is_pancake=True))
-    if dex in ("uniswapv3", "all"):
-        pairs.extend(fetch_pairs(UNISWAP_V3_SUBGRAPH, max_pairs, use_pools=True))
+
+    config = {
+        "camelot": (CAMELOT_V2_SUBGRAPH, "standard_v2"),
+        "uniswapv2": (UNISWAP_V2_SUBGRAPH, "standard_v2"),
+        "sushiswap": (SUSHISWAP_V2_SUBGRAPH, "standard_v2"),
+        "pancakeswap": (PANCAKESWAP_V2_SUBGRAPH, "pancake_v2"),
+        "uniswapv3": (UNISWAP_V3_SUBGRAPH, "uniswap_v3"),
+        "balancer": (BALANCER_V2_SUBGRAPH, "balancer"),
+        "dodo": (DODO_SUBGRAPH, "dodo"),
+        "integral": (INTEGRAL_SUBGRAPH, "standard_v2"),
+        "gmx": (GMX_SUBGRAPH, "gmx"),
+    }
+
+    target_dexes = []
+    if dex == "all":
+        target_dexes = list(config.keys())
+    elif dex == "both":
+        target_dexes = ["camelot", "uniswapv2"]
+    else:
+        # allow comma separated
+        target_dexes = dex.split(",")
+
+    for d in target_dexes:
+        d = d.strip()
+        if d in config:
+            url, qtype = config[d]
+            pairs.extend(fetch_pairs(url, max_pairs, query_type=qtype))
+
     return pairs
 
 
@@ -584,21 +700,6 @@ def load_pairs_from_watchlist(
     return pairs
 
 
-def update_pair_scan_state(
-    conn: sqlite3.Connection, dex: str, pair_ids: List[str], block_number: Optional[int]
-) -> None:
-    if block_number is None or not pair_ids:
-        return
-    conn.executemany(
-        """
-        UPDATE pairs SET last_seen_block = ?
-        WHERE dex = ? AND pair_id = ?
-        """,
-        [(block_number, dex, pair_id) for pair_id in pair_ids],
-    )
-    conn.commit()
-
-
 def crawl_pairs_to_db(
     dex: str,
     subgraph: str,
@@ -606,8 +707,7 @@ def crawl_pairs_to_db(
     batch_size: int,
     max_pairs: int,
     resume: bool,
-    use_pools: bool = False,
-    is_pancake: bool = False,
+    query_type: str = "standard_v2",
 ) -> int:
     last_id = ""
     if resume:
@@ -621,7 +721,7 @@ def crawl_pairs_to_db(
         if limit is not None:
             fetch_size = min(batch_size, limit - total)
         batch, block_number = fetch_pairs_page(
-            subgraph, last_id, fetch_size, use_pools=use_pools, is_pancake=is_pancake
+            subgraph, last_id, fetch_size, query_type=query_type
         )
         if not batch:
             break
@@ -634,13 +734,12 @@ def crawl_pairs_to_db(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Minimal v2 pair skim scanner for Arbitrum (Camelot + Uniswap v2 + SushiSwap + PancakeSwap + Uniswap V3)."
+        description="Minimal v2 pair skim scanner for Arbitrum."
     )
     parser.add_argument(
         "--dex",
-        choices=["camelot", "uniswapv2", "sushiswap", "sushiswapv2", "pancakeswap", "uniswapv3", "both", "all"],
         default="all",
-        help="Which subgraph to scan.",
+        help="Which subgraph to scan (comma separated or 'all').",
     )
     parser.add_argument(
         "--max-pairs",
@@ -704,54 +803,54 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    # Configuration mapping
+    config = {
+        "camelot": (CAMELOT_V2_SUBGRAPH, "standard_v2"),
+        "uniswapv2": (UNISWAP_V2_SUBGRAPH, "standard_v2"),
+        "sushiswap": (SUSHISWAP_V2_SUBGRAPH, "standard_v2"),
+        "sushiswapv2": (SUSHISWAP_V2_SUBGRAPH, "standard_v2"), # alias
+        "pancakeswap": (PANCAKESWAP_V2_SUBGRAPH, "pancake_v2"),
+        "uniswapv3": (UNISWAP_V3_SUBGRAPH, "uniswap_v3"),
+        "balancer": (BALANCER_V2_SUBGRAPH, "balancer"),
+        "dodo": (DODO_SUBGRAPH, "dodo"),
+        "integral": (INTEGRAL_SUBGRAPH, "standard_v2"),
+        "gmx": (GMX_SUBGRAPH, "gmx"),
+        # Note: Ramses Exchange (GUje...) and WOOFi Swap (7oJ7...) omitted due to schema/entity issues.
+        # Ramses subgraph appears to lack standard entities (pairs/pools/tokens) in the provided ID.
+        # WOOFi subgraph only exposes Tokens, no Pool/Pair entities suitable for skimming.
+    }
+
     if args.crawl:
         conn = init_pairs_db(args.db_path)
-        if args.dex in ("camelot", "both", "all"):
+
+        target_dexes = []
+        if args.dex == "all":
+            target_dexes = list(config.keys())
+        elif args.dex == "both":
+            target_dexes = ["camelot", "uniswapv2"]
+        else:
+            target_dexes = args.dex.split(",")
+
+        # Remove aliases from "all" if present to avoid duplicate work?
+        # dict keys are unique. but "sushiswap" and "sushiswapv2" point to same.
+        # if "all", both keys are in list.
+        # let's handle dedup by value? or just scan twice (harmless usually as sqlite uses ON CONFLICT).
+
+        for dex_key in target_dexes:
+            dex_key = dex_key.strip()
+            if dex_key not in config:
+                print(f"Unknown dex: {dex_key}")
+                continue
+
+            subgraph_url, query_type = config[dex_key]
             crawl_pairs_to_db(
-                "camelot",
-                CAMELOT_V2_SUBGRAPH,
+                dex_key,
+                subgraph_url,
                 conn,
                 args.batch_size,
                 args.max_pairs,
                 args.resume,
-            )
-        if args.dex in ("uniswapv2", "both", "all"):
-            crawl_pairs_to_db(
-                "uniswapv2",
-                UNISWAP_V2_SUBGRAPH,
-                conn,
-                args.batch_size,
-                args.max_pairs,
-                args.resume,
-            )
-        if args.dex in ("sushiswapv2", "sushiswap", "all"):
-            crawl_pairs_to_db(
-                "sushiswapv2",
-                SUSHISWAP_V2_SUBGRAPH,
-                conn,
-                args.batch_size,
-                args.max_pairs,
-                args.resume,
-            )
-        if args.dex in ("pancakeswap", "all"):
-            crawl_pairs_to_db(
-                "pancakeswap",
-                PANCAKESWAP_V2_SUBGRAPH,
-                conn,
-                args.batch_size,
-                args.max_pairs,
-                args.resume,
-                is_pancake=True,
-            )
-        if args.dex in ("uniswapv3", "all"):
-            crawl_pairs_to_db(
-                "uniswapv3",
-                UNISWAP_V3_SUBGRAPH,
-                conn,
-                args.batch_size,
-                args.max_pairs,
-                args.resume,
-                use_pools=True,
+                query_type=query_type
             )
         return
 
@@ -761,18 +860,21 @@ def main() -> None:
     elif args.scan_db:
         conn = init_pairs_db(args.db_path)
         pairs = []
-        if args.dex in ("camelot", "both", "all"):
-            pairs.extend(load_pairs_from_db(conn, "camelot", args.max_pairs))
-        if args.dex in ("uniswapv2", "both", "all"):
-            pairs.extend(load_pairs_from_db(conn, "uniswapv2", args.max_pairs))
-        if args.dex in ("sushiswapv2", "sushiswap", "all"):
-            pairs.extend(load_pairs_from_db(conn, "sushiswapv2", args.max_pairs))
-        if args.dex in ("pancakeswap", "all"):
-            pairs.extend(load_pairs_from_db(conn, "pancakeswap", args.max_pairs))
-        if args.dex in ("uniswapv3", "all"):
-            pairs.extend(load_pairs_from_db(conn, "uniswapv3", args.max_pairs))
+
+        target_dexes = []
+        if args.dex == "all":
+            target_dexes = list(config.keys())
+        elif args.dex == "both":
+            target_dexes = ["camelot", "uniswapv2"]
+        else:
+            target_dexes = args.dex.split(",")
+
+        for dex_key in target_dexes:
+             dex_key = dex_key.strip()
+             pairs.extend(load_pairs_from_db(conn, dex_key, args.max_pairs))
     else:
         pairs = build_pairs(args.dex, args.max_pairs)
+
     if not pairs:
         print("no pairs loaded")
         return

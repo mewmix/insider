@@ -1110,6 +1110,9 @@ def triangular_scan(
     allow_addresses: Set[str],
     allow_any: bool,
     min_pair_liquidity_usd: Decimal,
+    simulate_all: bool,
+    allow_v3: bool,
+    v3_amount_in: Decimal,
 ) -> None:
     adj: Dict[str, List[Tuple[str, PairData]]] = {}
     for p in pairs:
@@ -1154,12 +1157,14 @@ def triangular_scan(
                             continue
 
                         try:
+                            hop_types = tuple("v3" if "v3" in p.dex else "v2" for p in (pair_ab, pair_bc, pair_ca))
+                            has_v3 = any(h == "v3" for h in hop_types)
+                            if has_v3 and not allow_v3:
+                                continue
+
                             # Update reserves (only for V2)
                             for p in [pair_ab, pair_bc, pair_ca]:
                                 if "v3" in p.dex:
-                                    # Dummy reserves for V3 for now
-                                    p.reserve0 = Decimal("1000000")
-                                    p.reserve1 = Decimal("1000000")
                                     continue
                                 if p.pair_id not in reserve_cache:
                                     r0, r1 = fetch_reserves_with_rotation(rpc_urls, p.pair_id, start_idx)
@@ -1167,115 +1172,70 @@ def triangular_scan(
                                     p.reserve0 = to_decimal(r0, p.token0_decimals)
                                     p.reserve1 = to_decimal(r1, p.token1_decimals)
 
-                            hop_types = tuple("v3" if "v3" in p.dex else "v2" for p in (pair_ab, pair_bc, pair_ca))
-
-                            amt_in, profit = best_triangle_arb(
-                                start_token, b, c, pair_ab, pair_bc, pair_ca, fee_by_dex, max_trade_frac
-                            )
-                            # If V3 is involved, best_triangle_arb might be wrong, but we'll try with amt_in if provided or fallback
-                            if any(h == "v3" for h in hop_types) and profit <= 0:
-                                # For now, if V3 is involved, we just try a small amount if it's WETH
-                                if start_token.lower() == WETH.lower():
-                                    amt_in = Decimal("0.1")
-                                    profit = Decimal("0.001") # Dummy profit to pass filter
-                                else:
-                                    continue
-
-                            if profit <= 0:
-                                continue
-
-                            # Safety haircut
-                            safety_mult = (Decimal(10000) - safety_bps) / Decimal(10000)
-                            # Profit is (out - in). We apply safety to out.
-                            amt_out = amt_in + profit
-                            amt_out_safe = amt_out * safety_mult
-                            profit_safe = amt_out_safe - amt_in
-
-                            if profit_safe <= 0: continue
-
-                            price_usd = token_price_usd(start_token, pair_index, rpc_urls, start_idx, weth_price)
-                            profit_usd = None if price_usd is None else profit_safe * price_usd
+                            estimate_ok = not has_v3
+                            profit_safe = Decimal(0)
                             net_profit_usd = None
-                            if profit_usd is not None and weth_price is not None:
-                                gas_cost_eth = (Decimal(gas_units) * gas_price_gwei) / Decimal(1e9)
-                                gas_cost_usd = gas_cost_eth * weth_price
-                                net_profit_usd = profit_usd - gas_cost_usd
-
-                            if min_net_profit_usd > 0 and (net_profit_usd is None or net_profit_usd < min_net_profit_usd):
-                                continue
-
-                            if min_pair_liquidity_usd > 0:
-                                liq_ab = pair_liquidity_usd(pair_ab, pair_index, rpc_urls, start_idx, weth_price) if "v3" not in pair_ab.dex else Decimal(1000000)
-                                liq_bc = pair_liquidity_usd(pair_bc, pair_index, rpc_urls, start_idx, weth_price) if "v3" not in pair_bc.dex else Decimal(1000000)
-                                liq_ca = pair_liquidity_usd(pair_ca, pair_index, rpc_urls, start_idx, weth_price) if "v3" not in pair_ca.dex else Decimal(1000000)
-                                if (
-                                    liq_ab is None
-                                    or liq_bc is None
-                                    or liq_ca is None
-                                    or min(liq_ab, liq_bc, liq_ca) < min_pair_liquidity_usd
-                                ):
+                            amt_in = Decimal(0)
+                            if estimate_ok:
+                                amt_in, profit = best_triangle_arb(
+                                    start_token, b, c, pair_ab, pair_bc, pair_ca, fee_by_dex, max_trade_frac
+                                )
+                                if profit <= 0:
                                     continue
 
-                            net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
-                            dex_path = f"{pair_ab.dex}->{pair_bc.dex}->{pair_ca.dex}"
-                            print(
-                                f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} ({dex_path}) | "
-                                f"in={amt_in:.6f} profit={profit_safe:.6f} | {net_note}"
-                            )
-                            if dump_path:
-                                decimals = pair_ab.token0_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token1_decimals
-                                min_profit_weth = Decimal(0)
-                                if (
-                                    weth_price is not None
-                                    and min_net_profit_usd > 0
-                                    and start_token.lower() == WETH.lower()
-                                ):
-                                    min_profit_weth = min_net_profit_usd / weth_price
-                                min_profit_weth_raw = int(min_profit_weth * Decimal(10) ** 18) if min_profit_weth > 0 else 0
-                                payload = {
-                                    "start_token": start_token,
-                                    "token_b": b,
-                                    "token_c": c,
-                                    "pair_ab": pair_ab.pair_id,
-                                    "pair_bc": pair_bc.pair_id,
-                                    "pair_ca": pair_ca.pair_id,
-                                    "dex_ab": pair_ab.dex,
-                                    "dex_bc": pair_bc.dex,
-                                    "dex_ca": pair_ca.dex,
-                                    "amount_in": str(amt_in),
-                                    "amount_in_raw": int(amt_in * (Decimal(10) ** decimals)),
-                                    "start_token_decimals": decimals,
-                                    "token_b_decimals": pair_ab.token1_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token0_decimals,
-                                    "token_c_decimals": pair_bc.token1_decimals if pair_bc.token0.lower() == b else pair_bc.token0_decimals,
-                                    "profit_est": str(profit_safe),
-                                    "net_profit_usd_est": None if net_profit_usd is None else str(net_profit_usd),
-                                    "fee_bps_ab": int(fee_by_dex.get(pair_ab.dex, Decimal("0.003")) * Decimal(10000)),
-                                    "fee_bps_bc": int(fee_by_dex.get(pair_bc.dex, Decimal("0.003")) * Decimal(10000)),
-                                    "fee_bps_ca": int(fee_by_dex.get(pair_ca.dex, Decimal("0.003")) * Decimal(10000)),
-                                    "safety_bps": int(safety_bps),
-                                    "min_profit_weth_raw": min_profit_weth_raw,
-                                    "timestamp": int(time.time()),
-                                }
-                                with open(dump_path, "a", encoding="utf-8") as handle:
-                                    handle.write(json.dumps(payload) + "\n")
-                            count += 1
-                            if auto_execute:
-                                if not allow_any and not allow_addresses:
+                                # Safety haircut
+                                safety_mult = (Decimal(10000) - safety_bps) / Decimal(10000)
+                                # Profit is (out - in). We apply safety to out.
+                                amt_out = amt_in + profit
+                                amt_out_safe = amt_out * safety_mult
+                                profit_safe = amt_out_safe - amt_in
+
+                                if profit_safe <= 0:
                                     continue
 
-                                # Execute!
-                                decimals = pair_ab.token0_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token1_decimals
-                                raw_amount_in = int(amt_in * (Decimal(10) ** decimals))
+                                price_usd = token_price_usd(start_token, pair_index, rpc_urls, start_idx, weth_price)
+                                profit_usd = None if price_usd is None else profit_safe * price_usd
+                                if profit_usd is not None and weth_price is not None:
+                                    gas_cost_eth = (Decimal(gas_units) * gas_price_gwei) / Decimal(1e9)
+                                    gas_cost_usd = gas_cost_eth * weth_price
+                                    net_profit_usd = profit_usd - gas_cost_usd
 
-                                min_profit_weth = Decimal(0)
-                                if (
-                                    weth_price is not None
-                                    and min_net_profit_usd > 0
-                                    and start_token.lower() == WETH.lower()
-                                ):
-                                    min_profit_weth = min_net_profit_usd / weth_price
-                                min_profit_weth_raw = int(min_profit_weth * Decimal(10) ** 18) if min_profit_weth > 0 else 0
+                                if min_net_profit_usd > 0 and (net_profit_usd is None or net_profit_usd < min_net_profit_usd):
+                                    continue
 
+                                if min_pair_liquidity_usd > 0:
+                                    liq_ab = pair_liquidity_usd(pair_ab, pair_index, rpc_urls, start_idx, weth_price)
+                                    liq_bc = pair_liquidity_usd(pair_bc, pair_index, rpc_urls, start_idx, weth_price)
+                                    liq_ca = pair_liquidity_usd(pair_ca, pair_index, rpc_urls, start_idx, weth_price)
+                                    if (
+                                        liq_ab is None
+                                        or liq_bc is None
+                                        or liq_ca is None
+                                        or min(liq_ab, liq_bc, liq_ca) < min_pair_liquidity_usd
+                                    ):
+                                        continue
+
+                            else:
+                                if start_token.lower() != WETH.lower():
+                                    continue
+                                amt_in = v3_amount_in
+
+                            min_profit_weth = Decimal(0)
+                            if (
+                                weth_price is not None
+                                and min_net_profit_usd > 0
+                                and start_token.lower() == WETH.lower()
+                            ):
+                                min_profit_weth = min_net_profit_usd / weth_price
+                            min_profit_weth_raw = int(min_profit_weth * Decimal(10) ** 18) if min_profit_weth > 0 else 0
+
+                            decimals = pair_ab.token0_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token1_decimals
+                            raw_amount_in = int(amt_in * (Decimal(10) ** decimals))
+
+                            sim_ok = False
+                            if simulate_all or auto_execute:
+                                if min_net_profit_usd > 0 and start_token.lower() != WETH.lower():
+                                    continue
                                 sim_ok = execute_triangular_trade(
                                     start_token, b, c, pair_ab, pair_bc, pair_ca,
                                     hop_types,
@@ -1290,21 +1250,73 @@ def triangular_scan(
                                     safety_bps=safety_bps,
                                     min_profit_weth=min_profit_weth_raw,
                                 )
-                                if sim_ok:
-                                    execute_triangular_trade(
-                                        start_token, b, c, pair_ab, pair_bc, pair_ca,
-                                        hop_types,
-                                        raw_amount_in,
-                                        rpc_urls[0],
-                                        os.getenv("SKIM_PRIVATE_KEY", ""),
-                                        gas_price_gwei,
-                                        dry_run=False,
-                                        monstrosity_address=monstrosity_address,
-                                        aave_pool_address=aave_pool_address,
-                                        fee_by_dex=fee_by_dex,
-                                        safety_bps=safety_bps,
-                                        min_profit_weth=min_profit_weth_raw,
+                                if simulate_all:
+                                    status = "ok" if sim_ok else "fail"
+                                    dex_path = f"{pair_ab.dex}->{pair_bc.dex}->{pair_ca.dex}"
+                                    print(
+                                        f"SIM {status}: {start_token}->{b}->{c}->{start_token} ({dex_path}) | in={amt_in:.6f}"
                                     )
+
+                            if estimate_ok:
+                                net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
+                                dex_path = f"{pair_ab.dex}->{pair_bc.dex}->{pair_ca.dex}"
+                                print(
+                                    f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} ({dex_path}) | "
+                                    f"in={amt_in:.6f} profit={profit_safe:.6f} | {net_note}"
+                                )
+                            elif sim_ok:
+                                dex_path = f"{pair_ab.dex}->{pair_bc.dex}->{pair_ca.dex}"
+                                print(
+                                    f"FOUND TRIANGULAR ARB (sim-only): {start_token}->{b}->{c}->{start_token} ({dex_path}) | "
+                                    f"in={amt_in:.6f}"
+                                )
+
+                            if dump_path and (estimate_ok or sim_ok):
+                                payload = {
+                                    "start_token": start_token,
+                                    "token_b": b,
+                                    "token_c": c,
+                                    "pair_ab": pair_ab.pair_id,
+                                    "pair_bc": pair_bc.pair_id,
+                                    "pair_ca": pair_ca.pair_id,
+                                    "dex_ab": pair_ab.dex,
+                                    "dex_bc": pair_bc.dex,
+                                    "dex_ca": pair_ca.dex,
+                                    "amount_in": str(amt_in),
+                                    "amount_in_raw": raw_amount_in,
+                                    "start_token_decimals": decimals,
+                                    "token_b_decimals": pair_ab.token1_decimals if pair_ab.token0.lower() == start_token.lower() else pair_ab.token0_decimals,
+                                    "token_c_decimals": pair_bc.token1_decimals if pair_bc.token0.lower() == b else pair_bc.token0_decimals,
+                                    "profit_est": str(profit_safe),
+                                    "net_profit_usd_est": None if net_profit_usd is None else str(net_profit_usd),
+                                    "fee_bps_ab": int(fee_by_dex.get(pair_ab.dex, Decimal("0.003")) * Decimal(10000)),
+                                    "fee_bps_bc": int(fee_by_dex.get(pair_bc.dex, Decimal("0.003")) * Decimal(10000)),
+                                    "fee_bps_ca": int(fee_by_dex.get(pair_ca.dex, Decimal("0.003")) * Decimal(10000)),
+                                    "safety_bps": int(safety_bps),
+                                    "min_profit_weth_raw": min_profit_weth_raw,
+                                    "timestamp": int(time.time()),
+                                }
+                                with open(dump_path, "a", encoding="utf-8") as handle:
+                                    handle.write(json.dumps(payload) + "\n")
+
+                            count += 1
+                            if sim_ok and auto_execute:
+                                if not allow_any and not allow_addresses:
+                                    continue
+                                execute_triangular_trade(
+                                    start_token, b, c, pair_ab, pair_bc, pair_ca,
+                                    hop_types,
+                                    raw_amount_in,
+                                    rpc_urls[0],
+                                    os.getenv("SKIM_PRIVATE_KEY", ""),
+                                    gas_price_gwei,
+                                    dry_run=False,
+                                    monstrosity_address=monstrosity_address,
+                                    aave_pool_address=aave_pool_address,
+                                    fee_by_dex=fee_by_dex,
+                                    safety_bps=safety_bps,
+                                    min_profit_weth=min_profit_weth_raw,
+                                )
                         except Exception as e:
                             # print(f"Error checking cycle: {e}")
                             pass
@@ -1337,6 +1349,9 @@ def main() -> None:
     parser.add_argument("--triangular-auto-execute", action="store_true", help="Execute triangular routes.")
     parser.add_argument("--auto-execute-allow-any", action="store_true", help="Allow auto-execute without allowlist.")
     parser.add_argument("--triangular-safety-bps", type=Decimal, default=Decimal("10"), help="Safety haircut bps.")
+    parser.add_argument("--triangular-simulate-all", action="store_true", help="Simulate every found triangular opp.")
+    parser.add_argument("--triangular-allow-v3", action="store_true", help="Allow V3 paths (sim-only; no reserve quoting).")
+    parser.add_argument("--triangular-v3-amount-in", type=Decimal, default=Decimal("0.1"), help="WETH amount for V3 sim-only paths.")
     parser.add_argument("--monstrosity-addr", default=MONSTROSITY_ADDRESS, help="Monstrosity contract address.")
     parser.add_argument("--aave-pool", default=AAVE_V3_POOL_ADDRESS, help="Aave V3 pool address.")
     parser.add_argument("--triangular-dump", default="", help="Append found triangular opps to JSONL file.")
@@ -1494,6 +1509,9 @@ def main() -> None:
                 allow_addresses,
                 args.auto_execute_allow_any,
                 args.min_pair_liquidity_usd,
+                args.triangular_simulate_all,
+                args.triangular_allow_v3,
+                args.triangular_v3_amount_in,
             )
 
         keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]

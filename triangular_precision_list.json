@@ -1,0 +1,5692 @@
+[
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      4
+    ],
+    "degree_b": 38963,
+    "degree_c": 1927,
+    "stable_count": 2,
+    "score": 421.9
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 654,
+    "stable_count": 2,
+    "score": 408.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 654,
+    "stable_count": 2,
+    "score": 408.17
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 654,
+    "stable_count": 2,
+    "score": 408.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      4
+    ],
+    "degree_b": 38963,
+    "degree_c": 263,
+    "stable_count": 2,
+    "score": 405.26
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 263,
+    "stable_count": 2,
+    "score": 404.26
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 395,
+    "stable_count": 1,
+    "score": 404.08
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 395,
+    "stable_count": 1,
+    "score": 404.08
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 395,
+    "stable_count": 1,
+    "score": 403.08
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 141,
+    "stable_count": 1,
+    "score": 402.54
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 141,
+    "stable_count": 1,
+    "score": 401.54
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 141,
+    "stable_count": 1,
+    "score": 401.54
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 401.38
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 401.29
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 47,
+    "stable_count": 1,
+    "score": 400.6
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 47,
+    "stable_count": 1,
+    "score": 400.6
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 37,
+    "stable_count": 1,
+    "score": 400.5
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 37,
+    "stable_count": 1,
+    "score": 400.5
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 31,
+    "stable_count": 1,
+    "score": 400.44
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x5979d7b546e38e414f7e9822514be443a4800529",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 30,
+    "stable_count": 1,
+    "score": 400.43
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 400.41
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 26,
+    "stable_count": 1,
+    "score": 400.39
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 26,
+    "stable_count": 1,
+    "score": 400.39
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x10393c20975cf177a3513071bc110f7962cd67da",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 400.38
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x10393c20975cf177a3513071bc110f7962cd67da",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 400.38
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 22,
+    "stable_count": 1,
+    "score": 400.35
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 400.29
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 400.29
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3082cc23568ea640225c2467653db90e9250aaa0",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 400.26
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 400.26
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3082cc23568ea640225c2467653db90e9250aaa0",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 400.26
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x088cd8f5ef3652623c22d48b1605dcfe860cd704",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 12,
+    "stable_count": 1,
+    "score": 400.25
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x088cd8f5ef3652623c22d48b1605dcfe860cd704",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 12,
+    "stable_count": 1,
+    "score": 400.25
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x9623063377ad1b27544c965ccd7342f7ea7e88c7",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 11,
+    "stable_count": 1,
+    "score": 400.24
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x1d987200df3b744cfa9c14f713f5334cb4bc4d5d",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 8,
+    "stable_count": 1,
+    "score": 400.21
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 48,
+    "stable_count": 1,
+    "score": 399.61
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 48,
+    "stable_count": 1,
+    "score": 399.61
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 47,
+    "stable_count": 1,
+    "score": 399.6
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 42,
+    "stable_count": 1,
+    "score": 399.55
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 42,
+    "stable_count": 1,
+    "score": 399.55
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 42,
+    "stable_count": 1,
+    "score": 399.55
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 31,
+    "stable_count": 1,
+    "score": 399.44
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 399.41
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 27,
+    "stable_count": 1,
+    "score": 399.4
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 399.38
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 399.38
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x10393c20975cf177a3513071bc110f7962cd67da",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 399.38
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 23,
+    "stable_count": 1,
+    "score": 399.36
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 22,
+    "stable_count": 1,
+    "score": 399.35
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xde903e2712288a1da82942dddf2c20529565ac30",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 17,
+    "stable_count": 1,
+    "score": 399.3
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x93b346b6bc2548da6a1e7d98e9a421b42541425b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 399.29
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 399.26
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x088cd8f5ef3652623c22d48b1605dcfe860cd704",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 12,
+    "stable_count": 1,
+    "score": 399.25
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 11,
+    "stable_count": 1,
+    "score": 399.24
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x9623063377ad1b27544c965ccd7342f7ea7e88c7",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 11,
+    "stable_count": 1,
+    "score": 399.24
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 399.22
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 399.22
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 7,
+    "stable_count": 1,
+    "score": 399.2
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 7,
+    "stable_count": 1,
+    "score": 399.2
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 399.19
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x29c1ea5ed7af53094b1a79ef60d20641987c867e",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 399.18
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xf4fe727c855c2d395852ca43f645cab4b504af23",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 399.16
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x0ae38f7e10a43b5b2fb064b42a2f4514cba909ef",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      4,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 399.15
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xaf5db6e1cc585ca312e8c8f7c499033590cf5c98",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 399.15
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 48,
+    "stable_count": 1,
+    "score": 398.61
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 37,
+    "stable_count": 1,
+    "score": 398.5
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 31,
+    "stable_count": 1,
+    "score": 398.44
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 398.41
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 398.41
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 398.41
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 398.41
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 398.41
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 398.41
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 27,
+    "stable_count": 1,
+    "score": 398.4
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 26,
+    "stable_count": 1,
+    "score": 398.39
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 398.38
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3d9907f9a368ad0a51be60f7da3b97cf940982d8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 398.38
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 398.38
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 398.38
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 23,
+    "stable_count": 1,
+    "score": 398.36
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 23,
+    "stable_count": 1,
+    "score": 398.36
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 22,
+    "stable_count": 1,
+    "score": 398.35
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 21,
+    "stable_count": 1,
+    "score": 398.34
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x13a7dedb7169a17be92b0e3c7c2315b46f4772b3",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 21,
+    "stable_count": 1,
+    "score": 398.34
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xba5ddd1f9d7f570dc94a51479a000e3bce967196",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 20,
+    "stable_count": 1,
+    "score": 398.33
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x51318b7d00db7acc4026c88c3952b66278b6a67f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 20,
+    "stable_count": 1,
+    "score": 398.33
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xba5ddd1f9d7f570dc94a51479a000e3bce967196",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 20,
+    "stable_count": 1,
+    "score": 398.33
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x51318b7d00db7acc4026c88c3952b66278b6a67f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 20,
+    "stable_count": 1,
+    "score": 398.33
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x040d1edc9569d4bab2d15287dc5a4f10f56a56b8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 17,
+    "stable_count": 1,
+    "score": 398.3
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x8b0e6f19ee57089f7649a455d89d7bc6314d04e8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 17,
+    "stable_count": 1,
+    "score": 398.3
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x040d1edc9569d4bab2d15287dc5a4f10f56a56b8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 17,
+    "stable_count": 1,
+    "score": 398.3
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xde903e2712288a1da82942dddf2c20529565ac30",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 17,
+    "stable_count": 1,
+    "score": 398.3
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x93b346b6bc2548da6a1e7d98e9a421b42541425b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 398.29
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xdfb8be6f8c87f74295a87de951974362cedcfa30",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 398.29
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x93b346b6bc2548da6a1e7d98e9a421b42541425b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 398.29
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xdfb8be6f8c87f74295a87de951974362cedcfa30",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 398.29
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xed3fb761414da74b74f33e5c5a1f78104b188dfc",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 15,
+    "stable_count": 1,
+    "score": 398.28
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x32eb7902d4134bf98a28b963d26de779af92a212",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 398.26
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 398.26
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 398.26
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 12,
+    "stable_count": 1,
+    "score": 398.25
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 12,
+    "stable_count": 1,
+    "score": 398.25
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xba0dda8762c24da9487f5fa026a9b64b695a07ea",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 12,
+    "stable_count": 1,
+    "score": 398.25
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 12,
+    "stable_count": 1,
+    "score": 398.25
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xc6b4b368e9c586be8be7999e24e53a91db067886",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 11,
+    "stable_count": 1,
+    "score": 398.24
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 11,
+    "stable_count": 1,
+    "score": 398.24
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x69eb4fa4a2fbd498c257c57ea8b7655a2559a581",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 11,
+    "stable_count": 1,
+    "score": 398.24
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x13ad51ed4f1b7e9dc168d8a00cb3f4ddd85efa60",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 10,
+    "stable_count": 1,
+    "score": 398.23
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x13ad51ed4f1b7e9dc168d8a00cb3f4ddd85efa60",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 10,
+    "stable_count": 1,
+    "score": 398.23
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3a8b787f78d775aecfeea15706d4221b40f345ab",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xb5de3f06af62d8428a8bf7b4400ea42ad2e0bc53",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x51a80238b5738725128d3a3e06ab41c1d4c05c74",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3a8b787f78d775aecfeea15706d4221b40f345ab",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xb5de3f06af62d8428a8bf7b4400ea42ad2e0bc53",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3a8b787f78d775aecfeea15706d4221b40f345ab",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6048df2d0db43477ee77ff2e6d86e4339d3d5a66",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xb5de3f06af62d8428a8bf7b4400ea42ad2e0bc53",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 9,
+    "stable_count": 1,
+    "score": 398.22
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x9e90296a1343258388a6476db1c12d76dd04504e",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 8,
+    "stable_count": 1,
+    "score": 398.21
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x7c8a1a80fdd00c9cccd6ebd573e9ecb49bfa2a59",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 8,
+    "stable_count": 1,
+    "score": 398.21
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x1d987200df3b744cfa9c14f713f5334cb4bc4d5d",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 8,
+    "stable_count": 1,
+    "score": 398.21
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x7c8a1a80fdd00c9cccd6ebd573e9ecb49bfa2a59",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 8,
+    "stable_count": 1,
+    "score": 398.21
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6dd963c510c2d2f09d5eddb48ede45fed063eb36",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 8,
+    "stable_count": 1,
+    "score": 398.21
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x9e90296a1343258388a6476db1c12d76dd04504e",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 8,
+    "stable_count": 1,
+    "score": 398.21
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x1a6b3a62391eccaaa992ade44cd4afe6bec8cff1",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 7,
+    "stable_count": 1,
+    "score": 398.2
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xc223c546539e7b4002065cff5b2fa67173e1e72d",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      1,
+      3
+    ],
+    "degree_b": 38963,
+    "degree_c": 7,
+    "stable_count": 1,
+    "score": 398.2
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 7,
+    "stable_count": 1,
+    "score": 398.2
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xf1a82bfa7fceb8b8741e7e04a6b8efd348ca6393",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 7,
+    "stable_count": 1,
+    "score": 398.2
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x1bc6059b12a452dd9ec0140fdc79140ebf4dbe12",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 7,
+    "stable_count": 1,
+    "score": 398.2
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xd825c815c9b9bb8113fb9caa8690de2d5c1d5958",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x306fd3e7b169aa4ee19412323e1a5995b8c1a1f4",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2cab3abfc1670d1a452df502e216a66883cdf079",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x43c25f828390de5a3648864eb485cc523e039e67",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x83d6c8c06ac276465e4c92e7ac8c23740f435140",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xba082500478cc29f23ffb16b85e3c06b28497af5",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2cab3abfc1670d1a452df502e216a66883cdf079",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x43c25f828390de5a3648864eb485cc523e039e67",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x83d6c8c06ac276465e4c92e7ac8c23740f435140",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xeeeeeb57642040be42185f49c52f7e9b38f8eeee",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x83d6c8c06ac276465e4c92e7ac8c23740f435140",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 6,
+    "stable_count": 1,
+    "score": 398.19
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x323665443cef804a3b5206103304bd4872ea4253",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2e9a6df78e42a30712c10a9dc4b1c8656f8f2879",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2297aebd383787a160dd0d9f71508148769342e3",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x6fc2680d8ad8e8312191441b4eca9eff8d06b45a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x323665443cef804a3b5206103304bd4872ea4253",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xccd3891c1452b7cb0e4632774b9365dc4ee24f20",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x982239d38af50b0168da33346d85fb12929c4c07",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x580e933d90091b9ce380740e3a4a39c67eb85b4c",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x2e9a6df78e42a30712c10a9dc4b1c8656f8f2879",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 5,
+    "stable_count": 1,
+    "score": 398.18
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfd3713b309f843daa51c27022c249c5a9a5e311c",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x15b2fb8f08e4ac1ce019eadae02ee92aedf06851",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x077bc655c8d81b7de71c79318d0eb8f987e12820",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xbfbcfe8873fe28dfa25f1099282b088d52bbad9c",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xb2498cde54810424a24fdd23579164265a0c14c5",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xec70dcb4a1efa46b8f2d97c310c9c4790ba5ffa8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x431402e8b9de9aa016c743880e04e517074d8cec",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x15b2fb8f08e4ac1ce019eadae02ee92aedf06851",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xe85b662fe97e8562f4099d8a1d5a92d4b453bf30",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x51fc0f6660482ea73330e414efd7808811a57fa2",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x64343594ab9b56e99087bfa6f2335db24c2d1f17",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xb67c014fa700e69681a673876eb8bafaa36bff71",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xf8d72c9cd50607bdd6fbdce53d6929794c99c959",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfd3713b309f843daa51c27022c249c5a9a5e311c",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 4,
+    "stable_count": 1,
+    "score": 398.17
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x30dcba0405004cf124045793e1933c798af9e66a",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x23a941036ae778ac51ab04cea08ed6e2fe103614",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x244ae62439c1ef3187f244d8604ac2c391ef2b53",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x27d8de4c30ffde34e982482ae504fc7f23061f61",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x45e4fc54240c9bec351098aafe684177ef790d01",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x05d35769a222affd6185e20f3f3676abde56c25f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x326c33fd1113c1f29b35b4407f3d6312a8518431",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x45d55eadf0ed5495b369e040af0717eafae3b731",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 3,
+    "stable_count": 1,
+    "score": 398.16
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x560363bda52bc6a44ca6c8c9b4a5fadbda32fa60",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 398.15
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x07e49d5de43dda6162fa28d24d5935c151875283",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 398.15
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x73ed68b834e44096eb4bea6edead038c945722f1",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 398.15
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xdb0c6fc9e01cd95eb1d3bbae6689962de489cd7b",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      3,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 398.15
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x43e4ef7e796a631539f523900da824e73edc3110",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 398.15
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xd2568accd10a4c98e87c44e9920360031ad89fcb",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 2,
+    "stable_count": 1,
+    "score": 398.15
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x35751007a407ca6feffe80b3cb397736d2cf4dbe",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 37,
+    "stable_count": 1,
+    "score": 397.5
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 28,
+    "stable_count": 1,
+    "score": 397.41
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 27,
+    "stable_count": 1,
+    "score": 397.4
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x3d9907f9a368ad0a51be60f7da3b97cf940982d8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 25,
+    "stable_count": 1,
+    "score": 397.38
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 21,
+    "stable_count": 1,
+    "score": 397.34
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 21,
+    "stable_count": 1,
+    "score": 397.34
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x51318b7d00db7acc4026c88c3952b66278b6a67f",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 20,
+    "stable_count": 1,
+    "score": 397.33
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x155f0dd04424939368972f4e1838687d6a831151",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 19,
+    "stable_count": 1,
+    "score": 397.32
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x155f0dd04424939368972f4e1838687d6a831151",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 19,
+    "stable_count": 1,
+    "score": 397.32
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xd74f5255d557944cf7dd0e45ff521520002d5748",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "camelot",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      1,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 18,
+    "stable_count": 1,
+    "score": 397.31
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x8b0e6f19ee57089f7649a455d89d7bc6314d04e8",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "camelot",
+      "sushiswapv2"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 17,
+    "stable_count": 1,
+    "score": 397.3
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x25d887ce7a35172c62febfd67a1856f20faebb00",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 397.29
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x25d887ce7a35172c62febfd67a1856f20faebb00",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 16,
+    "stable_count": 1,
+    "score": 397.29
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xed3fb761414da74b74f33e5c5a1f78104b188dfc",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 15,
+    "stable_count": 1,
+    "score": 397.28
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0xc3abc47863524ced8daf3ef98d74dd881e131c38",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      1,
+      2
+    ],
+    "degree_b": 38963,
+    "degree_c": 14,
+    "stable_count": 1,
+    "score": 397.27
+  },
+  {
+    "start": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 397.26
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x18c11fd286c5ec11c3b683caa813b77f5163a122",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "uniswapv3"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 397.26
+  },
+  {
+    "start": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x4c51d343234cec467bdc62b6871b11aecb7f0c2c",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv2"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 397.26
+  },
+  {
+    "start": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "b": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "c": "0x32eb7902d4134bf98a28b963d26de779af92a212",
+    "dex_ab": [
+      "camelot",
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ],
+    "dex_bc": [
+      "sushiswapv2",
+      "uniswapv3"
+    ],
+    "dex_ca": [
+      "sushiswapv2"
+    ],
+    "edge_counts": [
+      4,
+      2,
+      1
+    ],
+    "degree_b": 38963,
+    "degree_c": 13,
+    "stable_count": 1,
+    "score": 397.26
+  }
+]

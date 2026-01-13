@@ -6,14 +6,18 @@ import sys
 import time
 from dataclasses import dataclass
 from decimal import Decimal, getcontext
-from typing import Dict, List, Optional, Tuple, Set
+from typing import Dict, List, Optional, Tuple, Set, Any
 
 import httpx
 from dotenv import load_dotenv
 from web3 import Web3
 from web3.exceptions import ContractLogicError
 
-from skim_scanner import RPC_ENDPOINTS, normalize_rpc_url
+try:
+    from skim_scanner import RPC_ENDPOINTS, normalize_rpc_url
+except ImportError:
+    RPC_ENDPOINTS = {}
+    def normalize_rpc_url(url): return url
 
 load_dotenv()
 getcontext().prec = 60
@@ -40,17 +44,39 @@ STABLES = {
     "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",  # DAI
 }
 
-FLASH_ARB_ADDRESS = "0xe14b184315f0a1edc476032daa051d7e6465858b"
-FLASH_ARB_ABI = [
+# Tokens supported by Aave V3 on Arbitrum for Flash Loan
+AAVE_SUPPORTED = {
+    WETH.lower(),
+    "0xaf88d065e77c8cc2239327c5edb3a432268e5831", # USDC
+    "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8", # USDC.e
+    "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9", # USDT
+    "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1", # DAI
+    "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f", # WBTC
+    "0xf97f4df75117a78c1a5a0dbb88af67027ae233c4", # LINK
+    "0x912ce59144191c1204e64559fe8253a0e49e6548", # ARB
+}
+
+MONSTROSITY_ADDRESS = "0x7e5E849D5a3FBAea7044b4b9e47baBb3d6A60283"
+AAVE_V3_POOL = "0x794a61358D6845594F94dc1DB02A252b5b4814aD"
+
+MONSTROSITY_ABI = [
     {
         "inputs": [
-            {"internalType": "address", "name": "pairBorrow", "type": "address"},
-            {"internalType": "address", "name": "pairSwap", "type": "address"},
-            {"internalType": "address", "name": "tokenBorrow", "type": "address"},
-            {"internalType": "uint256", "name": "amountBorrow", "type": "uint256"},
-            {"internalType": "uint256", "name": "feeBorrowBps", "type": "uint256"},
-            {"internalType": "uint256", "name": "feeSwapBps", "type": "uint256"},
-            {"internalType": "uint256", "name": "minProfit", "type": "uint256"},
+            {
+                "components": [
+                    {"internalType": "uint8", "name": "action", "type": "uint8"},
+                    {"internalType": "address", "name": "target", "type": "address"},
+                    {"internalType": "address", "name": "tokenIn", "type": "address"},
+                    {"internalType": "address", "name": "tokenOut", "type": "address"},
+                    {"internalType": "uint256", "name": "amountIn", "type": "uint256"},
+                    {"internalType": "uint256", "name": "minAmountOut", "type": "uint256"},
+                    {"internalType": "bytes", "name": "extraData", "type": "bytes"}
+                ],
+                "internalType": "struct Monstrosity.Step[]",
+                "name": "steps",
+                "type": "tuple[]"
+            },
+            {"internalType": "uint256", "name": "minProfitUSD", "type": "uint256"}
         ],
         "name": "execute",
         "outputs": [],
@@ -59,6 +85,9 @@ FLASH_ARB_ABI = [
     }
 ]
 
+ACTION_V2_SWAP = 1
+ACTION_V3_SWAP = 2
+ACTION_AAVE_FLASH = 3
 
 @dataclass
 class PairData:
@@ -625,51 +654,27 @@ def best_arb_for_token1(
     return amt_in, profit, "token1"
 
 
-def execute_trade(
-    pair_borrow: str,
-    pair_swap: str,
-    token_borrow: str,
-    amount_borrow: int,
-    fee_borrow_bps: int,
-    fee_swap_bps: int,
-    min_profit: int,
-    dry_run: bool,
-    rpc_url: str,
+def execute_monstrosity_steps(
+    steps: List[Dict[str, Any]],
+    w3: Web3,
     private_key: str,
+    min_profit_wei: int = 0
 ) -> bool:
     if not private_key:
         print("skipping execution: no private key", file=sys.stderr)
         return False
 
-    w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 30}))
-    if not w3.is_connected():
-        print("execution error: RPC not connected", file=sys.stderr)
-        return False
-
     account = w3.eth.account.from_key(private_key)
     contract = w3.eth.contract(
-        address=Web3.to_checksum_address(FLASH_ARB_ADDRESS),
-        abi=FLASH_ARB_ABI
+        address=Web3.to_checksum_address(MONSTROSITY_ADDRESS),
+        abi=MONSTROSITY_ABI
     )
 
-    pair_borrow_c = Web3.to_checksum_address(pair_borrow)
-    pair_swap_c = Web3.to_checksum_address(pair_swap)
-    token_borrow_c = Web3.to_checksum_address(token_borrow)
-
-    print(f"Simulating {amount_borrow} of {token_borrow} on {pair_borrow} -> {pair_swap}")
+    print(f"Simulating Monstrosity execution ({len(steps)} steps)...")
     sys.stdout.flush()
 
-    tx_func = contract.functions.execute(
-        pair_borrow_c,
-        pair_swap_c,
-        token_borrow_c,
-        amount_borrow,
-        fee_borrow_bps,
-        fee_swap_bps,
-        min_profit
-    )
-
     try:
+        tx_func = contract.functions.execute(steps, min_profit_wei)
         gas_estimate = tx_func.estimate_gas({"from": account.address})
         print(f"Simulation success! Gas: {gas_estimate}")
         sys.stdout.flush()
@@ -681,9 +686,6 @@ def execute_trade(
         print(f"Simulation failed: {e}", file=sys.stderr)
         sys.stderr.flush()
         return False
-
-    if dry_run:
-        return True
 
     print("Executing transaction...")
     nonce = w3.eth.get_transaction_count(account.address)
@@ -723,6 +725,26 @@ def execute_trade(
         return False
 
 
+def build_swap_step(
+    action: int,
+    target: str,
+    token_in: str,
+    token_out: str,
+    amount_in: int,
+    min_amount_out: int,
+    extra_data: bytes = b""
+) -> Dict[str, Any]:
+    return {
+        "action": action,
+        "target": Web3.to_checksum_address(target),
+        "tokenIn": Web3.to_checksum_address(token_in),
+        "tokenOut": Web3.to_checksum_address(token_out),
+        "amountIn": amount_in,
+        "minAmountOut": min_amount_out,
+        "extraData": extra_data
+    }
+
+
 def triangular_dry_run(
     start_token: str,
     token_b: str,
@@ -740,6 +762,7 @@ def triangular_dry_run(
     gas_price_gwei: Decimal,
     min_net_profit_usd: Decimal,
     safety_bps: Decimal,
+    private_key: str
 ) -> bool:
     for p in [pair_ab, pair_bc, pair_ca]:
         r0, r1 = fetch_reserves_with_rotation(rpc_urls, p.pair_id, start_idx)
@@ -753,32 +776,48 @@ def triangular_dry_run(
         print("Triangular dry-run failed: no profit after recheck")
         return False
 
-    amt_out = amt_in + profit
-    safety_mult = (Decimal(10000) - safety_bps) / Decimal(10000)
-    amt_out_safe = amt_out * safety_mult
-    profit_safe = amt_out_safe - amt_in
-    if profit_safe <= 0:
-        print("Triangular dry-run failed: safety haircut removed profit")
+    # Check Aave support
+    if start_token.lower() not in AAVE_SUPPORTED:
+        print(f"Triangular dry-run failed: start token {start_token} not supported by Aave Flash")
         return False
 
-    price_usd = token_price_usd(start_token, pair_index, rpc_urls, start_idx, weth_price)
-    profit_usd = None if price_usd is None else profit_safe * price_usd
-    net_profit_usd = None
-    if profit_usd is not None and weth_price is not None:
-        gas_cost_eth = (Decimal(gas_units) * gas_price_gwei) / Decimal(1e9)
-        gas_cost_usd = gas_cost_eth * weth_price
-        net_profit_usd = profit_usd - gas_cost_usd
+    w3 = Web3(Web3.HTTPProvider(rpc_urls[0], request_kwargs={"timeout": 30}))
 
-    if min_net_profit_usd > 0 and (net_profit_usd is None or net_profit_usd < min_net_profit_usd):
-        print("Triangular dry-run failed: net profit below threshold")
-        return False
+    # Construct steps
+    raw_amount_in = int(amt_in * (Decimal(10) ** pair_ab.token0_decimals if pair_ab.token0.lower() == start_token.lower() else Decimal(10) ** pair_ab.token1_decimals))
 
-    net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
-    print(
-        f"TRIANGULAR DRY RUN PASS: {start_token}->{token_b}->{token_c}->{start_token} "
-        f"| in={amt_in:.6f} out={amt_out_safe:.6f} | {net_note}"
-    )
-    return True
+    inner_steps = []
+    # 1. start -> B
+    inner_steps.append(build_swap_step(
+        ACTION_V2_SWAP, pair_ab.pair_id, start_token, token_b, raw_amount_in, 0
+    ))
+    # 2. B -> C
+    inner_steps.append(build_swap_step(
+        ACTION_V2_SWAP, pair_bc.pair_id, token_b, token_c, 0, 0
+    ))
+    # 3. C -> start
+    inner_steps.append(build_swap_step(
+        ACTION_V2_SWAP, pair_ca.pair_id, token_c, start_token, 0, 0
+    ))
+
+    # Aave Flash wrapper
+    # Encode inner steps
+    step_type_str = "(uint8,address,address,address,uint256,uint256,bytes)"
+    encoded_inner = w3.eth.abi.encode([f"{step_type_str}[]"], [[tuple(s.values()) for s in inner_steps]])
+
+    outer_steps = [
+        build_swap_step(
+            ACTION_AAVE_FLASH,
+            AAVE_V3_POOL,
+            start_token,
+            start_token, # Token out is irrelevant/same
+            raw_amount_in,
+            0,
+            encoded_inner
+        )
+    ]
+
+    return execute_monstrosity_steps(outer_steps, w3, private_key, 0)
 
 
 def triangular_scan(
@@ -795,6 +834,7 @@ def triangular_scan(
     max_trade_frac: Decimal,
     auto_execute: bool,
     safety_bps: Decimal,
+    private_key: str
 ) -> None:
     # Basic graph: token -> neighbor_token -> pair
     adj: Dict[str, List[Tuple[str, PairData]]] = {}
@@ -804,16 +844,16 @@ def triangular_scan(
         adj.setdefault(t0, []).append((t1, p))
         adj.setdefault(t1, []).append((t0, p))
 
-    # DFS for cycles of length 3: A -> B -> C -> A
-    # Limit: Check top 50 tokens by connectivity to avoid explosion
     sorted_tokens = sorted(adj.keys(), key=lambda k: len(adj[k]), reverse=True)
 
     print(f"Scanning triangular arb opportunities (Graph size: {len(adj)} tokens)...")
 
     count = 0
+    # Scan top connected tokens
+    for start_token in sorted_tokens[:150]:
+        if start_token not in AAVE_SUPPORTED:
+            continue # Only scan cycles starting with flashable tokens
 
-    # We will only check the most connected tokens to save time
-    for start_token in sorted_tokens[:100]:
         for (b, pair_ab) in adj[start_token]:
             if b == start_token: continue
             for (c, pair_bc) in adj[b]:
@@ -821,11 +861,8 @@ def triangular_scan(
                 for (d, pair_ca) in adj[c]:
                     if d == start_token:
                         # Found cycle A -> B -> C -> A
-                        # Verify we have pairs: pair_ab, pair_bc, pair_ca
-                        # Calculate profit...
-                        # Since we can't execute, we just verify reserves and print
                         try:
-                            # Update reserves if needed
+                            # Update reserves
                             for p in [pair_ab, pair_bc, pair_ca]:
                                 if p.pair_id not in reserve_cache:
                                     r0, r1 = fetch_reserves_with_rotation(rpc_urls, p.pair_id, start_idx)
@@ -854,7 +891,7 @@ def triangular_scan(
                             net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
                             print(
                                 f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} | "
-                                f"in={amt_in:.6f} out={amt_out:.6f} | {net_note} | (Cannot execute with current contract)"
+                                f"in={amt_in:.6f} out={amt_out:.6f} | {net_note}"
                             )
                             count += 1
                             if auto_execute:
@@ -875,10 +912,71 @@ def triangular_scan(
                                     gas_price_gwei,
                                     min_net_profit_usd,
                                     safety_bps,
+                                    private_key
                                 )
                         except Exception:
                             pass
-        if count > 5: break # limit results
+        if count > 10: break # limit results per iteration
+
+
+def execute_2hop_monstrosity(
+    pair_borrow: PairData,
+    pair_swap: PairData,
+    token_borrow: str,
+    amount_borrow: int,
+    rpc_url: str,
+    private_key: str
+) -> bool:
+    if token_borrow.lower() not in AAVE_SUPPORTED:
+        print(f"Skipping execution: {token_borrow} not supported on Aave")
+        return False
+
+    w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 30}))
+
+    # Identify the other token in the loop
+    # We are doing: Borrow T1. Swap T1->T2 on pair_swap. Swap T2->T1 on pair_borrow.
+    # Note: execute_trade usually calls this where pair_borrow is the one we "borrow" from in flash swap terms.
+    # But here we borrow from Aave. So we treat pair_swap as first hop, pair_borrow as second hop.
+    # Actually, in execute_trade (old):
+    # pair_borrow = pair_b (where we sell X->Y, so we borrow Y)
+    # pair_swap = pair_a (where we buy X with Y)
+    # So sequence is:
+    # 1. Have Y (from flash).
+    # 2. Swap Y -> X on Pair A (pair_swap).
+    # 3. Swap X -> Y on Pair B (pair_borrow).
+
+    # We need to find the token_out for the first swap.
+    t0 = pair_swap.token0
+    t1 = pair_swap.token1
+    token_intermediate = t1 if t0.lower() == token_borrow.lower() else t0
+
+    inner_steps = []
+    # 1. Swap BorrowedToken -> IntermediateToken on PairSwap
+    inner_steps.append(build_swap_step(
+        ACTION_V2_SWAP, pair_swap.pair_id, token_borrow, token_intermediate, amount_borrow, 0
+    ))
+    # 2. Swap IntermediateToken -> BorrowedToken on PairBorrow
+    inner_steps.append(build_swap_step(
+        ACTION_V2_SWAP, pair_borrow.pair_id, token_intermediate, token_borrow, 0, 0
+    ))
+
+    # Aave Flash wrapper
+    step_type_str = "(uint8,address,address,address,uint256,uint256,bytes)"
+    encoded_inner = w3.eth.abi.encode([f"{step_type_str}[]"], [[tuple(s.values()) for s in inner_steps]])
+
+    outer_steps = [
+        build_swap_step(
+            ACTION_AAVE_FLASH,
+            AAVE_V3_POOL,
+            token_borrow,
+            token_borrow,
+            amount_borrow,
+            0,
+            encoded_inner
+        )
+    ]
+
+    return execute_monstrosity_steps(outer_steps, w3, private_key, 0)
 
 
 def main() -> None:
@@ -891,9 +989,9 @@ def main() -> None:
     parser.add_argument("--fee-uniswap", type=Decimal, default=Decimal("0.003"), help="Uniswap v2 fee.")
     parser.add_argument("--fee-camelot", type=Decimal, default=Decimal("0.005"), help="Camelot v2 fee.")
     parser.add_argument("--fee-sushiswap", type=Decimal, default=Decimal("0.005"), help="Sushi v2 fee.")
-    parser.add_argument("--settle-token", choices=["none", "weth", "usdc"], default="none")
+    parser.add_argument("--settle-token", choices=["none", "weth", "usdc"], default="weth")
     parser.add_argument("--settle-fee-bps", type=Decimal, default=Decimal("30"), help="Fee bps for settle hop.")
-    parser.add_argument("--gas-units", type=int, default=200000, help="Gas units for net profit filter.")
+    parser.add_argument("--gas-units", type=int, default=400000, help="Gas units for net profit filter.")
     parser.add_argument("--gas-price-gwei", type=Decimal, default=Decimal("0.02"), help="Gas price in gwei.")
     parser.add_argument("--min-net-profit-usd", type=Decimal, default=Decimal("1.00"), help="Minimum net profit in USD.")
     parser.add_argument("--dexes", default="uniswapv2,camelot,sushiswapv2")
@@ -958,6 +1056,8 @@ def main() -> None:
         print("no RPC URLs available", file=sys.stderr)
         sys.exit(1)
 
+    private_key = os.getenv("SKIM_PRIVATE_KEY", "")
+
     fee_by_dex = {
         "uniswapv2": args.fee_uniswap,
         "camelot": args.fee_camelot,
@@ -995,6 +1095,7 @@ def main() -> None:
                 args.max_trade_frac,
                 args.triangular_auto_execute,
                 args.triangular_safety_bps,
+                private_key
             )
 
         keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]
@@ -1093,28 +1194,23 @@ def main() -> None:
 
             if args.auto_execute and net_profit_usd and net_profit_usd > 0:
                 print(f"Found profitable arb: {opportunity['route']} profit=${profit_usd:.2f} net=${net_profit_usd:.2f}")
-                # Format args for execution
-                # We need raw integer amounts
+
                 raw_amount_in = int(amount_in * (Decimal(10) ** (pair_a.token0_decimals if input_token == "token0" else pair_a.token1_decimals)))
-                # Calculate raw min profit? set to 0 to ensure execution for now, or strict
-                # Using 0 allows minor slippage.
 
-                # BUG FIX: If Python calculated A->B, we must borrow from B to execute A->B via flash loan.
-                # execute(pairBorrow=B, pairSwap=A, ...)
-                # Because execution logic is: Borrow(B) -> Swap(A) -> Swap(B, repay)
-                # This corresponds to route: A -> B
+                # Logic: Borrow InputToken. Swap on Pair A (receive OtherToken). Swap on Pair B (receive InputToken).
+                # In best candidate logic:
+                # pair_a is the one we start with? No, best_arb_for_tokenX logic:
+                # swap_out(pool_a) -> swap_out(pool_b).
+                # So sequence is Pool A -> Pool B.
+                # So we swap on Pair A first, then Pair B.
 
-                success = execute_trade(
-                    pair_borrow=pair_b.pair_id,  # Was pair_a.pair_id
-                    pair_swap=pair_a.pair_id,    # Was pair_b.pair_id
+                success = execute_2hop_monstrosity(
+                    pair_borrow=pair_b, # Wait, logic above says A -> B. So second pair is B.
+                    pair_swap=pair_a,   # First pair is A.
                     token_borrow=input_token_addr,
                     amount_borrow=raw_amount_in,
-                    fee_borrow_bps=opportunity["fee_b_bps"], # Was fee_a_bps
-                    fee_swap_bps=opportunity["fee_a_bps"],   # Was fee_b_bps
-                    min_profit=0,
-                    dry_run=False, # We simulate inside execute_trade first anyway
                     rpc_url=rpc_urls[0],
-                    private_key=os.getenv("SKIM_PRIVATE_KEY", "")
+                    private_key=private_key
                 )
                 if success:
                     print("Execution Success!")

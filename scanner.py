@@ -1100,6 +1100,251 @@ def execute_path_trade(
     )
 
 
+def deep_scan_cycles(
+    adj: Dict[str, List[Tuple[str, PairData]]],
+    start_token: str,
+    min_hops: int,
+    max_hops: int,
+    max_paths: int = 50
+) -> List[List[Tuple[str, PairData]]]:
+    results = []
+    # stack: (current_token, path_so_far, visited_set)
+    # path_so_far: List[Tuple[destination_token, pair_used]]
+    stack = [(start_token, [], {start_token})]
+
+    while stack:
+        curr, path, visited = stack.pop()
+
+        if len(path) >= max_hops:
+            continue
+
+        if curr not in adj:
+            continue
+
+        for neighbor, pair in adj[curr]:
+            if neighbor == start_token:
+                if len(path) + 1 >= min_hops:
+                    results.append(path + [(neighbor, pair)])
+                    if len(results) >= max_paths:
+                        return results
+                continue
+
+            if neighbor in visited:
+                continue
+
+            new_visited = visited | {neighbor}
+            new_path = path + [(neighbor, pair)]
+            stack.append((neighbor, new_path, new_visited))
+
+    return results
+
+
+def complex_scan(
+    pairs: List[PairData],
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    rpc_urls: List[str],
+    start_idx: int,
+    reserve_cache: Dict[str, Tuple[int, int]],
+    weth_price: Optional[Decimal],
+    gas_units: int,
+    gas_price_gwei: Decimal,
+    min_net_profit_usd: Decimal,
+    fee_by_dex: Dict[str, Decimal],
+    max_trade_frac: Decimal,
+    auto_execute: bool,
+    safety_bps: Decimal,
+    monstrosity_address: str,
+    aave_pool_address: str,
+    ignore_addresses: Set[str],
+    dump_path: str,
+    allow_addresses: Set[str],
+    allow_any: bool,
+    min_pair_liquidity_usd: Decimal,
+    simulate_all: bool,
+    allow_v3: bool,
+    v3_amount_in: Decimal,
+    min_hops: int,
+    max_hops: int,
+) -> None:
+    adj: Dict[str, List[Tuple[str, PairData]]] = {}
+    for p in pairs:
+        t0 = p.token0.lower()
+        t1 = p.token1.lower()
+        if allow_addresses:
+            if not (is_allowed_address(t0, allow_addresses, allow_any=False) or is_allowed_address(t1, allow_addresses, allow_any=False)):
+                continue
+        adj.setdefault(t0, []).append((t1, p))
+        adj.setdefault(t1, []).append((t0, p))
+
+    sorted_tokens = sorted(adj.keys(), key=lambda k: len(adj[k]), reverse=True)
+    print(f"Scanning complex arb opportunities (hops {min_hops}-{max_hops})...")
+
+    count = 0
+    # Limit start tokens to top 200 for performance unless restricted by allow_addresses
+    scan_list = sorted_tokens if allow_addresses else sorted_tokens[:200]
+
+    for start_token in scan_list:
+        if start_token in ignore_addresses:
+            continue
+        if allow_addresses and not is_allowed_address(start_token, allow_addresses, allow_any=False):
+            continue
+
+        cycles = deep_scan_cycles(adj, start_token, min_hops, max_hops)
+
+        for cycle in cycles:
+            # cycle: List[(next_token, pair)]
+            path_tokens = [start_token] + [x[0] for x in cycle]
+            path_pairs = [x[1] for x in cycle]
+
+            if any(t in ignore_addresses for t in path_tokens): continue
+            if any(p.pair_id in ignore_addresses for p in path_pairs): continue
+
+            hop_types = tuple("v3" if "v3" in p.dex else "v2" for p in path_pairs)
+            has_v3 = any(h == "v3" for h in hop_types)
+            if has_v3 and not allow_v3:
+                continue
+
+            # Update reserves
+            for p in path_pairs:
+                if "v3" in p.dex: continue
+                if p.pair_id not in reserve_cache:
+                    try:
+                        r0, r1 = fetch_reserves_with_rotation(rpc_urls, p.pair_id, start_idx)
+                        reserve_cache[p.pair_id] = (r0, r1)
+                        p.reserve0 = to_decimal(r0, p.token0_decimals)
+                        p.reserve1 = to_decimal(r1, p.token1_decimals)
+                    except Exception:
+                        pass
+
+            estimate_ok = not has_v3
+            profit_safe = Decimal(0)
+            net_profit_usd = None
+            amt_in = Decimal(0)
+
+            if estimate_ok:
+                # We need a generic profit estimator for N hops.
+                # Use ternary search on the path function?
+                # Defining profit_fn closure
+
+                # Check liquidity first
+                max_in_start = Decimal(0)
+                p0 = path_pairs[0]
+                if p0.token0.lower() == start_token.lower():
+                    max_in_start = p0.reserve0 * max_trade_frac
+                else:
+                    max_in_start = p0.reserve1 * max_trade_frac
+
+                if max_in_start <= 0: continue
+
+                def profit_fn_path(amount_in_val: Decimal) -> Decimal:
+                    cur = amount_in_val
+                    for i, p in enumerate(path_pairs):
+                        t_in = path_tokens[i]
+                        fee = fee_by_dex.get(p.dex, Decimal("0.003"))
+                        cur = swap_out_pair(cur, t_in, p, fee)
+                    return cur - amount_in_val
+
+                amt_in, profit = ternary_search_generic(max_in_start, profit_fn_path)
+
+                if profit <= 0: continue
+
+                # Safety haircut
+                safety_mult = (Decimal(10000) - safety_bps) / Decimal(10000)
+                amt_out = amt_in + profit
+                amt_out_safe = amt_out * safety_mult
+                profit_safe = amt_out_safe - amt_in
+
+                if profit_safe <= 0: continue
+
+                price_usd = token_price_usd(start_token, pair_index, rpc_urls, start_idx, weth_price)
+                profit_usd = None if price_usd is None else profit_safe * price_usd
+
+                if profit_usd is not None and weth_price is not None:
+                    # Gas estimate: ~150k + 100k per hop?
+                    est_gas = 150000 + (100000 * len(path_pairs))
+                    gas_cost_eth = (Decimal(est_gas) * gas_price_gwei) / Decimal(1e9)
+                    gas_cost_usd = gas_cost_eth * weth_price
+                    net_profit_usd = profit_usd - gas_cost_usd
+
+                if min_net_profit_usd > 0 and (net_profit_usd is None or net_profit_usd < min_net_profit_usd):
+                    continue
+
+                if min_pair_liquidity_usd > 0:
+                    low_liq = False
+                    for p in path_pairs:
+                        liq = pair_liquidity_usd(p, pair_index, rpc_urls, start_idx, weth_price)
+                        if liq is None or liq < min_pair_liquidity_usd:
+                            low_liq = True
+                            break
+                    if low_liq: continue
+
+            else:
+                if start_token.lower() != WETH.lower(): continue
+                amt_in = v3_amount_in
+
+            min_profit_weth = Decimal(0)
+            if weth_price is not None and min_net_profit_usd > 0 and start_token.lower() == WETH.lower():
+                min_profit_weth = min_net_profit_usd / weth_price
+            min_profit_weth_raw = int(min_profit_weth * Decimal(10) ** 18) if min_profit_weth > 0 else 0
+
+            decimals = path_pairs[0].token0_decimals if path_pairs[0].token0.lower() == start_token.lower() else path_pairs[0].token1_decimals
+            raw_amount_in = int(amt_in * (Decimal(10) ** decimals))
+
+            sim_ok = False
+            if simulate_all or auto_execute:
+                if min_net_profit_usd > 0 and start_token.lower() != WETH.lower():
+                    continue
+
+                sim_ok = execute_path_trade(
+                    path_tokens, path_pairs,
+                    raw_amount_in,
+                    rpc_urls[0],
+                    os.getenv("SKIM_PRIVATE_KEY", ""),
+                    gas_price_gwei,
+                    dry_run=True,
+                    monstrosity_address=monstrosity_address,
+                    aave_pool_address=aave_pool_address,
+                    fee_by_dex=fee_by_dex,
+                    safety_bps=safety_bps,
+                    min_profit_weth=min_profit_weth_raw
+                )
+                if simulate_all:
+                    status = "ok" if sim_ok else "fail"
+                    dex_path = "->".join(p.dex for p in path_pairs)
+                    print(f"SIM {status}: {'->'.join(path_tokens)} ({dex_path}) | in={amt_in:.6f}")
+
+            if estimate_ok:
+                net_note = f"net=${net_profit_usd:.2f}" if net_profit_usd is not None else "net=unknown"
+                dex_path = "->".join(p.dex for p in path_pairs)
+                print(
+                    f"FOUND COMPLEX ARB: {'->'.join(path_tokens)} ({dex_path}) | "
+                    f"in={amt_in:.6f} profit={profit_safe:.6f} | {net_note}"
+                )
+            elif sim_ok:
+                dex_path = "->".join(p.dex for p in path_pairs)
+                print(f"FOUND COMPLEX ARB (sim-only): {'->'.join(path_tokens)} ({dex_path}) | in={amt_in:.6f}")
+
+            if sim_ok and auto_execute:
+                if not allow_any and not allow_addresses: continue
+                execute_path_trade(
+                    path_tokens, path_pairs,
+                    raw_amount_in,
+                    rpc_urls[0],
+                    os.getenv("SKIM_PRIVATE_KEY", ""),
+                    gas_price_gwei,
+                    dry_run=False,
+                    monstrosity_address=monstrosity_address,
+                    aave_pool_address=aave_pool_address,
+                    fee_by_dex=fee_by_dex,
+                    safety_bps=safety_bps,
+                    min_profit_weth=min_profit_weth_raw
+                )
+
+            count += 1
+            if count > 10: break # per iteration limit
+        if count > 10: break
+
+
 def triangular_scan(
     pairs: List[PairData],
     pair_index: Dict[Tuple[str, str], List[PairData]],
@@ -1363,6 +1608,9 @@ def main() -> None:
     parser.add_argument("--triangular-simulate-all", action="store_true", help="Simulate every found triangular opp.")
     parser.add_argument("--triangular-allow-v3", action="store_true", help="Allow V3 paths (sim-only; no reserve quoting).")
     parser.add_argument("--triangular-v3-amount-in", type=Decimal, default=Decimal("0.1"), help="WETH amount for V3 sim-only paths.")
+    parser.add_argument("--complex", action="store_true", help="Scan for complex (multi-hop) arbitrage.")
+    parser.add_argument("--min-hops", type=int, default=4, help="Min hops for complex scan.")
+    parser.add_argument("--max-hops", type=int, default=6, help="Max hops for complex scan.")
     parser.add_argument("--monstrosity-addr", default=MONSTROSITY_ADDRESS, help="Monstrosity contract address.")
     parser.add_argument("--aave-pool", default=AAVE_V3_POOL_ADDRESS, help="Aave V3 pool address.")
     parser.add_argument("--triangular-dump", default="", help="Append found triangular opps to JSONL file.")
@@ -1523,6 +1771,36 @@ def main() -> None:
                 args.triangular_simulate_all,
                 args.triangular_allow_v3,
                 args.triangular_v3_amount_in,
+            )
+
+        # Complex Scan
+        if args.complex:
+            complex_scan(
+                all_pairs,
+                pair_index,
+                rpc_urls,
+                iteration,
+                reserve_cache,
+                weth_price,
+                args.gas_units,
+                args.gas_price_gwei,
+                args.min_net_profit_usd,
+                fee_by_dex,
+                args.max_trade_frac,
+                args.auto_execute,
+                args.triangular_safety_bps,
+                args.monstrosity_addr,
+                args.aave_pool,
+                ignore_addresses,
+                args.triangular_dump,
+                allow_addresses,
+                args.auto_execute_allow_any,
+                args.min_pair_liquidity_usd,
+                args.triangular_simulate_all,
+                args.triangular_allow_v3,
+                args.triangular_v3_amount_in,
+                args.min_hops,
+                args.max_hops,
             )
 
         keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]

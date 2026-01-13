@@ -2,6 +2,7 @@
 
 # Kill existing python processes to avoid duplicates
 pkill -f "flash_swap_scanner.py" || true
+pkill -f "universal_scanner.py" || true
 
 # Narrow/Fast Scan (2-hop)
 # Using defaults: 0.02 Gwei, $1 Min Profit, No max pairs.
@@ -30,4 +31,13 @@ python3 flash_swap_scanner.py \
     --settle-token weth \
     > wide_scan.log 2>&1 &
 
-echo "Scanners running in background. Check narrow_scan.log and wide_scan.log."
+# Universal Scanner (Generic Graph Search)
+echo "Starting Universal Scanner..."
+python3 -u universal_scanner.py \
+    --loop \
+    --max-hops 3 \
+    --min-profit-usd 1.00 \
+    --gas-price-gwei 0.02 \
+    > universal_scan.log 2>&1 &
+
+echo "Scanners running in background. Check narrow_scan.log, wide_scan.log, and universal_scan.log."

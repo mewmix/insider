@@ -1,9 +1,11 @@
 import argparse
+import asyncio
 import json
+import logging
 import os
 import sys
 from decimal import Decimal
-from typing import Dict, Iterator
+from typing import Dict, Iterator, List, Tuple
 
 from dotenv import load_dotenv
 
@@ -13,7 +15,8 @@ from policy import parse_allow_addresses, is_allowed_address
 
 
 load_dotenv()
-
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+logger = logging.getLogger("BatchExec")
 
 def read_jsonl(path: str) -> Iterator[Dict[str, object]]:
     with open(path, "r", encoding="utf-8") as handle:
@@ -21,8 +24,10 @@ def read_jsonl(path: str) -> Iterator[Dict[str, object]]:
             line = line.strip()
             if not line:
                 continue
-            yield json.loads(line)
-
+            try:
+                yield json.loads(line)
+            except json.JSONDecodeError:
+                continue
 
 def build_pair(pair_id: str, token0: str, token1: str, dex: str, d0: int, d1: int) -> PairData:
     return PairData(
@@ -38,35 +43,16 @@ def build_pair(pair_id: str, token0: str, token1: str, dex: str, d0: int, d1: in
         reserve1=Decimal(0),
     )
 
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Batch simulate/execute Monstrosity triangular opps.")
-    parser.add_argument("--opps-file", required=True, help="JSONL file with opportunities.")
-    parser.add_argument("--rpc-url", default=os.getenv("ARBITRUM_RPC_URL", "https://arb1.arbitrum.io/rpc"))
-    parser.add_argument("--monstrosity-addr", required=True, help="Monstrosity contract address.")
-    parser.add_argument("--aave-pool", required=True, help="Aave V3 pool address.")
-    parser.add_argument("--gas-price-gwei", type=Decimal, default=Decimal("0.02"))
-    parser.add_argument("--max", type=int, default=50, help="Max opps to process.")
-    parser.add_argument("--dry-run", action="store_true", help="Simulate only.")
-    parser.add_argument("--auto-execute", action="store_true", help="Execute after successful sim.")
-    parser.add_argument("--ignore-addresses", default="", help="Comma-separated addresses to ignore.")
-    parser.add_argument("--allow-addresses", default="", help="Comma-separated addresses to allow.")
-    parser.add_argument("--auto-execute-allow-any", action="store_true", help="Allow auto-execute without allowlist.")
-    args = parser.parse_args()
-
-    private_key = os.getenv("SKIM_PRIVATE_KEY", "")
-    if not private_key:
-        print("SKIM_PRIVATE_KEY required", file=sys.stderr)
-        sys.exit(1)
-
-    ignore_addresses = parse_ignore_addresses(args.ignore_addresses)
-    allow_addresses = parse_allow_addresses(args.allow_addresses)
-
-    processed = 0
-    for opp in read_jsonl(args.opps_file):
-        if processed >= args.max:
-            break
-        start_token = str(opp["start_token"]).lower()
+async def process_opp(
+    opp: Dict[str, object],
+    sem: asyncio.Semaphore,
+    args: argparse.Namespace,
+    private_key: str,
+    ignore_addresses: List[str],
+    allow_addresses: List[str]
+):
+    async with sem:
+        start_token = str(opp.get("start_token", "")).lower()
         token_b = str(opp.get("token_b", "")).lower()
         token_c = str(opp.get("token_c", "")).lower()
         pair_ab = str(opp.get("pair_ab", ""))
@@ -86,18 +72,18 @@ def main() -> None:
             path_pairs = [pair_ab, pair_bc, pair_ca]
 
         if any(is_ignored_address(addr, ignore_addresses) for addr in path_tokens + path_pairs):
-            continue
+            return
 
         if args.auto_execute and not args.auto_execute_allow_any and not allow_addresses:
-            print("auto-execute blocked: allowlist empty", file=sys.stderr)
-            sys.exit(2)
+            logger.warning("auto-execute blocked: allowlist empty")
+            return
 
         if args.auto_execute and allow_addresses:
             if not all(
                 is_allowed_address(addr, allow_addresses, allow_any=False)
                 for addr in (start_token, token_b, token_c, pair_ab, pair_bc, pair_ca)
             ):
-                continue
+                return
 
         dex_ab = str(opp.get("dex_ab", ""))
         dex_bc = str(opp.get("dex_bc", ""))
@@ -125,8 +111,9 @@ def main() -> None:
         safety_bps = Decimal(int(opp.get("safety_bps", 10)))
         min_profit_weth = int(opp.get("min_profit_weth_raw", 0))
 
+        sim_ok = False
         if len(path_pairs) == 3 and len(path_tokens) == 4:
-            sim_ok = execute_triangular_trade(
+            sim_ok = await execute_triangular_trade(
                 start_token=start_token,
                 token_b=token_b,
                 token_c=token_c,
@@ -153,7 +140,7 @@ def main() -> None:
                 d_in = path_token_decimals[i] if len(path_token_decimals) > i else 18
                 d_out = path_token_decimals[i + 1] if len(path_token_decimals) > i + 1 else 18
                 pair_objs.append(build_pair(pair_id, token_in, token_out, "", d_in, d_out))
-            sim_ok = execute_path_trade(
+            sim_ok = await execute_path_trade(
                 path_tokens=path_tokens,
                 path_pairs=pair_objs,
                 amount_in=amount_in_raw,
@@ -167,11 +154,13 @@ def main() -> None:
                 safety_bps=safety_bps,
                 min_profit_weth=min_profit_weth,
             )
-        print(f"sim={sim_ok} start={start_token} b={token_b} c={token_c} in={amount_in_raw}")
-        processed += 1
+
+        logger.info(f"sim={sim_ok} start={start_token} in={amount_in_raw}")
+
         if sim_ok and args.auto_execute and not args.dry_run:
+            exec_ok = False
             if len(path_pairs) == 3 and len(path_tokens) == 4:
-                exec_ok = execute_triangular_trade(
+                exec_ok = await execute_triangular_trade(
                     start_token=start_token,
                     token_b=token_b,
                     token_c=token_c,
@@ -191,14 +180,14 @@ def main() -> None:
                     min_profit_weth=min_profit_weth,
                 )
             else:
-                pair_objs = []
-                for i, pair_id in enumerate(path_pairs):
+                 pair_objs = []
+                 for i, pair_id in enumerate(path_pairs):
                     token_in = path_tokens[i]
                     token_out = path_tokens[i + 1]
                     d_in = path_token_decimals[i] if len(path_token_decimals) > i else 18
                     d_out = path_token_decimals[i + 1] if len(path_token_decimals) > i + 1 else 18
                     pair_objs.append(build_pair(pair_id, token_in, token_out, "", d_in, d_out))
-                exec_ok = execute_path_trade(
+                 exec_ok = await execute_path_trade(
                     path_tokens=path_tokens,
                     path_pairs=pair_objs,
                     amount_in=amount_in_raw,
@@ -212,8 +201,46 @@ def main() -> None:
                     safety_bps=safety_bps,
                     min_profit_weth=min_profit_weth,
                 )
-            print(f"execute={exec_ok} start={start_token} b={token_b} c={token_c}")
+            logger.info(f"execute={exec_ok} start={start_token}")
 
+async def main_async():
+    parser = argparse.ArgumentParser(description="Batch simulate/execute Monstrosity triangular opps.")
+    parser.add_argument("--opps-file", required=True, help="JSONL file with opportunities.")
+    parser.add_argument("--rpc-url", default=os.getenv("ARBITRUM_RPC_URL", "https://arb1.arbitrum.io/rpc"))
+    parser.add_argument("--monstrosity-addr", required=True, help="Monstrosity contract address.")
+    parser.add_argument("--aave-pool", required=True, help="Aave V3 pool address.")
+    parser.add_argument("--gas-price-gwei", type=Decimal, default=Decimal("0.02"))
+    parser.add_argument("--max", type=int, default=50, help="Max opps to process.")
+    parser.add_argument("--dry-run", action="store_true", help="Simulate only.")
+    parser.add_argument("--auto-execute", action="store_true", help="Execute after successful sim.")
+    parser.add_argument("--ignore-addresses", default="", help="Comma-separated addresses to ignore.")
+    parser.add_argument("--allow-addresses", default="", help="Comma-separated addresses to allow.")
+    parser.add_argument("--auto-execute-allow-any", action="store_true", help="Allow auto-execute without allowlist.")
+    args = parser.parse_args()
+
+    private_key = os.getenv("SKIM_PRIVATE_KEY", "")
+    if not private_key:
+        logger.error("SKIM_PRIVATE_KEY required")
+        sys.exit(1)
+
+    ignore_addresses = parse_ignore_addresses(args.ignore_addresses)
+    allow_addresses = parse_allow_addresses(args.allow_addresses)
+
+    sem = asyncio.Semaphore(10) # 10 Concurrent sims
+    tasks = []
+
+    processed = 0
+    for opp in read_jsonl(args.opps_file):
+        if processed >= args.max:
+            break
+
+        task = asyncio.create_task(process_opp(opp, sem, args, private_key, ignore_addresses, allow_addresses))
+        tasks.append(task)
+        processed += 1
+
+    if tasks:
+        logger.info(f"Waiting for {len(tasks)} tasks...")
+        await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main_async())

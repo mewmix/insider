@@ -5,6 +5,8 @@ import json
 import time
 from dotenv import load_dotenv
 from web3 import Web3
+from ignore_list import parse_ignore_addresses, is_ignored_address
+from policy import parse_allow_addresses, is_allowed_address
 
 load_dotenv()
 
@@ -41,11 +43,28 @@ def main() -> None:
     parser.add_argument("--private-key", default=os.getenv("SKIM_PRIVATE_KEY", ""), help="Private key for execution.")
     parser.add_argument("--chain-id", default=42161, type=int, help="Chain ID (default: 42161 for Arbitrum).")
     parser.add_argument("--dry-run", action="store_true", help="Simulate only (eth_call/estimateGas).")
+    parser.add_argument("--ignore-addresses", default="", help="Comma-separated addresses to ignore.")
+    parser.add_argument("--allow-addresses", default="", help="Comma-separated addresses to allow.")
     args = parser.parse_args()
 
     if not args.private_key:
         print("SKIM_PRIVATE_KEY required", file=sys.stderr)
         sys.exit(1)
+
+    ignore_addresses = parse_ignore_addresses(args.ignore_addresses)
+    allow_addresses = parse_allow_addresses(args.allow_addresses)
+    if any(
+        is_ignored_address(addr, ignore_addresses)
+        for addr in (args.pair_borrow, args.pair_swap, args.token_borrow)
+    ):
+        print("execution blocked: address is in ignore list", file=sys.stderr)
+        sys.exit(2)
+    if allow_addresses and not all(
+        is_allowed_address(addr, allow_addresses, allow_any=False)
+        for addr in (args.pair_borrow, args.pair_swap, args.token_borrow)
+    ):
+        print("execution blocked: address not in allow list", file=sys.stderr)
+        sys.exit(2)
 
     w3 = Web3(Web3.HTTPProvider(args.rpc_url, request_kwargs={"timeout": 30}))
     if not w3.is_connected():

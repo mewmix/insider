@@ -14,6 +14,8 @@ from web3 import Web3
 from web3.exceptions import ContractLogicError
 
 from skim_scanner import RPC_ENDPOINTS, normalize_rpc_url
+from ignore_list import parse_ignore_addresses, is_ignored_address
+from policy import parse_allow_addresses, is_allowed_address
 
 load_dotenv()
 getcontext().prec = 60
@@ -795,6 +797,7 @@ def triangular_scan(
     max_trade_frac: Decimal,
     auto_execute: bool,
     safety_bps: Decimal,
+    ignore_addresses: Set[str],
 ) -> None:
     # Basic graph: token -> neighbor_token -> pair
     adj: Dict[str, List[Tuple[str, PairData]]] = {}
@@ -814,12 +817,23 @@ def triangular_scan(
 
     # We will only check the most connected tokens to save time
     for start_token in sorted_tokens[:100]:
+        if is_ignored_address(start_token, ignore_addresses):
+            continue
         for (b, pair_ab) in adj[start_token]:
             if b == start_token: continue
+            if is_ignored_address(b, ignore_addresses):
+                continue
             for (c, pair_bc) in adj[b]:
                 if c == start_token or c == b: continue
+                if is_ignored_address(c, ignore_addresses):
+                    continue
                 for (d, pair_ca) in adj[c]:
                     if d == start_token:
+                        if any(
+                            is_ignored_address(p.pair_id, ignore_addresses)
+                            for p in (pair_ab, pair_bc, pair_ca)
+                        ):
+                            continue
                         # Found cycle A -> B -> C -> A
                         # Verify we have pairs: pair_ab, pair_bc, pair_ca
                         # Calculate profit...
@@ -903,14 +917,20 @@ def main() -> None:
     parser.add_argument("--watchlist", default="")
     parser.add_argument("--loop", action="store_true", help="Run in a continuous loop.")
     parser.add_argument("--auto-execute", action="store_true", help="Simulate and execute profitable opportunities.")
+    parser.add_argument("--auto-execute-allow-any", action="store_true", help="Allow auto-execute without allowlist.")
+    parser.add_argument("--auto-execute-dry-run-only", action="store_true", help="Only simulate; do not execute.")
     parser.add_argument("--triangular", action="store_true", help="Scan for triangular arbitrage (A->B->C->A).")
     parser.add_argument("--triangular-auto-execute", action="store_true", help="Dry-run simulate triangular routes after discovery.")
     parser.add_argument("--triangular-safety-bps", type=Decimal, default=Decimal("50"), help="Safety haircut bps for triangular dry-run.")
+    parser.add_argument("--ignore-addresses", default="", help="Comma-separated addresses to ignore.")
+    parser.add_argument("--allow-addresses", default="", help="Comma-separated addresses to allow.")
     args = parser.parse_args()
 
     dexes = [d.strip() for d in args.dexes.split(",") if d.strip()]
     dex_aliases = {"sushiswap": "sushiswapv2"}
     dexes = [dex_aliases.get(d, d) for d in dexes]
+    ignore_addresses = parse_ignore_addresses(args.ignore_addresses)
+    allow_addresses = parse_allow_addresses(args.allow_addresses)
 
     conn = sqlite3.connect(args.db_path)
     if args.watchlist:
@@ -922,6 +942,31 @@ def main() -> None:
         pairs_by_dex: Dict[str, List[PairData]] = {}
         for dex in dexes:
             pairs_by_dex[dex] = load_pairs(conn, dex, args.max_pairs)
+
+    if ignore_addresses:
+        for dex, dex_pairs in list(pairs_by_dex.items()):
+            pairs_by_dex[dex] = [
+                p
+                for p in dex_pairs
+                if not (
+                    is_ignored_address(p.pair_id, ignore_addresses)
+                    or is_ignored_address(p.token0, ignore_addresses)
+                    or is_ignored_address(p.token1, ignore_addresses)
+                )
+            ]
+    if allow_addresses:
+        for dex, dex_pairs in list(pairs_by_dex.items()):
+            pairs_by_dex[dex] = [
+                p
+                for p in dex_pairs
+                if (
+                    is_allowed_address(p.pair_id, allow_addresses, allow_any=False)
+                    or (
+                        is_allowed_address(p.token0, allow_addresses, allow_any=False)
+                        and is_allowed_address(p.token1, allow_addresses, allow_any=False)
+                    )
+                )
+            ]
 
     by_tokens: Dict[Tuple[str, str], Dict[str, PairData]] = {}
     for dex_pairs in pairs_by_dex.values():
@@ -967,6 +1012,28 @@ def main() -> None:
     all_pairs: List[PairData] = []
     for dex_pairs in pairs_by_dex.values():
         all_pairs.extend(dex_pairs)
+    if ignore_addresses:
+        all_pairs = [
+            p
+            for p in all_pairs
+            if not (
+                is_ignored_address(p.pair_id, ignore_addresses)
+                or is_ignored_address(p.token0, ignore_addresses)
+                or is_ignored_address(p.token1, ignore_addresses)
+            )
+        ]
+    if allow_addresses:
+        all_pairs = [
+            p
+            for p in all_pairs
+            if (
+                is_allowed_address(p.pair_id, allow_addresses, allow_any=False)
+                or (
+                    is_allowed_address(p.token0, allow_addresses, allow_any=False)
+                    and is_allowed_address(p.token1, allow_addresses, allow_any=False)
+                )
+            )
+        ]
     pair_index = build_pair_index(all_pairs)
 
     iteration = 0
@@ -995,6 +1062,7 @@ def main() -> None:
                 args.max_trade_frac,
                 args.triangular_auto_execute,
                 args.triangular_safety_bps,
+                ignore_addresses,
             )
 
         keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]
@@ -1092,6 +1160,13 @@ def main() -> None:
             results.append(opportunity)
 
             if args.auto_execute and net_profit_usd and net_profit_usd > 0:
+                if not args.auto_execute_allow_any and not allow_addresses:
+                    continue
+                if allow_addresses and not all(
+                    is_allowed_address(addr, allow_addresses, allow_any=False)
+                    for addr in (pair_a.pair_id, pair_b.pair_id, input_token_addr)
+                ):
+                    continue
                 print(f"Found profitable arb: {opportunity['route']} profit=${profit_usd:.2f} net=${net_profit_usd:.2f}")
                 # Format args for execution
                 # We need raw integer amounts
@@ -1112,10 +1187,23 @@ def main() -> None:
                     fee_borrow_bps=opportunity["fee_b_bps"], # Was fee_a_bps
                     fee_swap_bps=opportunity["fee_a_bps"],   # Was fee_b_bps
                     min_profit=0,
-                    dry_run=False, # We simulate inside execute_trade first anyway
+                    dry_run=True,
                     rpc_url=rpc_urls[0],
                     private_key=os.getenv("SKIM_PRIVATE_KEY", "")
                 )
+                if success and not args.auto_execute_dry_run_only:
+                    success = execute_trade(
+                        pair_borrow=pair_b.pair_id,
+                        pair_swap=pair_a.pair_id,
+                        token_borrow=input_token_addr,
+                        amount_borrow=raw_amount_in,
+                        fee_borrow_bps=opportunity["fee_b_bps"],
+                        fee_swap_bps=opportunity["fee_a_bps"],
+                        min_profit=0,
+                        dry_run=False,
+                        rpc_url=rpc_urls[0],
+                        private_key=os.getenv("SKIM_PRIVATE_KEY", "")
+                    )
                 if success:
                     print("Execution Success!")
                 else:

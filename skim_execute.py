@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 from web3 import Web3
 
 from skim_scanner import RPC_ENDPOINTS, normalize_rpc_url
+from ignore_list import parse_ignore_addresses, is_ignored_address
+from policy import parse_allow_addresses, is_allowed_address
 
 
 load_dotenv()
@@ -109,6 +111,8 @@ def main() -> None:
         default=os.getenv("ARBITRUM_RPC_URLS", ""),
         help="Comma-separated RPC URLs to rotate across.",
     )
+    parser.add_argument("--ignore-addresses", default="", help="Comma-separated addresses to ignore.")
+    parser.add_argument("--allow-addresses", default="", help="Comma-separated addresses to allow.")
     args = parser.parse_args()
 
     private_key = os.getenv("SKIM_PRIVATE_KEY")
@@ -119,6 +123,14 @@ def main() -> None:
     w3_tmp = Web3()
     from_addr = w3_tmp.eth.account.from_key(private_key).address
     to_addr = args.to or from_addr
+    ignore_addresses = parse_ignore_addresses(args.ignore_addresses)
+    allow_addresses = parse_allow_addresses(args.allow_addresses)
+    if is_ignored_address(args.pair, ignore_addresses):
+        print("execution blocked: pair is in ignore list", file=sys.stderr)
+        sys.exit(2)
+    if allow_addresses and not is_allowed_address(args.pair, allow_addresses, allow_any=False):
+        print("execution blocked: pair not in allow list", file=sys.stderr)
+        sys.exit(2)
 
     rpc_urls = build_rpc_pool(args.rpc_urls)
     send_skim(rpc_urls, args.pair, to_addr, private_key)

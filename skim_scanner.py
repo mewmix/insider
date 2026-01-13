@@ -6,10 +6,12 @@ import sys
 import time
 from dataclasses import dataclass
 from decimal import Decimal, getcontext
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple, Set
 
 import httpx
 from dotenv import load_dotenv
+from ignore_list import parse_ignore_addresses, is_ignored_address
+from policy import parse_allow_addresses, is_allowed_address
 
 
 load_dotenv()
@@ -437,10 +439,26 @@ def scan_pairs(
     pairs: List[PairInfo],
     min_imbalance: Decimal,
     rotate_rpc: bool,
+    ignore_addresses: Set[str],
+    allow_addresses: Set[str],
 ) -> List[str]:
     results: List[str] = []
     rpc_count = max(len(rpc_urls), 1)
     for pair in pairs:
+        if (
+            is_ignored_address(pair.address, ignore_addresses)
+            or is_ignored_address(pair.token0.address, ignore_addresses)
+            or is_ignored_address(pair.token1.address, ignore_addresses)
+        ):
+            continue
+        if allow_addresses and not (
+            is_allowed_address(pair.address, allow_addresses, allow_any=False)
+            or (
+                is_allowed_address(pair.token0.address, allow_addresses, allow_any=False)
+                and is_allowed_address(pair.token1.address, allow_addresses, allow_any=False)
+            )
+        ):
+            continue
         last_exc: Optional[Exception] = None
         for attempt in range(rpc_count):
             rpc_url = rpc_urls[(hash(pair.address) + attempt) % rpc_count] if rotate_rpc else rpc_urls[0]
@@ -677,6 +695,8 @@ def main() -> None:
         action="store_true",
         help="Rotate across RPC URLs when set.",
     )
+    parser.add_argument("--ignore-addresses", default="", help="Comma-separated addresses to ignore.")
+    parser.add_argument("--allow-addresses", default="", help="Comma-separated addresses to allow.")
     parser.add_argument(
         "--watchlist",
         default="",
@@ -758,7 +778,9 @@ def main() -> None:
         return
 
     rpc_urls = build_rpc_pool(args.rpc_urls if args.rpc_urls else args.rpc_url)
-    hits = scan_pairs(rpc_urls, pairs, args.min_imbalance, args.rotate_rpc)
+    ignore_addresses = parse_ignore_addresses(args.ignore_addresses)
+    allow_addresses = parse_allow_addresses(args.allow_addresses)
+    hits = scan_pairs(rpc_urls, pairs, args.min_imbalance, args.rotate_rpc, ignore_addresses, allow_addresses)
     if not hits:
         print("no skim opportunities found")
         return

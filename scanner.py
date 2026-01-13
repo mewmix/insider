@@ -934,7 +934,7 @@ def execute_triangular_trade(
         "tokenOut": token_b,
         "amountIn": amount_in,
         "minAmountOut": max(0, min_out1_raw),
-        "extraData": eth_abi_encode(["uint256"], [fee_ab_bps]) if fee_ab_bps != 30 else b""
+        "extraData": (eth_abi_encode(["uint256"], [fee_ab_bps]) if fee_ab_bps != 30 else b"") if hop_types[0] != "v3" else b""
     }
     step2 = {
         "action": ACTION_V3_SWAP if hop_types[1] == "v3" else ACTION_V2_SWAP,
@@ -943,7 +943,7 @@ def execute_triangular_trade(
         "tokenOut": token_c,
         "amountIn": 0,
         "minAmountOut": max(0, min_out2_raw),
-        "extraData": eth_abi_encode(["uint256"], [fee_bc_bps]) if fee_bc_bps != 30 else b""
+        "extraData": (eth_abi_encode(["uint256"], [fee_bc_bps]) if fee_bc_bps != 30 else b"") if hop_types[1] != "v3" else b""
     }
     step3 = {
         "action": ACTION_V3_SWAP if hop_types[2] == "v3" else ACTION_V2_SWAP,
@@ -952,7 +952,7 @@ def execute_triangular_trade(
         "tokenOut": start_token,
         "amountIn": 0,
         "minAmountOut": max(0, min_out3_raw),
-        "extraData": eth_abi_encode(["uint256"], [fee_ca_bps]) if fee_ca_bps != 30 else b""
+        "extraData": (eth_abi_encode(["uint256"], [fee_ca_bps]) if fee_ca_bps != 30 else b"") if hop_types[2] != "v3" else b""
     }
 
     nested_steps = [step1, step2, step3]
@@ -1039,15 +1039,26 @@ def execute_path_trade(
 
     steps: List[Dict] = []
     for idx, pair in enumerate(path_pairs):
+        is_v3 = "v3" in pair.dex
+        action = ACTION_V3_SWAP if is_v3 else ACTION_V2_SWAP
+
+        # Calculate fee extra data for V2 only
+        fee_extra = b""
+        if not is_v3:
+            fee = fee_by_dex.get(pair.dex, Decimal("0.003"))
+            fee_bps = int(fee * Decimal(10000))
+            if fee_bps != 30:
+                fee_extra = eth_abi_encode(["uint256"], [fee_bps])
+
         steps.append(
             {
-                "action": ACTION_V2_SWAP,
+                "action": action,
                 "target": pair.pair_id,
                 "tokenIn": path_tokens[idx],
                 "tokenOut": path_tokens[idx + 1],
                 "amountIn": amount_in if idx == 0 else 0,
                 "minAmountOut": max(0, min_outs_raw[idx]),
-                "extraData": b"",
+                "extraData": fee_extra,
             }
         )
 
@@ -1128,8 +1139,8 @@ def triangular_scan(
     print(f"Scanning triangular arb opportunities (Graph size: {len(adj)} tokens)...")
 
     count = 0
-    # Wide scan: Check top 200 tokens
-    for start_token in sorted_tokens[:200]:
+    # Wide scan: Check top 1000 tokens (or all if feasible)
+    for start_token in sorted_tokens[:1000]:
         if start_token in ignore_addresses:
             continue
         if allow_addresses and not is_allowed_address(start_token, allow_addresses, allow_any=False):

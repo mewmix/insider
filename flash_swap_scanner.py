@@ -59,6 +59,16 @@ FLASH_ARB_ABI = [
     }
 ]
 
+SKIM_ABI = [
+    {
+        "inputs": [{"internalType": "address", "name": "to", "type": "address"}],
+        "name": "skim",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+    }
+]
+
 
 @dataclass
 class PairData:
@@ -125,6 +135,13 @@ def fetch_reserves_raw(rpc_url: str, pair: str) -> Tuple[int, int]:
     if len(raw) < 128:
         raise RuntimeError("Unexpected getReserves response")
     return int(raw[0:64], 16), int(raw[64:128], 16)
+
+
+def fetch_balance(rpc_url: str, token: str, owner: str) -> int:
+    # 70a08231 + padding(owner)
+    data = "0x" + BALANCE_OF_SIG + owner.replace("0x", "").rjust(64, "0")
+    result = rpc_call(rpc_url, "eth_call", [{"to": token, "data": data}, "latest"])
+    return decode_uint256(result)
 
 
 def fetch_reserves_with_rotation(
@@ -643,6 +660,136 @@ def execute_trade(
         return False
 
 
+def execute_skim(
+    pair_addr: str,
+    to_addr: str,
+    private_key: str,
+    rpc_url: str
+) -> bool:
+    if not private_key:
+        print("skipping skim execution: no private key", file=sys.stderr)
+        return False
+
+    try:
+        w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 15}))
+        account = w3.eth.account.from_key(private_key)
+        contract = w3.eth.contract(address=Web3.to_checksum_address(pair_addr), abi=SKIM_ABI)
+
+        tx_func = contract.functions.skim(Web3.to_checksum_address(to_addr))
+        gas_estimate = tx_func.estimate_gas({"from": account.address})
+
+        print(f"Skim gas estimate: {gas_estimate}")
+
+        nonce = w3.eth.get_transaction_count(account.address)
+        latest_block = w3.eth.get_block("latest")
+        base_fee = latest_block.get("baseFeePerGas")
+
+        tx_params = {
+            "from": account.address,
+            "nonce": nonce,
+            "chainId": 42161,
+            "gas": int(gas_estimate * 1.2),
+        }
+
+        if base_fee is not None:
+            max_priority = w3.to_wei(0.1, "gwei")
+            tx_params["maxPriorityFeePerGas"] = max_priority
+            tx_params["maxFeePerGas"] = int(base_fee * 1.2 + max_priority)
+            tx_params["type"] = 2
+        else:
+            tx_params["gasPrice"] = int(w3.eth.gas_price * 1.1)
+
+        signed = w3.eth.account.sign_transaction(tx_func.build_transaction(tx_params), private_key)
+        tx_hash = w3.eth.send_raw_transaction(signed.raw_transaction)
+        print(f"Skim TX sent: {tx_hash.hex()}")
+        return True
+    except Exception as e:
+        print(f"Skim execution failed: {e}", file=sys.stderr)
+        return False
+
+
+def check_skims(
+    pairs: List[PairData],
+    rpc_urls: List[str],
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    weth_price: Optional[Decimal],
+    start_idx: int,
+    auto_execute: bool,
+    gas_units_limit: int,
+    gas_price_gwei: Decimal,
+    skim_offset: int
+) -> int:
+    # Scan a sequential chunk of pairs to ensure full coverage over time
+    # Reduced batch size to 10 to avoid timeouts/blocking the main loop for too long
+    batch_size = 10
+    total_pairs = len(pairs)
+    if total_pairs == 0:
+        return 0
+
+    start = skim_offset % total_pairs
+    end = start + batch_size
+
+    subset = []
+    if end <= total_pairs:
+        subset = pairs[start:end]
+    else:
+        # wrap around
+        subset = pairs[start:] + pairs[:end % total_pairs]
+
+    print(f"Scanning {len(subset)} pairs for skim opportunities (offset {start}/{total_pairs})...")
+
+    private_key = os.getenv("SKIM_PRIVATE_KEY", "")
+    count_found = 0
+    for pair in subset:
+        try:
+            rpc_url = rpc_urls[(start_idx + hash(pair.pair_id)) % len(rpc_urls)]
+            r0, r1 = fetch_reserves_raw(rpc_url, pair.pair_id)
+            b0 = fetch_balance(rpc_url, pair.token0, pair.pair_id)
+            b1 = fetch_balance(rpc_url, pair.token1, pair.pair_id)
+
+            excess0 = b0 - r0
+            excess1 = b1 - r1
+
+            profit_usd = Decimal(0)
+
+            if excess0 > 1000: # ignore dust
+                amt = to_decimal(excess0, pair.token0_decimals)
+                price = token_price_usd(pair.token0, pair_index, rpc_urls, start_idx, weth_price)
+                if price:
+                    profit_usd += amt * price
+
+            if excess1 > 1000:
+                amt = to_decimal(excess1, pair.token1_decimals)
+                price = token_price_usd(pair.token1, pair_index, rpc_urls, start_idx, weth_price)
+                if price:
+                    profit_usd += amt * price
+
+            if profit_usd > Decimal("0.5"): # Found something worth > $0.50
+                print(f"FOUND SKIM: {pair.pair_id} ({pair.token0_symbol}/{pair.token1_symbol}) Profit: ${profit_usd:.2f}")
+
+                # Check gas cost
+                # Skim gas is approx 60k-80k.
+                gas_cost_eth = (Decimal(80000) * gas_price_gwei) / Decimal(1e9)
+                gas_cost_usd = gas_cost_eth * (weth_price if weth_price else Decimal(2000))
+
+                if profit_usd > gas_cost_usd:
+                    print(f"  -> Profitable (Cost ${gas_cost_usd:.2f})")
+                    if auto_execute and private_key:
+                        # Need my address for the 'to' param
+                        # We can init Web3 once in main, but here we do it locally
+                        w3_temp = Web3(Web3.HTTPProvider(rpc_url))
+                        acct = w3_temp.eth.account.from_key(private_key)
+                        execute_skim(pair.pair_id, acct.address, private_key, rpc_url)
+                else:
+                     print(f"  -> Not profitable (Cost ${gas_cost_usd:.2f})")
+
+        except Exception as e:
+            # print(f"Skim check error: {e}")
+            pass
+
+    return (skim_offset + batch_size) % total_pairs
+
+
 def triangular_scan(
     pairs: List[PairData],
     pair_index: Dict[Tuple[str, str], List[PairData]],
@@ -738,6 +885,7 @@ def main() -> None:
     parser.add_argument("--loop", action="store_true", help="Run in a continuous loop.")
     parser.add_argument("--auto-execute", action="store_true", help="Simulate and execute profitable opportunities.")
     parser.add_argument("--triangular", action="store_true", help="Scan for triangular arbitrage (A->B->C->A).")
+    parser.add_argument("--scan-skim", action="store_true", help="Scan for Skim opportunities (balance > reserve).")
     args = parser.parse_args()
 
     dexes = [d.strip() for d in args.dexes.split(",") if d.strip()]
@@ -796,18 +944,27 @@ def main() -> None:
     pair_index = build_pair_index(all_pairs)
 
     iteration = 0
+    skim_offset = 0
     while True:
         iteration += 1
         print(f"--- Scan Iteration {iteration} ---")
         reserve_cache: Dict[str, Tuple[int, int]] = {}
 
-        # Triangular Scan
-        if args.triangular:
-            triangular_scan(all_pairs, pair_index, rpc_urls, iteration, reserve_cache)
-
         weth_price, weth_pair = find_best_price_pair(
             WETH, list(STABLES), pair_index, rpc_urls, iteration
         )
+
+        # Skim Scan
+        if args.scan_skim:
+            skim_offset = check_skims(
+                all_pairs, rpc_urls, pair_index, weth_price, iteration,
+                args.auto_execute, args.gas_units, args.gas_price_gwei,
+                skim_offset
+            )
+
+        # Triangular Scan
+        if args.triangular:
+            triangular_scan(all_pairs, pair_index, rpc_urls, iteration, reserve_cache)
 
         keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]
         if focus_keys is not None:

@@ -1,0 +1,6670 @@
+[
+  {
+    "token0": "0x10c9cc8aba8c0d9289bee510f3147cc38774b8b0",
+    "token1": "0x9e90296a1343258388a6476db1c12d76dd04504e",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x8dcd3393a6e48e898a60e05baec0d568df128f89",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0fdbb79705b6fd0f6bfb0cded694cda197d2419c",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x326c33fd1113c1f29b35b4407f3d6312a8518431",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x066a9df7964cc83fcf8b47193f868913c4be50af",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfd3713b309f843daa51c27022c249c5a9a5e311c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf0b5ceefc89684889e5f7e0a7775bd100fcd3709",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x92e00609ee894512e5d9937d8fb2eb26f6b797db",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x580e933d90091b9ce380740e3a4a39c67eb85b4c",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe99ca8db0dae699803a93de499206f6d6f4d4e75",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1d987200df3b744cfa9c14f713f5334cb4bc4d5d",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xe4feb6d09a022bb6793a5b3e152adafbc9eee03a",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x27c2de0ccd05b15f5ec2047ffc8b46cefde915ad",
+    "token1": "0xeb51a729ca01cc25057953eb85491197bdd883a6",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7f91531fc25dd262aebf57e8ebe9a6a6df372e96",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x10393c20975cf177a3513071bc110f7962cd67da",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xcdd443e916781891a82b542e0297785f20ef09a9",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x87a4c24f3765f3a19f4fc7ab94855da528ec21c1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6e98a37d236588e1b3ba2b8f3659ac72fa90b90d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x73db621cc8f0a767bed0e5c0a2920f480d77b765",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xb5de3f06af62d8428a8bf7b4400ea42ad2e0bc53",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd681da5b12ad6d6f8aeaf105e547d50336ef5cad",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8835d192c7c1efbc3e74e2260cf2ba32545b5575",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7985de01b26c1efaba8bf4a9971a32dff8661bfb",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x463b3aa0cc32e16960756a4bfc9841b014133f68",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x55678cd083fcdc2947a0df635c93c838c89454a3",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb2dcbd5258a22385240e4ac13fc6726b66f0de96",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd8c77726cf483e5acb7d632610be0c2237fb3fb1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xc6b4b368e9c586be8be7999e24e53a91db067886",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xd8083e393985530b7cf6798d44a2f1536e211ab6",
+    "token1": "0xf0a5717ec0883ee56438932b0fe4a20822735fba",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6af9b38fe66591755768db83bac14a425340ba63",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x431402e8b9de9aa016c743880e04e517074d8cec",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x56b251d4b493ee3956e3f899d36b7290902d2326",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x51b902f19a56f0c8e409a34a215ad2673edf3284",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe5f1f81fdbccb03fd1dd9677b7ec3b94dc49824a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2404572eaa937c5a64c84ee597faae4c13823782",
+    "token1": "0xbe09d76ab090e30274468b0a0883cc79caff8175",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x32eb7902d4134bf98a28b963d26de779af92a212",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x786a07f4ceb9a6f70965f9e9e8d4c8a40b42294b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf05f2fa8f169eed50110f3f80b4aa712a758be96",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xac303d18ec588f84731cf57954313edb68c5e78d",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2297aebd383787a160dd0d9f71508148769342e3",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdaf0a23690f0687b2ca431517f97c5fe7a4af110",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfb411a4a80bb7a5ec87c7651acdd605fe14c36e4",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x36ac4d327756d0422e2684f888af663d10723957",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x155f0dd04424939368972f4e1838687d6a831151",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xb60f04155aa7aee24727612fbde8cf21af08f63f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x4e352cf164e64adcbad318c3a1e222e9eba4ce42",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc95e481e86d71d7892dbb7d1f4e98455e4e52ca7",
+    "token1": "0xd44257dde89ca53f1471582f718632e690e46dc2",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x7319fd355268df8d68dcd69ddcdae19aabd81142",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x0196788bbfa48bb31e16f576301769f6e2e9f5b5",
+    "token1": "0x526bcb36e138c7bbc8c5c2cf20fe3a4398b6ebf1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xee65d8b88f86ace0f7ba42ba2d2c679b6f604bf0",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6d630f3946e3bbbf49e22c6fd53185d35b3f1045",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5979d7b546e38e414f7e9822514be443a4800529",
+    "token1": "0xec70dcb4a1efa46b8f2d97c310c9c4790ba5ffa8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2cab3abfc1670d1a452df502e216a66883cdf079",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x43c25f828390de5a3648864eb485cc523e039e67",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    "token1": "0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xe646e0e6f1f6835e409fdb7db176ec8909d00859",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xba4f8168aac6ec5648b5cd8ed55e52dc2f658407",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x154d925d7598956d4f9889381320ba3dc07c219f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xea77d0721fe10610217fe4d2256e7dabb75cc8c9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x20add076e99932f4883c51f47f0ccb5aa681efae",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4031b0e09298de9b91db8014b57963c8542993ab",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x9623063377ad1b27544c965ccd7342f7ea7e88c7",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xba5ddd1f9d7f570dc94a51479a000e3bce967196",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0196788bbfa48bb31e16f576301769f6e2e9f5b5",
+    "token1": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x1000f88060d130b40fcb039292b03444cd7d8582",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x29c1ea5ed7af53094b1a79ef60d20641987c867e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2a8a6757b271068a9b394afd76320a9bba894947",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0ae38f7e10a43b5b2fb064b42a2f4514cba909ef",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x961713bdf061c659b0faa9f768b11dc902e8a223",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2e9a6df78e42a30712c10a9dc4b1c8656f8f2879",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "token1": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf5db6e1cc585ca312e8c8f7c499033590cf5c98",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb9d1c329d398ab28c07fb9d8afc0929e697345d1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8f997fd95faae30a3842b3ad56f3fdaa74e0a0ee",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe75238c9f60f262738d76e6f5aa34aac675d8894",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x49dee22356074070eb44be646ab480cd967ac472",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x21563283766348a7ec82403cef9af185dedc6b2c",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x9a1d253e63003c942350f43421cddfa469868ff5",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0xba082500478cc29f23ffb16b85e3c06b28497af5",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x51318b7d00db7acc4026c88c3952b66278b6a67f",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2a35c341f4dcf2d18e0fb38e0df50e8a47af1368",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4c51d343234cec467bdc62b6871b11aecb7f0c2c",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x27c2de0ccd05b15f5ec2047ffc8b46cefde915ad",
+    "token1": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xee9857de0e55d4a54d36a5a5a73a15e57435fdca",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd44257dde89ca53f1471582f718632e690e46dc2",
+    "token1": "0xf15a8a57cddbd79a0a45be47a26b5030545a3985",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf4fe727c855c2d395852ca43f645cab4b504af23",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x764bfc309090e7f93edce53e5befa374cdcb7b8e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x41365a22d464eb700c62a1f800046145f26c687b",
+    "token1": "0xc4324898552ff292737ee6cb66ea7fa5896155bc",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x4a70366c75ef886e3bf9e48c100a6aaadf17ab6a",
+    "token1": "0x6e005ddf4281d4bc806adbdc350f019a1d4e425e",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdb96f8efd6865644993505318cc08ff9c42fb9ac",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xeca66820ed807c096e1bd7a1a091cd3d3152cc79",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd6c0156e85decdf2983c7a2c4a3015ed268d6f8a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf4c7d08b91748ee577e98e3b9f1aa91981aab08c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xeb51a729ca01cc25057953eb85491197bdd883a6",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1c9c5726c0d71c1421cb4d685a225e12b48a28db",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdd389517320720f09db75d20a27d8a2cfa5f8568",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "token1": "0xfd3713b309f843daa51c27022c249c5a9a5e311c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa65ca5f58fa86fd48c975c86f67e3f1ec1388146",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xba0dda8762c24da9487f5fa026a9b64b695a07ea",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xde903e2712288a1da82942dddf2c20529565ac30",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd2b8e1693d4dbbdf206379201f06912562687a3e",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd8947221af8b13c1333d9390c68f74f7ddd2e22f",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xb5de3f06af62d8428a8bf7b4400ea42ad2e0bc53",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xbc9b77aca82f6be43927076d71cd453b625165b8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x32eb7902d4134bf98a28b963d26de779af92a212",
+    "token1": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdb0c6fc9e01cd95eb1d3bbae6689962de489cd7b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x06e187b761705918fbddfb920992558ae521c55b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4a70366c75ef886e3bf9e48c100a6aaadf17ab6a",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x9e758b8a98a42d612b3d38b66a22074dc03d7370",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x0081b0a83201400418a1654e531eea6d32d9d1bf",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf1b6437703cdd400faec05d1761ca3ed5ee3f3ef",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x255f1640232d05ea568fb2938ff9aaa509a11087",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x72d5e718555b0d27baa4c0a79c2180997022a536",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd1f55d9bba3ffe50f8f6ddda835c2d6140b92aeb",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x7fb7ede54259cb3d4e1eaf230c7e2b1ffc951e9a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x55513386fdd8be3360ef373763ebe2a5bcee865c",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0829cf466566b602b79e3dc93cc3b0b4e71abdb3",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc22734f40f70951d070a93ddf5c68252ed669030",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xef04804e1e474d3f9b73184d7ef5d786f3fce930",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x709e9cad5a737b724669f60c75d17a2e65172d73",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x8198c0954024c07b875e38152eaded84c5e94d5a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x50f346c35d0121e45823f3490857f03ffcaa6d71",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2d0e0ec9c82c67c4a8d7c7e6c176831f52821b33",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0196788bbfa48bb31e16f576301769f6e2e9f5b5",
+    "token1": "0xa928784464b8a40ca62be32f0e1965827f49176b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0xccd05a0fcfc1380e9da27862adb2198e58e0d66f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x83d6c8c06ac276465e4c92e7ac8c23740f435140",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4bf16f546858da8bb73b203a6fa9192bb7a3db2b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3082cc23568ea640225c2467653db90e9250aaa0",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xdedf7d9fa9f54cba9707c6b62c6c85af5f78bb2d",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdc09c88f40e484c72ae1b49635e8089f7d47bee7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd1f72c64ced225c3a07d5a01603b6b49b23e0db1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3269a3c00ab86c753856fd135d97b87facb0d848",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0x91c532949ec64eebdfe2854ee522e3c24e9362df",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x54a5cdba137286f6ad3f762e2165e613cb225215",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x23a941036ae778ac51ab04cea08ed6e2fe103614",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x951e6d5c50dc14097f179af71c8a6fa96ba1a97f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdf6c5578242a3ffc915fbe89655aed370001973f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7e6e19e116c6136d6dddcf093e1c00feb4a77090",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x49eb1b0e7e10385ecb46982bdd344e3f18eacab8",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9f6abbf0ba6b5bfa27f4deb6597cc6ec20573fda",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xf4fe727c855c2d395852ca43f645cab4b504af23",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x79f707d68cd49ca5d9aeb33affd4477c3ea8ea8f",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x12e59c59d282d2c00f3166915bed6dc2f5e2b5c7",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x51fc0f6660482ea73330e414efd7808811a57fa2",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x45d55eadf0ed5495b369e040af0717eafae3b731",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9ddb5c297265b0ffa9a7a483a8bb39103c7009ce",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4a20ca44d950f817873b1acdf61a557cd4b5f872",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc75fe1d0b4d50eafd1a804b74c1dd2e81c8974f4",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1908308d17c7fe5cf6147ca830cab4f41e94b025",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xe153c8c9fcb69c042f47dce73010c2f3daf5fb64",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x7319f56bc33c768b2a1279935b9701ce3a261d8b",
+    "token1": "0xe004b9f65c28f9c345c0aab12a2932c75ef3d2bf",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc559afe7449a778a130fcf8193c7111625481bfe",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3d9907f9a368ad0a51be60f7da3b97cf940982d8",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf5a0a5e4fbdf3ec158f146359c4057b1b46f18b2",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x93b346b6bc2548da6a1e7d98e9a421b42541425b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x68ad80a3df0ebb13727373df3676e6f4d6b4fa7d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5b1bb0671b5618b1340a9c247cb0450be788360e",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xa38fdbb6cf6e4b29db3c53fafc2f35ca2d8ae3e3",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xb5de3f06af62d8428a8bf7b4400ea42ad2e0bc53",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x951559273f372ceecfa6ec7edaa2d99f99a3f9fd",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5379759ecefb5280aab47bc26d39601ffae4f6af",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdba35afc5f4d5af4933c29a157dab3975f3eee9b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0196788bbfa48bb31e16f576301769f6e2e9f5b5",
+    "token1": "0x27c2de0ccd05b15f5ec2047ffc8b46cefde915ad",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x1a2ec5ba58f50e92ab36fb0a13e87b6fa56fb992",
+    "token1": "0x475cf514890c11538541d085171e161cad34d4d7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xaaa6c1e32c55a7bfa8066a6fae9b42650f262418",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0f34ab83446fa30551dbff0bdcd110eb4ca7e994",
+    "token1": "0xc69686866e014c38f01d2d26ed3624769c32c830",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x9da4567843f7e51cabf98ee24d4177fdc200eefa",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9ed7e4b1bff939ad473da5e7a218c771d1569456",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb157047a77be0f2e77beab3595cf2de18828135b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcac5c9c5aeb94fc0dcae4efa006ec165fea8a371",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4d15a3a2286d883af0aa1b3f21367843fac63e07",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x779b9473ecc18e2c35c116bc57b1a7da2bbaafea",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c6674c452459c7166952524e92344f384ac0170",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "token1": "0xf7428ffcb2581a2804998efbb036a43255c8a8d3",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x07a2daf92be38cf8c21213238d3fc3565469432f",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "token1": "0xfd3713b309f843daa51c27022c249c5a9a5e311c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf42ae1d54fd613c9bb14810b0588faaa09a426ca",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5e421ee0559e29fda8d34c81eb0fc7e43cd7eb3b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3082cc23568ea640225c2467653db90e9250aaa0",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x088cd8f5ef3652623c22d48b1605dcfe860cd704",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb4bbfe92702730ef7f1d28e4b9e42381182f48a5",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x323665443cef804a3b5206103304bd4872ea4253",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa684cd057951541187f288294a1e1c2646aa2d24",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9d7c0e59d92390777d459169948ad1e81994cd55",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x20d788d73a59efcc0e7ced570697fa3847cb71fb",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa72159fc390f0e3c6d415e658264c7c4051e9b87",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xa8502058d923d0eb4234735449d3b734c103d0a5",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xf25b580f95ac53dc99068603494bf924e4218d3d",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8312a706a5da09cf8ab380bf23116bcda2ba1679",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xbe1a9cfe5ba389e7ba536f67857d018741f6207d",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x6586e50fa870187307b94613624a2cb44da6ef06",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x70d646c3c6167b71b86b3d100013d74b87ab9bad",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6fd58f5a2f3468e35feb098b5f59f04157002407",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7e435d80c2c75d58efd6f06938ace68f022af397",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x289ba1701c2f088cf0faf8b3705246331cb8a839",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd4d026322c88c2d49942a75dff920fcfbc5614c1",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6048df2d0db43477ee77ff2e6d86e4339d3d5a66",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc0655a433aa1076d3f8f895854e4df2809dbb65e",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x88a7b75b07d25a95ea6592e20976f81691616e33",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x3b0ae42f6391fab77208af2084ec9ea960071eb6",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xe4164a07941c1ab087563726bfb4686c997aef59",
+    "token1": "0xfb411a4a80bb7a5ec87c7651acdd605fe14c36e4",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x46d0ce7de6247b0a95f67b43b589b4041bae7fbe",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3cd1833ce959e087d0ef0cb45ed06bffe60f23ba",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xce7165e1056dab6343416628c8f7f7ce42c7f59c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd56734d7f9979dd94fae3d67c7e928234e71cd4c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4425742f1ec8d98779690b5a3a6276db85ddc01a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xef261714f7e5ba6b86f4780eb6e3bf26b10729cf",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xb13a8515dd3137faed36ee74e17fee92cae94a13",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0aab5fe97c0bbf0b74f5993c9a80835a621e3ce9",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x739ca6d71365a08f584c8fc4e1029045fa8abc4b",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9054929ce9d186110ba7cc895e4364d5e51e1aaf",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x526bcb36e138c7bbc8c5c2cf20fe3a4398b6ebf1",
+    "token1": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xec70dcb4a1efa46b8f2d97c310c9c4790ba5ffa8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3f56e0c36d275367b8c502090edf38289b3dea0d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3450c2a325ac1925342b034b89b531c0e9928b3c",
+    "token1": "0x6efc4bf36ccaf7e717d54d34104f279d79200e17",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc91934f40ca98a4f24af3ffae2a6381a4a418f27",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x6374d87c5a48c41b309a1ab7b12eeb4fe30d8d8a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x47957e5fe8c2015c826bff84cea7d1c5e272c433",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xdc213369cda233119ae03a31f22fe218820ea1b7",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x51318b7d00db7acc4026c88c3952b66278b6a67f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x29c170dfe9994a113fac69bb77708d90bd3d867e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcc88dd97a8be7e9afc154d6052a9c8e6f08aaed1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x041cfd4917aaee342712f72dc2bc11e6f87c78ae",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x057ba66c2109fd4487f0781e0203b71fd77a6341",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb5de3f06af62d8428a8bf7b4400ea42ad2e0bc53",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1bd013bd089c2b6b2d30a0e0b545810a5844e761",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x06692855a1c88d70a8187d5dda483e7f3b18c789",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6ca1269a49a293124fe0a897eb3cbacefeddb6ca",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xed3fb761414da74b74f33e5c5a1f78104b188dfc",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4ba8d09436819fc1224c6167c8a6635d4d801790",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf2dbfaab64f241d8d1ad135a5e2c343180fcb085",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x352f4bf396a7353a0877f99e99757e5d294df374",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3dbe31a8d0f63c17aefb2bf05adf563933673c82",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1b161b5f8d69b50c984a7761c6c2d4050a5be279",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x70000e6fd2c87e3718b71d120f510029417f1f89",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x32eb7902d4134bf98a28b963d26de779af92a212",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xb51e7e6f2effd7545860b903b3377acd043b182a",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x69eb4fa4a2fbd498c257c57ea8b7655a2559a581",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x032bc1097ffe46eef2f414bc8f663156045a7ef0",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9e20461bc2c4c980f62f1b279d71734207a6a356",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x982239d38af50b0168da33346d85fb12929c4c07",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x945810418cb1cba9de0d82dbb881d129137f3818",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x51528496e709bbcf643c53b1d914034c31ddcdef",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x080f6aed32fc474dd5717105dba5ea57268f46eb",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x44886c19fe77741da203dc1320e223ccb1f9d412",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x9f6abbf0ba6b5bfa27f4deb6597cc6ec20573fda",
+    "token1": "0xe685d3cc0be48bd59082ede30c3b64cbfc0326e2",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xba082500478cc29f23ffb16b85e3c06b28497af5",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x25266cc5d67686adad6e80cf06c14aab89660249",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x30dcba0405004cf124045793e1933c798af9e66a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "token1": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4dad357726b41bb8932764340ee9108cc5ad33a0",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa0eebb0e5c3859a1c5412c2380c074f2f6725e2e",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "token1": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe6c4c7c0b9b7089b70752cdb5024a30b16fa772d",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc223c546539e7b4002065cff5b2fa67173e1e72d",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x51a80238b5738725128d3a3e06ab41c1d4c05c74",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0032f5e1520a66c6e572e96a11fbf54aea26f9be",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x45d55eadf0ed5495b369e040af0717eafae3b731",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5a49c3005ed8e1db87dbd467b252e3f6376e2139",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf42e2b8bc2af8b110b65be98db1321b1ab8d44f5",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb20a678f6cd9ae9dbd7ed9b84454f6e3ed4fd9ea",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xbbc7e76daa0f110702a888972057153a843ac2ed",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe4687492e0b65d72f6f297714738d3cfd4e3d88f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x43e4ef7e796a631539f523900da824e73edc3110",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcab59a10d5fa4c8aba5d1da3f90ab741a78969dd",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb261104a83887ae92392fb5ce5899fcfe5481456",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xbda957a564f00bf2effef6f1906a3e5cb59ecb23",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3407ddb9202f2fca8e2330ee72c6bd12758a21c8",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xb67c014fa700e69681a673876eb8bafaa36bff71",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xca848be669070a6a429a400edf2af8b95008951c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4ab6fa095136008aa2be69227664850f176ff0fe",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2c347d1c20caebf45908b5f55841b25fd0c943d3",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xcf250e7463e34954c546b79b238e7b2b671c0d8e",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5bbbc5e3d23e470cca6be4387f43f8c45fa0143d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x87594e636f7f67e193e0c0a0587d44f9b5c5071e",
+    "token1": "0xa7903c2d3518ac23ea013403df3fc5c6267259b5",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7acbc9542ab22b9de1c9af43868361c152f677eb",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x3082cc23568ea640225c2467653db90e9250aaa0",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x326c33fd1113c1f29b35b4407f3d6312a8518431",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x83ea9d8748a7ad9f2f12b2a2f7a45ce47a862ac9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xcb603326042aa9ac28abf88a00df2a4047fc4016",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x52d8ca895d215843886324899d8855a95e60456c",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3ea9b0ab55f34fb188824ee288ceaefc63cf908e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfcb587d8d478398642f58dba30bebad900ce3aec",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5fc60ca14b2843c80b3806a22b6a28d2495a2a36",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2e516ba5bf3b7ee47fb99b09eadb60bde80a82e0",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5d147313cea5548ac2f08f1d41053e0781989009",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x8de9feef0d5b1440a7b531968ae3334c61415156",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x46777c76dbbe40fabb2aab99e33ce20058e76c59",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x33c88d4cac6ac34f77020915a2a88cd0417dc069",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2e80259c9071b6176205ff5f5eb6f7ec8361b93f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x02150e97271fdc0d6e3a16d9094a0948266f07dd",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x73ed68b834e44096eb4bea6edead038c945722f1",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xba60a4f237781dcec1fab1ed48e5833905ccb5b3",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfe7448d735319fc8a222ca8edbfe1e89a81d500d",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xeeeeeb57642040be42185f49c52f7e9b38f8eeee",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xbcad8e85669a3fc9ea9b5d692bd8bdcc2464df31",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xafa37dfc7ba1eb85f266f079bbb53030f5927d7e",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb9f3066bfc808f116920ca8dbdf318880472ddef",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf40374b825237fc75fb4369d7b5937c7f37e7da9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf0c4597ba5092d2f0b94e423ee4cbd7af63ceaf8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaba6a2e748c4895f33d0fe411b3c78e85d4e8e6a",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xae5bc8ff76db902314008020bf9719083edf9678",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe5822e98cd4d65ec049ffb36b35c3301a10964b2",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+    "token1": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf80d589b3dbe130c270a69f1a69d050f268786df",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0196788bbfa48bb31e16f576301769f6e2e9f5b5",
+    "token1": "0xeb51a729ca01cc25057953eb85491197bdd883a6",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x4186bfc76e2e237523cbc30fd220fe055156b41f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdcbf4cb83d27c408b30dd7f39bfcabd7176b1ba3",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x09199d9a5f4448d0848e4395d065e1ad9c4a1f74",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x45e4fc54240c9bec351098aafe684177ef790d01",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc24e693ffe9c1afd70bbc3c50bb1bba701e95c2a",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb61c8a59a9f75c56b0b348ffcf1c8830069982b5",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb67c014fa700e69681a673876eb8bafaa36bff71",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdb298285fe4c5410b05390ca80e8fbe9de1f259b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7a276293209defb8a26d442b59203fba690f14aa",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x804c4b5233a8e14ec48f9f9d4c923c74e6cfaec7",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x5a851c5b0d8703e15175324eccefd3b82566546f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x23a941036ae778ac51ab04cea08ed6e2fe103614",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x296a0b8847bd4ed9af71a9ef238fa5be0778b611",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8d1c89dcf613e3e709afe9abecae591d0e2b64ca",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3185041bb04ecaf7f2e902d13568f685cc36c961",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3b475f6f2f41853706afc9fa6a6b8c5df1a2724c",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x742f74e2059b7d507e1f84fd0ee79011d85667cb",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xe656165d39419c03d588515c835d109e19221e1e",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa670346dbda5047e12a3d307db04411c541c8b1b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb45189f721d2991f978e8ac247732c846631eb5a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9623063377ad1b27544c965ccd7342f7ea7e88c7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc0df86bb7dc3e658139fe1ec4bb13013348b059c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x27745ae7fc798c007f3b18144120a0b942c6059d",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x619736b8b66a7e450c11cf474f8e96fb37f6e085",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5917a8b9676a9806882ed94da127646c72221ab9",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6f73f3beb294913f2926032af3d7c5b8939ff57e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x040d1edc9569d4bab2d15287dc5a4f10f56a56b8",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb41bd4c99da73510d9e081c5fadbe7a27ac1f814",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x63795babc1f06dc7484b30b21649d4416a2eff6d",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x117f3a6a235f8730e04654e0563849b0b68b53d4",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x48290d01ad7eba402508930f698144a60cb16b8f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc14a7747cfec02cfea62e72bb93538de6b2078e6",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x30d6612d716478376d9371257357950133cb95d3",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc365b8cbde40cb902cae1bddf425a4c9e1f60d3f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfbfaf198677108d2085bac0698ea8ec3a248f17a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb401022ddec04f647ae194ce8644f8bb0fd4e956",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9f20de1fc9b161b34089cbeae888168b44b03461",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x527e8d368298dea5a53be257e5300f4dbafb7a97",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xde903e2712288a1da82942dddf2c20529565ac30",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x10393c20975cf177a3513071bc110f7962cd67da",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcbd34be8b8deb2fb6f5cc5bc14a37c2398db5320",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xb2498cde54810424a24fdd23579164265a0c14c5",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9ca419293a1eeb2871eab9c8dab0ac22cd1588e0",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "token1": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x10393c20975cf177a3513071bc110f7962cd67da",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1d987200df3b744cfa9c14f713f5334cb4bc4d5d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6804e7551e65b07892992971ffc3f562df9fcbb9",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc4324898552ff292737ee6cb66ea7fa5896155bc",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x77d4b2fa039801c9e464fcfc20f78fc18c0227da",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x28656c22d22c82c4869578672d05e48f0cb7d611",
+    "token1": "0xeb1a8f8ea373536600082ba9ae2db97327513f7d",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xaee3473a047c75855bd5f47a1e4b6293c47028b5",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x16b4964671d00286c33415bd01156643695b135f",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa3ab90c49c2e7c873fb047d30cef87464ba1cb59",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x031d35296154279dc1984dcd93e392b1f946737b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa0b862f60edef4452f25b4160f177db44deb6cf1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2cab3abfc1670d1a452df502e216a66883cdf079",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8fbd420956fdd301f4493500fd0bcaaa80f2389c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x01af69db91b1ac862d45bf58c1edefbc86c6bcbf",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd694f10ade43befcc5e3cf6b73f83e802093e55a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5187ac7257d3148052d45bcdf6e3eb56f91b8079",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xeb3c4d71c31d291e47641cd09ea8e8f5696b6b4c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x84f2b5e7894620606ae7bbea8217373451e83b66",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x15b2fb8f08e4ac1ce019eadae02ee92aedf06851",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1de6e12923a6549be2237d8268c94d1f84ccc19d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0x6048df2d0db43477ee77ff2e6d86e4339d3d5a66",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0x9623063377ad1b27544c965ccd7342f7ea7e88c7",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x01e9777ea131a18a6e0ee6aa964848844a45f672",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3d04d47880ddb25fb868acefd622d3d4497ad70f",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8bf6f52616373cfef18a94e4038000d2fe85722e",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x74912f00bda1c2030cf33e7194803259426e64a4",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "token1": "0xffb0c2a502f4637007916ee79b773b263422b689",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x29241bf83d2a01ce7a716daebe963db38fa79db4",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xeeeeeb57642040be42185f49c52f7e9b38f8eeee",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5979d7b546e38e414f7e9822514be443a4800529",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x80e0dfe47b2caa9c13915931d50347a1ef350912",
+    "token1": "0xc0e8929292510eb88d6ba73a22123c0c86f30057",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb35b630ec98c0b1376db1c7f3593981ee9c5736a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb766039cc6db368759c1e56b79affe831d0cc507",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9ba95095b558b2f12cf5417e9724f870ac59500f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2b2864dce7d206c3324516167bc76989bf695dd8",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xccd05a0fcfc1380e9da27862adb2198e58e0d66f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x919a3f5566b14f99e51d603c5fecd8171906327f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x74ef7bced393b79d8055472d0cf8474d4cb78db4",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x5d15de0142cf1a9c524c7e426c85ad74ba4a3e53",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x48b0226fc42a34ba1d28011352163cb618fd6f41",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x69eb4fa4a2fbd498c257c57ea8b7655a2559a581",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf602a45812040d90b202355bdc05438918cd3fe3",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xb816688e4b70c9076bd87d45b5309f205ec2cf5f",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xcdfb52783591231ea098d9e3207dc6c699513b00",
+    "token1": "0xd44257dde89ca53f1471582f718632e690e46dc2",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "token1": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9c67ee39e3c4954396b9142010653f17257dd39c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xba5ddd1f9d7f570dc94a51479a000e3bce967196",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x040d1edc9569d4bab2d15287dc5a4f10f56a56b8",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6e61ec9cd90669ffd6f7e1cbcff9901f0ef7d5d9",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82e3a8f066a6989666b031d916c43672085b1582",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2cab3abfc1670d1a452df502e216a66883cdf079",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1d42783e7eeacae12ebc315d1d2d0e3c6230a068",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf1a82bfa7fceb8b8741e7e04a6b8efd348ca6393",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe20b9e246db5a0d21bf9209e4858bc9a3ff7a034",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xab5fbdda12c36d72701696c440b21601af4c62e4",
+    "token1": "0xee4b06861ddd6fde6e6e8b7725aaa81726f6657f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd44257dde89ca53f1471582f718632e690e46dc2",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x847503fbf003ce8b005546aa3c03b80b7c2f9771",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7cb16cb78ea464ad35c8a50abf95dff3c9e09d5d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1aa03b5dd58d7813c11d405f226d3f7dc1bf8af5",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd26c6b8b2263616f6216e38470f915e5f5f7becb",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6048df2d0db43477ee77ff2e6d86e4339d3d5a66",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x18c11fd286c5ec11c3b683caa813b77f5163a122",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7135fa6e68f7e58185858b7429c66c62c6267b00",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xce12bb556677709afb58347a9ad38c8503c8288a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x485f52c3b0bc42d0b71e14cdaf86b87d31d97a6e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7c2a38bdff774ad83bf5d3f7d806179d51febbcf",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x61b94bb8030d2f51c155a621d12bf1eb61ff4d7d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x95854d667d32388cf082e9dc598c18029d469af0",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2598c30330d5771ae9f983979209486ae26de875",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x580e933d90091b9ce380740e3a4a39c67eb85b4c",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2e9a6df78e42a30712c10a9dc4b1c8656f8f2879",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0672f5380b554ebcf567b3ea67510be619470605",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaae0c3856e665ff9b3e2872b6d75939d810b7e40",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2b6167c283d972b8fd979d8c686482defc516adc",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x07e49d5de43dda6162fa28d24d5935c151875283",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "token1": "0x3c20d71872376ec1860017aadcf8f2960943d855",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x78a5d05c9d5bcafd0b12c0cd6453a4e02579a92b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2e9a6df78e42a30712c10a9dc4b1c8656f8f2879",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa2f9ecf83a48b86265ff5fd36cdbaaa1f349916c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe35af03b7370af7c7ac82a804fe2493cd07579b1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9966f5eb1c1bb8ad69fa3ce020b985710392e14b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7a3ee24ac378d1c3ccf43ee8e14e6857fcefb474",
+    "token1": "0xfb01185f98ea7c2085cd7358c89453796b8ea0ee",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2e324c219d66527f4b6d19d2f441d270b21baace",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x15b2fb8f08e4ac1ce019eadae02ee92aedf06851",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x02869765ecfb85874ce1edd70e881d2815a824f0",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa7c78e43464a82fb4d403cc0c1c4e471306f514d",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7074c436073d76d073a80b455e89df87ef0048b3",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x89d076fba29e0b37246b6e8b06cb157c06908d48",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "token1": "0xfe1450cf3140777b322e8e69aebe8ee83637c47b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd3f1da62cafb7e7bc6531ff1cef6f414291f03d3",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x50aa7a13b28eea97dc6c3f5e8aaa7fe512e7306d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x954ac1c73e16c77198e83c088ade88f6223f3d44",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x57f12fe6a4e5fe819eec699fadf9db2d06606bb4",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "token1": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc3f240cb6fb8b4af7f93b8e5e550a750f1232e51",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    "token1": "0x74912f00bda1c2030cf33e7194803259426e64a4",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7a5d193fe4ed9098f7eadc99797087c96b002907",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0d111e482146fe9ac9ca3a65d92e65610bbc1ba6",
+    "token1": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x64343594ab9b56e99087bfa6f2335db24c2d1f17",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xad5451166b5f9b646566b1d865eeb9c56721cb7a",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd2568accd10a4c98e87c44e9920360031ad89fcb",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc1dad1e4d4d5641fb228b159812d4848c30eae91",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x64343594ab9b56e99087bfa6f2335db24c2d1f17",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x64081252c497fcfec247a664e9d10ca8ed71b276",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe86af47e49fe7f517f137c9756de697fcc741f99",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc4a95aca3458d61ef78849d503f8d6a8212e91d0",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x45026e94feef4ebaeafa9bbb7f5050bbbf6150da",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3570f8c2f9ded2c38761d6c396a82c52317add59",
+    "token1": "0x4a3b880314299de7e243528a475bcb736cdea697",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xed3fb761414da74b74f33e5c5a1f78104b188dfc",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x323665443cef804a3b5206103304bd4872ea4253",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3a8b787f78d775aecfeea15706d4221b40f345ab",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb1bdcdddf7f2bf06112e0a41a41e45e42643bece",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfaf4ff912077804ce2d0de6ebe0cb34b38c93a5c",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5dc61e63e94fe25d4af7bf5bd03542c754f35476",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd24ae0694ab0271124e359f6b34dfc28d21f9245",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x43e4ef7e796a631539f523900da824e73edc3110",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xaf713de553e6b7c74882be8abb4d8c3c12421f0e",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x55da608c57445e7824d53493a04bd80aa58097e7",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd2568accd10a4c98e87c44e9920360031ad89fcb",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf0040c627431a6c11dd07c23c92dae3c309bdb25",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x3d0ee518881666d4028df61873ae9d21f8e2c9da",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x26cde3d916ef29a03b21929aa4cc45351cd580cd",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xde5ed76e7c05ec5e4572cfc88d1acea165109e44",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcb6460d56825ddc12229c7a7d94b6b26a9f9c867",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa268dff1cd4a9732966968950562893cc68bbbae",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc74fe4c715510ec2f8c61d70d397b32043f55abe",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xae8627db72d7fc6241f2e2b87eb2bbc7cafb1661",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x24188ee96e69faa7d0be4e263338536137e2cc82",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0b33e51346e7a09e025ba1003cb950a885cb4dcc",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x7b5ea182b0dfea7fe9ffe21ae837e78e19734068",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv2"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcd6d197ad94e23e116b00a8f8b02b72f1fee0c88",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3fcbba527ea1f455ac2bc34eb60246b47917de56",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x10393c20975cf177a3513071bc110f7962cd67da",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc628534100180582e43271448098cb2c185795bd",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xba082500478cc29f23ffb16b85e3c06b28497af5",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1c986661170c1834db49c3830130d4038eeeb866",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2879e4cff83108042a3bd575b5ca46f5b230d073",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xda7c0de432a9346bb6e96ac74e3b61a36d8a77eb",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x458a2df1a5c74c5dc9ed6e01dd1178e6d353243b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb0cc685b054e21c9accd3d551b2f6cbf5fa17e1e",
+    "dexes": [
+      "sushiswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3b58a4c865b568a2f6a957c264f6b50cba35d8ce",
+    "token1": "0x9d0c0675a995d5f12b03e880763f639d0628b5c6",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "token1": "0xba5ddd1f9d7f570dc94a51479a000e3bce967196",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x823267046fd070f81355edea872ef5f73b49014a",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7397d9cf4eb6122d51734075ff9f9cd985eb6a18",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1a6b3a62391eccaaa992ade44cd4afe6bec8cff1",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e4cff6e50f37f731284a92d44ae943e17077fd4",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xc760f9782f8cea5b06d862574464729537159966",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfa296fca3c7dba4a92a42ec0b5e2138da3b29050",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x35ca1e5a9b1c09fa542fa18d1ba4d61c8edff852",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3096e7bfd0878cc65be71f8899bc4cfb57187ba3",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3419875b4d3bca7f3fdda2db7a476a79fd31b4fe",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd825c815c9b9bb8113fb9caa8690de2d5c1d5958",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf8d72c9cd50607bdd6fbdce53d6929794c99c959",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1c9c5726c0d71c1421cb4d685a225e12b48a28db",
+    "token1": "0x602f0585405f337db6fb6da39864e4f8e1b6a83e",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcb8b5cd20bdcaea9a010ac1f8d835824f5c87a04",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x17a80a95f6f3d35ea651cc26585531c89878f987",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x25d887ce7a35172c62febfd67a1856f20faebb00",
+    "token1": "0x296a0b8847bd4ed9af71a9ef238fa5be0778b611",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1debd73e752beaf79865fd6446b0c970eae7732f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x114b3e2fe611f50e35fe9b069a036244332e419a",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xab8b761326239528b3c2d58d16b3ef8dbccda830",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xe9f5a048103293aeeb05f1d986bb91ef38410d8e",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x8697841b82c71fcbd9e58c15f6de68cd1c63fd02",
+    "token1": "0x88266f9eb705f5282a2507a9c418821a2ac9f8bd",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x968f0e4c6eb94e81e1392754dc456bb3ff7fa1f9",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc309d6ca17b630bd2e302ed3818e61fa2edbd90c",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0196788bbfa48bb31e16f576301769f6e2e9f5b5",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x33f9c439e82c677b59a6c1d05425fb7afd17b3bf",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x61a1ff55c5216b636a294a07d77c6f4df10d3b56",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f49785e75b512818411874eeed83d959076d399",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd6ec8a10f902871eac5fcacfa4c697dac001a4b4",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e76bb02286bfeaa89dd35f11253f2cbce634f91",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x951e318013e5a71141da87edd11fd0eb5f79f036",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x752b4166ae93d3f8f9473346f8e70895f19474ad",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8929e9dbd2785e3ba16175e596cdd61520fee0d1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xfdef601fe0321f39acc3dfde40192711b2b4e870",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x306fd3e7b169aa4ee19412323e1a5995b8c1a1f4",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x32df62dc3aed2cd6224193052ce665dc18165841",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x8740c7b2a01834a9def858856b352b7e3aaecf25",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf8f8d737d08abaf662cb4bfe1b37f418d8616d8c",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x9e37523f0304980b6cfadcc7ba15b8ca59e2b717",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x13ad51ed4f1b7e9dc168d8a00cb3f4ddd85efa60",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x431402e8b9de9aa016c743880e04e517074d8cec",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc6b4b368e9c586be8be7999e24e53a91db067886",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc2aa13dfd70ba5e441c4a216dc26a020bd5921dd",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1e06c8387e526a7ef41ebe10834908fadcdb4a12",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcfd599909fb410d7b8383057a900fbe16792c660",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2ab5774fc06c3d908149e48bf6f1c2a6a4e69795",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4c24cbf3363dfb36210c3c9d77faa8c7d1101a52",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3ce4f34acc4abe4c33a664cdb9a84fac0058fb34",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa7bbadab539f1dc708a7269d495101743a556a30",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3212dc0f8c834e4de893532d27cc9b6001684db0",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0caadd427a6feb5b5fc1137eb05aa7ddd9c08ce9",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x28ae72129afd1e8dd364d2652d067191181a1baf",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xa220c351415b48cb5cf57eb9e4b8d43edf04c7c1",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3f08d3c63293ae49a96c82ce36fe290ce3d2fb04",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x255f1b39172f65dc6406b8bee8b08155c45fe1b6",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe21f8564ecc3db2a83e65a0130f6d8c662711c15",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x250f93c92aebf7304c9e7e347d1aca8c0212edea",
+    "token1": "0x498127b0a9fbb955084ebb5cff1e1e53dc670731",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x465d3d8cc2cd083380e7d855e89ee77deedb4b49",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x50576c61948f6cc6f0e4f585ba9faa9fb01478a6",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+    "token1": "0xa8c0c7a09c9c1b70e430ab232628c4c6b6aec396",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x412f4b922bb9afdc65c7e9b669f4bec6e554452a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x238c8bba402494002930e75f199e67e4685ed83d",
+    "token1": "0x700fc1d4527e49762b7e259d6338bd590ad8c76e",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x611a44d2884ea397ce025c209ab2d0809ba4402e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9e90296a1343258388a6476db1c12d76dd04504e",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2416092f143378750bb29b79ed961ab195cceea5",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f8cbc0be0d95acb3074ab18d011bd950b6140d5",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x010700ab046dd8e92b0e3587842080df36364ed3",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x330bd769382cfc6d50175903434ccc8d206dcae5",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2ea0be86990e8dac0d09e4316bb92086f304622d",
+    "token1": "0x643b34980e635719c15a2d4ce69571a258f940e9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xcb8b5cd20bdcaea9a010ac1f8d835824f5c87a04",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x9e90296a1343258388a6476db1c12d76dd04504e",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x97e2922642e3ae55a29ca57e637707e129b766cf",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x238c8bba402494002930e75f199e67e4685ed83d",
+    "token1": "0x46d3d38f1f1fead54b2452ba663429779180cc4c",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xaf7355462240d5a8f3509bd890994af1022f1948",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x422c62205fd289b7763939e2af78d0960b971e80",
+    "token1": "0x7030114e34b762d0d5656b867df7f77e49c61d4b",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xb1c3960aeeaf4c255a877da04b06487bba698386",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdd69db25f6d620a7bad3023c5d32761d353d3de9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdf20d62c2a1ade0cca2c74e7c7f70ba5f54f4d44",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x25d887ce7a35172c62febfd67a1856f20faebb00",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x704638e5051b392351c8e6e758aea35b512abeeb",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xb6ad6eb0b4d673b3cc4a1da446fa3bcfea04d4e8",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xac7e66a8fcc79cd45845122a239b179b94c93915",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xeece44792b949680cd5e2adb22bf7c6411a9c645",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xba5ddd1f9d7f570dc94a51479a000e3bce967196",
+    "token1": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x67b9cf3ce478bff2a0fef6e953b36914d8ff5dbc",
+    "token1": "0xf1c183a0243b05eb6e5c651c7c02510f5f160eb6",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe5c3ef658a008edcbe265f5fa6711da753e4df81",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3f7f123bab1fd545aa201194f628e933413fffd7",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe086022290444bcd279d22c56925cc5eda389999",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xb6212b633c941e9be168c4b9c2d9e785f1cd42fb",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa152e66efe32b426193218fa1db7529e804481c5",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x51a80238b5738725128d3a3e06ab41c1d4c05c74",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x763a716dd74a79d037e57f993fe3047271879bc1",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xdadeca1167fe47499e53eb50f261103630974905",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2c8ade870335c9a35b5a80220bc39895e3ee52f4",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x11cdb42b0eb46d95f990bedd4695a6e3fa034978",
+    "token1": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0x45d9831d8751b2325f3dbf48db748723726e1c8c",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcbc79972198fd73ddb8fdee6dcdec1e6270be357",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdd182bd5312d46548c7c0b6aced75f8ecc687de9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e76bb02286bfeaa89dd35f11253f2cbce634f91",
+    "token1": "0xc8fb643d18f1e53698cfda5c8fdf0cdc03c1dbec",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xb08d8becab1bf76a9ce3d2d5fa946f65ec1d3e83",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xe333e7754a2dc1e020a162ecab019254b9dab653",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf3527ef8de265eaa3716fb312c12847bfba66cef",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "token1": "0xc8a4eea31e9b6b61c406df013dd4fec76f21e279",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1cd9a56c8c2ea913c70319a44da75e99255aa46f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1a525f1ab404416bd08d98bf19ac1e8c2dea775a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xa5912b3841229bb9df0c075ec5cb7733c72cf1a1",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x65fa064e808b33462a214dee8b8b715c3424fdda",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x306fd3e7b169aa4ee19412323e1a5995b8c1a1f4",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xc87b37a581ec3257b734886d9d3a581f5a9d056c",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xef171a5ba71348eff16616fd692855c2fe606eb2",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3b55804e532c4d7c47894d5ed89a89a5ff103fe2",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c5fa0e07949f941a6c2c29a008252db1527d6ee",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5979d7b546e38e414f7e9822514be443a4800529",
+    "token1": "0xd6cf874e24a9f5f43075142101a6b13735cdd424",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xc3abc47863524ced8daf3ef98d74dd881e131c38",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5443c1344bab837e61fe2f6b591b8361f10a9b7d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c5fa0e07949f941a6c2c29a008252db1527d6ee",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6b021b3f68491974be6d4009fee61a4e3c708fd6",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x88a269df8fe7f53e590c561954c52fccc8ec0cfb",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xbfbcfe8873fe28dfa25f1099282b088d52bbad9c",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x11f98c7e42a367dab4f200d2fdc460fb445ce9a8",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3b58a4c865b568a2f6a957c264f6b50cba35d8ce",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x561877b6b3dd7651313794e5f2894b2f18be0766",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdfb8be6f8c87f74295a87de951974362cedcfa30",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa84261564c9ed1ec0528aae01de53b430b8bcd28",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9f19c959a8415a66e275de38a71d3c0cb627b797",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xce788b5a56f67abe34a70f86c937894d667675db",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xa8c0c7a09c9c1b70e430ab232628c4c6b6aec396",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x57347782d19b697cf4f8747a3c2b2c4419df7f91",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x74885b4d524d497261259b38900f54e6dbad2210",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x77b7787a09818502305c95d68a2571f090abb135",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x13a7dedb7169a17be92b0e3c7c2315b46f4772b3",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf7e585f8bb6b5a98f0e8e36c97c22ea0fde38f3e",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfca908413e7eea8abd55760a5f67a6db309df10d",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x000f1720a263f96532d1ac2bb9cdc12b72c6f386",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x94b68e25b40b79518f64089627a81e06658c552d",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x596246b1601f5240da5f12a4931b846f0cd6d7d1",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xa0995d43901551601060447f9abf93ebc277cec2",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x495c0b12dfa7be314d4e150c9eacf6d4780f7f94",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x00cae0cdf6ee710e49b64e8f4dcbc8420d652ace",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x75c5f6d32d8ef3a4f0f43f7792aa08e8678972f9",
+    "token1": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0b159aacd4a93977a34928c417fca3a2f3a40d1b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x50f346c35d0121e45823f3490857f03ffcaa6d71",
+    "token1": "0xc91934f40ca98a4f24af3ffae2a6381a4a418f27",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3f56e0c36d275367b8c502090edf38289b3dea0d",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xba0dda8762c24da9487f5fa026a9b64b695a07ea",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x29b6471c8d2374403291d5436876eb60b605c7d0",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1bc6059b12a452dd9ec0140fdc79140ebf4dbe12",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2ad20c6438cc1797096ee854c6a5b88f270e6e42",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xd3443ee1e91af28e5fb858fbd0d72a63ba8046e0",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5117f4ad0bc70dbb3b05bf39a1ec1ee40dd67654",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1bc6059b12a452dd9ec0140fdc79140ebf4dbe12",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xd660d55d7fcfbb529a960df56c26bc58c179e460",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0de59c86c306b9fead9fb67e65551e2b6897c3f6",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "token1": "0xc223c546539e7b4002065cff5b2fa67173e1e72d",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5ff754041e8ac87935d663354075096b5386934f",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1a6b3a62391eccaaa992ade44cd4afe6bec8cff1",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x8697841b82c71fcbd9e58c15f6de68cd1c63fd02",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x641441c631e2f909700d2f41fd87f0aa6a6b4edb",
+    "token1": "0xae6aab43c4f3e0cea4ab83752c278f8debaba689",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x9e90296a1343258388a6476db1c12d76dd04504e",
+    "token1": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1bd013bd089c2b6b2d30a0e0b545810a5844e761",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3e8d4abd06ae69768b9cc23f83b32cd9735a1670",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc6b4b368e9c586be8be7999e24e53a91db067886",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x42f4e5fcd12d59e879dbcb908c76032a4fb0303b",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x35e6a59f786d9266c7961ea28c7b768b33959cbb",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xafed70140f40e72c1120da83a3d83f116e4f1fc5",
+    "token1": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2249905e396c71777fe1f92530fdecf762d51a7b",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6314c31a7a1652ce482cffe247e9cb7c3f4bb9af",
+    "token1": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1509706a6c66ca549ff0cb464de88231ddbe213b",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2c650dab03a59332e2e0c0c4a7f726913e5028c1",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x67286d1ac1c33e040678783be0b97e3b47618ddc",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xc223c546539e7b4002065cff5b2fa67173e1e72d",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xda685bdeefb27f1755899eb1b63578794467b177",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe38d8f2a1787f4d9ec0a671f4d39f7788fd3b235",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x25bccbb0f55ea59553b14b9182c8ecb9e2fc5538",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6c84a8f1c29108f47a79964b5fe888d4f4d0de40",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x79d6aa2f859ac1fd20e532a20ba2a80c9b129fac",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4a24b101728e07a52053c13fb4db2bcf490cabc3",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x28d5116b52ef0668aa75caf51f79840999dccddd",
+    "token1": "0xa992b7dde2ed1632d0b66c56744e914ed673a37f",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x46d3d38f1f1fead54b2452ba663429779180cc4c",
+    "token1": "0x4b4ceae37aaf159badb90a9c074141ac3d4c1439",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x44c472aebf354447688866857f7a0d72559f9f92",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x385827b74781f827b450bfeaddde1feaf5a1c91e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x61328aab4926d9ef1030dfc298340125b7eefab5",
+    "token1": "0xf7d4e7273e5015c96728a6b02f31c505ee184603",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+    "token1": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x30a538effd91acefb1b12ce9bc0074ed18c9dfc9",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1009c5c11cdd44bffeac3c70db7eb143df2faad1",
+    "token1": "0xe93307b8faa1c9d5cae6f9fe96f91549fb651a20",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xc4848d072d0d985b5fe29ec560b81bc710bbef5a",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x35751007a407ca6feffe80b3cb397736d2cf4dbe",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x577eeba7ab9f08cd078871e50586fff8a3a5c42a",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6f620ec89b8479e97a6985792d0c64f237566746",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1dfcfd2877d4e2b73f82a3646dbe0d64743488d7",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xf8388c2b6edf00e2e27eef5200b1befb24ce141d",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x560363bda52bc6a44ca6c8c9b4a5fadbda32fa60",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "token1": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+    "token1": "0x13ad51ed4f1b7e9dc168d8a00cb3f4ddd85efa60",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x7424f00845777a06e21f0bd8873f814a8a814b2d",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1db4e24a2747d0e7b209e9bb4efe0b7d3df806b0",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x6ddb932d7ff00aa619aa71677759978a6dd91670",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xf81f4f6e0e68900bea2e2172b2ad88495926f7b0",
+    "token1": "0xfa296fca3c7dba4a92a42ec0b5e2138da3b29050",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc760f9782f8cea5b06d862574464729537159966",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x83030bdff43477f5b52d92453a59ab92e276e7ed",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3b60ff35d3f7f62d636b067dd0dc0dfdad670e4e",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xe71bdfe1df69284f00ee185cf0d95d0c7680c0d4",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xc29b9c4f45fd4f07768cf913acde0c7772b47124",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x229e9d448c29e966630b4ebf3d61abdc47e533bd",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xd07d35368e04a839dee335e213302b21ef14bb4a",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "token1": "0xf8d72c9cd50607bdd6fbdce53d6929794c99c959",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5a3a31bb0435ad9b7a23e1e5082c114fd543cbb8",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x3cb73e591fac10a9de458a8f4f270715cf9d5116",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x0ee6e6ca526b7dd5aa323116be08cbd8746cdbe7",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0x9da6aee2879671ecc3caf3eb35547b1a4c4c6d8e",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x1cce00e56619dcece0fa43c80000987a46ab4e51",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x10aaed289a7b1b0155bf4b86c862f297e84465e0",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "token1": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "token1": "0xdd07006cd1f784d968facabb01974474f74b382a",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x5b62c53c7be692ca81ca0f093ec6d27f88956e19",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x319e222de462ac959baf2aec848697aec2bbd770",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0xa7a6a8f7fc0d749fbe4e77c5e5c9c8ab9f3bccd6",
+    "token1": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  },
+  {
+    "token0": "0x4d1f7bf75305f18bad61e905a6c938f3167190da",
+    "token1": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "dexes": [
+      "uniswapv2",
+      "uniswapv3"
+    ]
+  }
+]

@@ -657,6 +657,7 @@ def execute_trade(
     token_borrow_c = Web3.to_checksum_address(token_borrow)
 
     print(f"Simulating {amount_borrow} of {token_borrow} on {pair_borrow} -> {pair_swap}")
+    sys.stdout.flush()
 
     tx_func = contract.functions.execute(
         pair_borrow_c,
@@ -671,11 +672,14 @@ def execute_trade(
     try:
         gas_estimate = tx_func.estimate_gas({"from": account.address})
         print(f"Simulation success! Gas: {gas_estimate}")
+        sys.stdout.flush()
     except ContractLogicError as e:
         print(f"Simulation failed (revert): {e}", file=sys.stderr)
+        sys.stderr.flush()
         return False
     except Exception as e:
         print(f"Simulation failed: {e}", file=sys.stderr)
+        sys.stderr.flush()
         return False
 
     if dry_run:
@@ -706,6 +710,7 @@ def execute_trade(
         signed_tx = w3.eth.account.sign_transaction(tx_func.build_transaction(tx_params), private_key)
         tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
         print(f"Transaction sent: {tx_hash.hex()}")
+        sys.stdout.flush()
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
         if receipt.status == 1:
             print("Transaction confirmed!")
@@ -968,6 +973,7 @@ def main() -> None:
     while True:
         iteration += 1
         print(f"--- Scan Iteration {iteration} ---")
+        sys.stdout.flush()
         reserve_cache: Dict[str, Tuple[int, int]] = {}
 
         weth_price, weth_pair = find_best_price_pair(
@@ -1093,13 +1099,18 @@ def main() -> None:
                 # Calculate raw min profit? set to 0 to ensure execution for now, or strict
                 # Using 0 allows minor slippage.
 
+                # BUG FIX: If Python calculated A->B, we must borrow from B to execute A->B via flash loan.
+                # execute(pairBorrow=B, pairSwap=A, ...)
+                # Because execution logic is: Borrow(B) -> Swap(A) -> Swap(B, repay)
+                # This corresponds to route: A -> B
+
                 success = execute_trade(
-                    pair_borrow=pair_a.pair_id,
-                    pair_swap=pair_b.pair_id,
+                    pair_borrow=pair_b.pair_id,  # Was pair_a.pair_id
+                    pair_swap=pair_a.pair_id,    # Was pair_b.pair_id
                     token_borrow=input_token_addr,
                     amount_borrow=raw_amount_in,
-                    fee_borrow_bps=opportunity["fee_a_bps"],
-                    fee_swap_bps=opportunity["fee_b_bps"],
+                    fee_borrow_bps=opportunity["fee_b_bps"], # Was fee_a_bps
+                    fee_swap_bps=opportunity["fee_a_bps"],   # Was fee_b_bps
                     min_profit=0,
                     dry_run=False, # We simulate inside execute_trade first anyway
                     rpc_url=rpc_urls[0],

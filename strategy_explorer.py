@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 from ignore_list import parse_ignore_addresses, is_ignored_address
 from policy import parse_allow_addresses, is_allowed_address
-from monstrosity_scanner import (
+from scanner import (
     PairData,
     STABLES,
     WETH,

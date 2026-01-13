@@ -1,3 +1,5 @@
 {
-  "flash_arb_executor": "0xe14b184315f0a1edc476032daa051d7e6465858b"
+  "flash_arb_executor": "0xe14b184315f0a1edc476032daa051d7e6465858b",
+  "monstrosity": "0x7e5E849D5a3FBAea7044b4b9e47baBb3d6A60283",
+  "monstrosity_chain_id": 42161
 }

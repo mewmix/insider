@@ -1031,6 +1031,7 @@ def main() -> None:
     parser.add_argument("--triangular", action="store_true", help="Scan for triangular arbitrage (A->B->C->A).")
     parser.add_argument("--triangular-auto-execute", action="store_true", help="Execute triangular routes.")
     parser.add_argument("--triangular-safety-bps", type=Decimal, default=Decimal("10"), help="Safety haircut bps.")
+    parser.add_argument("--triangular-overlap-only", action="store_true", help="Only scan triangular paths using overlapping (high-quality) pairs.")
 
     # New argument
     parser.add_argument("--max-hops", type=int, default=2, help="Maximum number of hops (2 or 3).")
@@ -1104,6 +1105,13 @@ def main() -> None:
         all_pairs.extend(dex_pairs)
     pair_index = build_pair_index(all_pairs)
 
+    # Identify overlapping pairs (exist on >= 2 DEXes)
+    overlapping_keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]
+    overlapping_pairs: List[PairData] = []
+    for k in overlapping_keys:
+        for p in by_tokens[k].values():
+            overlapping_pairs.append(p)
+
     iteration = 0
     while True:
         iteration += 1
@@ -1116,8 +1124,11 @@ def main() -> None:
         )
         # Triangular Scan (if enabled by args.triangular, which is set if max-hops >= 3)
         if args.triangular:
+            # Select pairs to scan
+            pairs_to_scan = overlapping_pairs if args.triangular_overlap_only else all_pairs
+
             triangular_scan(
-                all_pairs,
+                pairs_to_scan,
                 pair_index,
                 rpc_urls,
                 iteration,
@@ -1132,7 +1143,7 @@ def main() -> None:
                 args.triangular_safety_bps,
             )
 
-        keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]
+        keys = overlapping_keys
         if focus_keys is not None:
             keys = [k for k in keys if k in focus_keys]
 

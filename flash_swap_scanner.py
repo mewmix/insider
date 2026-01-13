@@ -6,13 +6,14 @@ import sys
 import time
 from dataclasses import dataclass
 from decimal import Decimal, getcontext
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Set
 
 import httpx
 from dotenv import load_dotenv
+from web3 import Web3
+from web3.exceptions import ContractLogicError
 
 from skim_scanner import RPC_ENDPOINTS, normalize_rpc_url
-
 
 load_dotenv()
 getcontext().prec = 60
@@ -39,6 +40,25 @@ STABLES = {
     "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",  # DAI
 }
 
+FLASH_ARB_ADDRESS = "0xe14b184315f0a1edc476032daa051d7e6465858b"
+FLASH_ARB_ABI = [
+    {
+        "inputs": [
+            {"internalType": "address", "name": "pairBorrow", "type": "address"},
+            {"internalType": "address", "name": "pairSwap", "type": "address"},
+            {"internalType": "address", "name": "tokenBorrow", "type": "address"},
+            {"internalType": "uint256", "name": "amountBorrow", "type": "uint256"},
+            {"internalType": "uint256", "name": "feeBorrowBps", "type": "uint256"},
+            {"internalType": "uint256", "name": "feeSwapBps", "type": "uint256"},
+            {"internalType": "uint256", "name": "minProfit", "type": "uint256"},
+        ],
+        "name": "execute",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+    }
+]
+
 
 @dataclass
 class PairData:
@@ -63,7 +83,6 @@ def build_rpc_pool(rpc_urls: str) -> List[str]:
         urls = [normalize_rpc_url(url.strip()) for url in rpc_urls.split(",") if url.strip()]
         return [url for url in urls if url]
     env_url = normalize_rpc_url(os.getenv("ARBITRUM_RPC_URL", "https://arb1.arbitrum.io/rpc"))
-    # Use many fallbacks from RPC_ENDPOINTS
     fallbacks = [
         "https://arb1.arbitrum.io/rpc",
         "https://1rpc.io/arb",
@@ -79,7 +98,6 @@ def build_rpc_pool(rpc_urls: str) -> List[str]:
     if env_url and env_url not in urls:
         urls.insert(0, env_url)
     return urls
-
 
 
 def rpc_call(url: str, method: str, params: List[object]) -> str:
@@ -532,8 +550,173 @@ def best_arb_for_token1(
     return amt_in, profit, "token1"
 
 
+def execute_trade(
+    pair_borrow: str,
+    pair_swap: str,
+    token_borrow: str,
+    amount_borrow: int,
+    fee_borrow_bps: int,
+    fee_swap_bps: int,
+    min_profit: int,
+    dry_run: bool,
+    rpc_url: str,
+    private_key: str,
+) -> bool:
+    if not private_key:
+        print("skipping execution: no private key", file=sys.stderr)
+        return False
+
+    w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 30}))
+    if not w3.is_connected():
+        print("execution error: RPC not connected", file=sys.stderr)
+        return False
+
+    account = w3.eth.account.from_key(private_key)
+    contract = w3.eth.contract(
+        address=Web3.to_checksum_address(FLASH_ARB_ADDRESS),
+        abi=FLASH_ARB_ABI
+    )
+
+    pair_borrow_c = Web3.to_checksum_address(pair_borrow)
+    pair_swap_c = Web3.to_checksum_address(pair_swap)
+    token_borrow_c = Web3.to_checksum_address(token_borrow)
+
+    print(f"Simulating {amount_borrow} of {token_borrow} on {pair_borrow} -> {pair_swap}")
+
+    tx_func = contract.functions.execute(
+        pair_borrow_c,
+        pair_swap_c,
+        token_borrow_c,
+        amount_borrow,
+        fee_borrow_bps,
+        fee_swap_bps,
+        min_profit
+    )
+
+    try:
+        gas_estimate = tx_func.estimate_gas({"from": account.address})
+        print(f"Simulation success! Gas: {gas_estimate}")
+    except ContractLogicError as e:
+        print(f"Simulation failed (revert): {e}", file=sys.stderr)
+        return False
+    except Exception as e:
+        print(f"Simulation failed: {e}", file=sys.stderr)
+        return False
+
+    if dry_run:
+        return True
+
+    print("Executing transaction...")
+    nonce = w3.eth.get_transaction_count(account.address)
+    latest_block = w3.eth.get_block("latest")
+    base_fee = latest_block.get("baseFeePerGas")
+
+    tx_params = {
+        "from": account.address,
+        "nonce": nonce,
+        "chainId": 42161,
+        "gas": int(gas_estimate * 1.2),
+    }
+
+    if base_fee is not None:
+        max_priority_fee = w3.to_wei(0.1, "gwei")
+        max_fee = int(base_fee * 1.35 + max_priority_fee)
+        tx_params["maxPriorityFeePerGas"] = max_priority_fee
+        tx_params["maxFeePerGas"] = max_fee
+        tx_params["type"] = 2
+    else:
+        tx_params["gasPrice"] = int(w3.eth.gas_price * 1.1)
+
+    try:
+        signed_tx = w3.eth.account.sign_transaction(tx_func.build_transaction(tx_params), private_key)
+        tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+        print(f"Transaction sent: {tx_hash.hex()}")
+        receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
+        if receipt.status == 1:
+            print("Transaction confirmed!")
+            return True
+        else:
+            print("Transaction reverted on chain.")
+            return False
+    except Exception as e:
+        print(f"Execution error: {e}", file=sys.stderr)
+        return False
+
+
+def triangular_scan(
+    pairs: List[PairData],
+    pair_index: Dict[Tuple[str, str], List[PairData]],
+    rpc_urls: List[str],
+    start_idx: int,
+    reserve_cache: Dict[str, Tuple[int, int]]
+) -> None:
+    # Basic graph: token -> neighbor_token -> pair
+    adj: Dict[str, List[Tuple[str, PairData]]] = {}
+    for p in pairs:
+        t0 = p.token0.lower()
+        t1 = p.token1.lower()
+        adj.setdefault(t0, []).append((t1, p))
+        adj.setdefault(t1, []).append((t0, p))
+
+    # DFS for cycles of length 3: A -> B -> C -> A
+    # Limit: Check top 50 tokens by connectivity to avoid explosion
+    sorted_tokens = sorted(adj.keys(), key=lambda k: len(adj[k]), reverse=True)
+
+    print(f"Scanning triangular arb opportunities (Graph size: {len(adj)} tokens)...")
+
+    count = 0
+
+    # We will only check the most connected tokens to save time
+    for start_token in sorted_tokens[:100]:
+        for (b, pair_ab) in adj[start_token]:
+            if b == start_token: continue
+            for (c, pair_bc) in adj[b]:
+                if c == start_token or c == b: continue
+                for (d, pair_ca) in adj[c]:
+                    if d == start_token:
+                        # Found cycle A -> B -> C -> A
+                        # Verify we have pairs: pair_ab, pair_bc, pair_ca
+                        # Calculate profit...
+                        # Since we can't execute, we just verify reserves and print
+                        try:
+                            # Update reserves if needed
+                            for p in [pair_ab, pair_bc, pair_ca]:
+                                if p.pair_id not in reserve_cache:
+                                    r0, r1 = fetch_reserves_with_rotation(rpc_urls, p.pair_id, start_idx)
+                                    reserve_cache[p.pair_id] = (r0, r1)
+                                    p.reserve0 = to_decimal(r0, p.token0_decimals)
+                                    p.reserve1 = to_decimal(r1, p.token1_decimals)
+
+                            # Simple Profit Check: 1 unit input
+                            # A -> B
+                            amt = Decimal(1)
+                            if pair_ab.token0.lower() == start_token:
+                                amt = swap_out(amt, pair_ab.reserve0, pair_ab.reserve1, Decimal("0.003"))
+                            else:
+                                amt = swap_out(amt, pair_ab.reserve1, pair_ab.reserve0, Decimal("0.003"))
+
+                            # B -> C
+                            if pair_bc.token0.lower() == b:
+                                amt = swap_out(amt, pair_bc.reserve0, pair_bc.reserve1, Decimal("0.003"))
+                            else:
+                                amt = swap_out(amt, pair_bc.reserve1, pair_bc.reserve0, Decimal("0.003"))
+
+                            # C -> A
+                            if pair_ca.token0.lower() == c:
+                                amt = swap_out(amt, pair_ca.reserve0, pair_ca.reserve1, Decimal("0.003"))
+                            else:
+                                amt = swap_out(amt, pair_ca.reserve1, pair_ca.reserve0, Decimal("0.003"))
+
+                            if amt > Decimal("1.01"): # > 1% profit
+                                print(f"FOUND TRIANGULAR ARB: {start_token}->{b}->{c}->{start_token} | Output: {amt} | (Cannot execute with current contract)")
+                                count += 1
+                        except Exception:
+                            pass
+        if count > 5: break # limit results
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Flash swap arbitrage scanner (Camelot v2 vs Uniswap v2).")
+    parser = argparse.ArgumentParser(description="Flash swap arbitrage scanner & executor.")
     parser.add_argument("--db-path", default="skim_pairs.db", help="SQLite DB with pairs.")
     parser.add_argument("--max-pairs", type=int, default=0, help="Limit pairs per dex (0 = all).")
     parser.add_argument("--top", type=int, default=25, help="Top opportunities to print.")
@@ -542,33 +725,19 @@ def main() -> None:
     parser.add_argument("--fee-uniswap", type=Decimal, default=Decimal("0.003"), help="Uniswap v2 fee.")
     parser.add_argument("--fee-camelot", type=Decimal, default=Decimal("0.005"), help="Camelot v2 fee.")
     parser.add_argument("--fee-sushiswap", type=Decimal, default=Decimal("0.005"), help="Sushi v2 fee.")
-    parser.add_argument(
-        "--settle-token",
-        choices=["none", "weth", "usdc"],
-        default="none",
-        help="Settle profits into WETH or USDC via an extra hop.",
-    )
+    parser.add_argument("--settle-token", choices=["none", "weth", "usdc"], default="none")
     parser.add_argument("--settle-fee-bps", type=Decimal, default=Decimal("30"), help="Fee bps for settle hop.")
     parser.add_argument("--gas-units", type=int, default=200000, help="Gas units for net profit filter.")
     parser.add_argument("--gas-price-gwei", type=Decimal, default=Decimal("0.1"), help="Gas price in gwei.")
     parser.add_argument("--min-net-profit-usd", type=Decimal, default=Decimal("0"), help="Minimum net profit in USD.")
-    parser.add_argument(
-        "--dexes",
-        default="uniswapv2,camelot,sushiswapv2",
-        help="Comma-separated dex list to compare.",
-    )
-    parser.add_argument("--focus-top-reserve", type=int, default=0, help="Limit scan to top pairs by reserveUSD.")
-    parser.add_argument("--focus-top-volume", type=int, default=0, help="Limit scan to top pairs by volumeUSD.")
-    parser.add_argument(
-        "--rpc-urls",
-        default=os.getenv("ARBITRUM_RPC_URLS", ""),
-        help="Comma-separated RPC URLs to rotate across.",
-    )
-    parser.add_argument(
-        "--watchlist",
-        default="",
-        help="JSON file with list of pair addresses to scan.",
-    )
+    parser.add_argument("--dexes", default="uniswapv2,camelot,sushiswapv2")
+    parser.add_argument("--focus-top-reserve", type=int, default=0)
+    parser.add_argument("--focus-top-volume", type=int, default=0)
+    parser.add_argument("--rpc-urls", default=os.getenv("ARBITRUM_RPC_URLS", ""))
+    parser.add_argument("--watchlist", default="")
+    parser.add_argument("--loop", action="store_true", help="Run in a continuous loop.")
+    parser.add_argument("--auto-execute", action="store_true", help="Simulate and execute profitable opportunities.")
+    parser.add_argument("--triangular", action="store_true", help="Scan for triangular arbitrage (A->B->C->A).")
     args = parser.parse_args()
 
     dexes = [d.strip() for d in args.dexes.split(",") if d.strip()]
@@ -596,29 +765,25 @@ def main() -> None:
     if args.focus_top_reserve or args.focus_top_volume:
         if not GRAPH_API_KEY and "gateway.thegraph.com" in UNISWAP_V2_SUBGRAPH:
             print("GRAPH_API_KEY required for focus scan", file=sys.stderr)
-            sys.exit(1)
-        focus_keys = set()
-        subgraphs = {
-            "uniswapv2": UNISWAP_V2_SUBGRAPH,
-            "camelot": CAMELOT_V2_SUBGRAPH,
-            "sushiswapv2": SUSHISWAP_V2_SUBGRAPH,
-        }
-        for dex in dexes:
-            if dex not in subgraphs:
-                continue
-            subgraph = subgraphs[dex]
-            if args.focus_top_reserve:
+        else:
+            focus_keys = set()
+            subgraphs = {
+                "uniswapv2": UNISWAP_V2_SUBGRAPH,
+                "camelot": CAMELOT_V2_SUBGRAPH,
+                "sushiswapv2": SUSHISWAP_V2_SUBGRAPH,
+            }
+            for dex in dexes:
+                if dex not in subgraphs: continue
+                subgraph = subgraphs[dex]
                 try:
-                    pairs = fetch_top_pairs(subgraph, "reserveUSD", args.focus_top_reserve)
-                    focus_keys.update(tuple(sorted(p)) for p in pairs)
-                except Exception as exc:
-                    print(f"focus reserve fetch failed {dex}: {exc}", file=sys.stderr)
-            if args.focus_top_volume:
-                try:
-                    pairs = fetch_top_pairs(subgraph, "volumeUSD", args.focus_top_volume)
-                    focus_keys.update(tuple(sorted(p)) for p in pairs)
-                except Exception as exc:
-                    print(f"focus volume fetch failed {dex}: {exc}", file=sys.stderr)
+                    if args.focus_top_reserve:
+                        pairs = fetch_top_pairs(subgraph, "reserveUSD", args.focus_top_reserve)
+                        focus_keys.update(tuple(sorted(p)) for p in pairs)
+                    if args.focus_top_volume:
+                        pairs = fetch_top_pairs(subgraph, "volumeUSD", args.focus_top_volume)
+                        focus_keys.update(tuple(sorted(p)) for p in pairs)
+                except Exception as e:
+                    print(f"Graph error {dex}: {e}", file=sys.stderr)
 
     rpc_urls = build_rpc_pool(args.rpc_urls)
     if not rpc_urls:
@@ -629,135 +794,147 @@ def main() -> None:
     for dex_pairs in pairs_by_dex.values():
         all_pairs.extend(dex_pairs)
     pair_index = build_pair_index(all_pairs)
-    reserve_cache: Dict[str, Tuple[int, int]] = {}
-    weth_price, weth_pair = find_best_price_pair(
-        WETH, list(STABLES), pair_index, rpc_urls, 0
-    )
-    if weth_price is None:
-        print("warn: could not derive WETH/USD price", file=sys.stderr)
 
-    results = []
-    keys = [
-        k
-        for k, v in by_tokens.items()
-        if sum(1 for dex in dexes if dex in v) >= 2
-    ]
-    if focus_keys is not None:
-        keys = [k for k in keys if k in focus_keys]
-    for idx, key in enumerate(keys):
-        available = {dex: by_tokens[key][dex] for dex in dexes if dex in by_tokens[key]}
-        fee_by_dex = {
-            "uniswapv2": args.fee_uniswap,
-            "camelot": args.fee_camelot,
-            "sushiswapv2": args.fee_sushiswap,
-        }
+    iteration = 0
+    while True:
+        iteration += 1
+        print(f"--- Scan Iteration {iteration} ---")
+        reserve_cache: Dict[str, Tuple[int, int]] = {}
 
-        # Fetch reserves for each available dex.
-        bad_dexes = set()
-        for dex_idx, (dex, pair) in enumerate(list(available.items())):
-            try:
-                time.sleep(0.1)
-                r0, r1 = fetch_reserves_with_rotation(rpc_urls, pair.pair_id, idx + dex_idx)
-                reserve_cache[pair.pair_id] = (r0, r1)
-                pair.reserve0 = to_decimal(r0, pair.token0_decimals)
-                pair.reserve1 = to_decimal(r1, pair.token1_decimals)
-            except Exception as exc:
-                print(f"skip {pair.pair_id} err={exc}", file=sys.stderr)
-                bad_dexes.add(dex)
-        for dex in bad_dexes:
-            available.pop(dex, None)
-        if len(available) < 2:
-            continue
+        # Triangular Scan
+        if args.triangular:
+            triangular_scan(all_pairs, pair_index, rpc_urls, iteration, reserve_cache)
 
-        candidates = []
-        dex_list = list(available.keys())
-        for i in range(len(dex_list)):
-            for j in range(len(dex_list)):
-                if i == j:
-                    continue
-                dex_a = dex_list[i]
-                dex_b = dex_list[j]
-                pair_a = available[dex_a]
-                pair_b = available[dex_b]
-                fee_a = fee_by_dex.get(dex_a, args.fee_uniswap)
-                fee_b = fee_by_dex.get(dex_b, args.fee_uniswap)
+        weth_price, weth_pair = find_best_price_pair(
+            WETH, list(STABLES), pair_index, rpc_urls, iteration
+        )
 
-                amt_in0, profit0, token0 = best_arb_for_token0(
-                    pair_a, pair_b, fee_a, fee_b, args.max_trade_frac
+        keys = [k for k, v in by_tokens.items() if sum(1 for dex in dexes if dex in v) >= 2]
+        if focus_keys is not None:
+            keys = [k for k in keys if k in focus_keys]
+
+        results = []
+        for idx, key in enumerate(keys):
+            available = {dex: by_tokens[key][dex] for dex in dexes if dex in by_tokens[key]}
+            fee_by_dex = {
+                "uniswapv2": args.fee_uniswap,
+                "camelot": args.fee_camelot,
+                "sushiswapv2": args.fee_sushiswap,
+            }
+
+            # Fetch reserves
+            bad_dexes = set()
+            for dex_idx, (dex, pair) in enumerate(list(available.items())):
+                try:
+                    if pair.pair_id not in reserve_cache:
+                        r0, r1 = fetch_reserves_with_rotation(rpc_urls, pair.pair_id, idx + dex_idx)
+                        reserve_cache[pair.pair_id] = (r0, r1)
+                    else:
+                        r0, r1 = reserve_cache[pair.pair_id]
+                    pair.reserve0 = to_decimal(r0, pair.token0_decimals)
+                    pair.reserve1 = to_decimal(r1, pair.token1_decimals)
+                except Exception:
+                    bad_dexes.add(dex)
+            for dex in bad_dexes: available.pop(dex, None)
+            if len(available) < 2: continue
+
+            candidates = []
+            dex_list = list(available.keys())
+            for i in range(len(dex_list)):
+                for j in range(len(dex_list)):
+                    if i == j: continue
+                    dex_a = dex_list[i]
+                    dex_b = dex_list[j]
+                    pair_a = available[dex_a]
+                    pair_b = available[dex_b]
+                    fee_a = fee_by_dex.get(dex_a, args.fee_uniswap)
+                    fee_b = fee_by_dex.get(dex_b, args.fee_uniswap)
+
+                    amt_in0, profit0, token0 = best_arb_for_token0(pair_a, pair_b, fee_a, fee_b, args.max_trade_frac)
+                    amt_in1, profit1, token1 = best_arb_for_token1(pair_a, pair_b, fee_a, fee_b, args.max_trade_frac)
+                    candidates.append((f"{dex_a}->{dex_b}", amt_in0, profit0, token0, pair_a, pair_b, fee_a, fee_b))
+                    candidates.append((f"{dex_a}->{dex_b}", amt_in1, profit1, token1, pair_a, pair_b, fee_a, fee_b))
+
+            best = max(candidates, key=lambda c: c[2])
+            if best[2] <= args.min_profit: continue
+
+            _, amount_in, profit, input_token, pair_a, pair_b, fee_a_dec, fee_b_dec = best
+            input_token_addr = pair_a.token0 if input_token == "token0" else pair_a.token1
+            price_usd = token_price_usd(input_token_addr, pair_index, rpc_urls, idx, weth_price)
+            profit_usd = price_usd * profit if price_usd is not None else None
+
+            # Settle logic
+            settle_token = args.settle_token
+            settle_amount = None
+            if settle_token != "none":
+                target_token = WETH if settle_token == "weth" else "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+                settle_result = settle_profit(
+                    input_token_addr, profit, target_token, pair_index, rpc_urls, idx, reserve_cache, args.settle_fee_bps
                 )
-                amt_in1, profit1, token1 = best_arb_for_token1(
-                    pair_a, pair_b, fee_a, fee_b, args.max_trade_frac
-                )
-                candidates.append((f"{dex_a}->{dex_b}", amt_in0, profit0, token0, pair_a, pair_b))
-                candidates.append((f"{dex_a}->{dex_b}", amt_in1, profit1, token1, pair_a, pair_b))
+                if settle_result:
+                    settle_amount, _ = settle_result
+                    if settle_token == "usdc": profit_usd = settle_amount
+                    elif settle_token == "weth" and weth_price: profit_usd = settle_amount * weth_price
 
-        best = max(candidates, key=lambda c: c[2])
-        if best[2] <= args.min_profit:
-            continue
-        _, amount_in, profit, input_token, pair_a, pair_b = best
-        input_token_addr = pair_a.token0 if input_token == "token0" else pair_a.token1
-        input_token_symbol = pair_a.token0_symbol if input_token == "token0" else pair_a.token1_symbol
-        price_usd = token_price_usd(input_token_addr, pair_index, rpc_urls, idx, weth_price)
-        profit_usd = price_usd * profit if price_usd is not None else None
+            net_profit_usd = None
+            if profit_usd is not None and weth_price is not None:
+                gas_cost_eth = (Decimal(args.gas_units) * args.gas_price_gwei) / Decimal(1e9)
+                gas_cost_usd = gas_cost_eth * weth_price
+                net_profit_usd = profit_usd - gas_cost_usd
 
-        settle_token = args.settle_token
-        settle_amount = None
-        settle_route = None
-        if settle_token != "none":
-            target_token = WETH if settle_token == "weth" else "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
-            settle_result = settle_profit(
-                input_token_addr,
-                profit,
-                target_token,
-                pair_index,
-                rpc_urls,
-                idx,
-                reserve_cache,
-                args.settle_fee_bps,
-            )
-            if settle_result is None:
-                continue
-            settle_amount, settle_route = settle_result
-            if settle_token == "usdc":
-                profit_usd = settle_amount
-            elif settle_token == "weth" and weth_price is not None:
-                profit_usd = settle_amount * weth_price
-
-        net_profit_usd = None
-        if profit_usd is not None and weth_price is not None:
-            gas_cost_eth = (Decimal(args.gas_units) * args.gas_price_gwei) / Decimal(1e9)
-            gas_cost_usd = gas_cost_eth * weth_price
-            net_profit_usd = profit_usd - gas_cost_usd
-            if net_profit_usd < args.min_net_profit_usd:
+            if args.min_net_profit_usd > 0 and (net_profit_usd is None or net_profit_usd < args.min_net_profit_usd):
                 continue
 
-        results.append(
-            {
+            opportunity = {
                 "pair_key": key,
                 "route": best[0],
                 "input_token": input_token,
-                "amount_in": str(amount_in),
-                "profit": str(profit),
-                "profit_usd": str(profit_usd) if profit_usd is not None else None,
-                "net_profit_usd": str(net_profit_usd) if net_profit_usd is not None else None,
-                "settle_token": settle_token,
-                "settle_amount": str(settle_amount) if settle_amount is not None else None,
-                "settle_route": settle_route,
-                "input_token_symbol": input_token_symbol,
-                "input_token_address": input_token_addr,
-                "pair_a": pair_a.pair_id,
-                "pair_b": pair_b.pair_id,
-                "token0": f"{pair_a.token0_symbol}/{pair_a.token0}",
-                "token1": f"{pair_a.token1_symbol}/{pair_a.token1}",
+                "amount_in": amount_in,
+                "profit": profit,
+                "profit_usd": profit_usd,
+                "net_profit_usd": net_profit_usd,
+                "pair_a": pair_a,
+                "pair_b": pair_b,
+                "fee_a_bps": int(fee_a_dec * 10000),
+                "fee_b_bps": int(fee_b_dec * 10000)
             }
-        )
+            results.append(opportunity)
 
-    results.sort(key=lambda r: Decimal(r["profit"]), reverse=True)
-    if not results:
-        print("no results found")
-    for item in results[: args.top]:
-        print(item)
+            if args.auto_execute and net_profit_usd and net_profit_usd > 0:
+                print(f"Found profitable arb: {opportunity['route']} profit=${profit_usd:.2f} net=${net_profit_usd:.2f}")
+                # Format args for execution
+                # We need raw integer amounts
+                raw_amount_in = int(amount_in * (Decimal(10) ** (pair_a.token0_decimals if input_token == "token0" else pair_a.token1_decimals)))
+                # Calculate raw min profit? set to 0 to ensure execution for now, or strict
+                # Using 0 allows minor slippage.
 
+                success = execute_trade(
+                    pair_borrow=pair_a.pair_id,
+                    pair_swap=pair_b.pair_id,
+                    token_borrow=input_token_addr,
+                    amount_borrow=raw_amount_in,
+                    fee_borrow_bps=opportunity["fee_a_bps"],
+                    fee_swap_bps=opportunity["fee_b_bps"],
+                    min_profit=0,
+                    dry_run=False, # We simulate inside execute_trade first anyway
+                    rpc_url=rpc_urls[0],
+                    private_key=os.getenv("SKIM_PRIVATE_KEY", "")
+                )
+                if success:
+                    print("Execution Success!")
+                else:
+                    print("Execution Failed.")
+
+        results.sort(key=lambda r: r["profit"], reverse=True)
+        if not results:
+            print("no results found")
+        else:
+            for item in results[: args.top]:
+                print(f"{item['route']} profit={item['profit']} (${item['profit_usd']}) net=${item['net_profit_usd']}")
+
+        if not args.loop:
+            break
+        time.sleep(1)
 
 if __name__ == "__main__":
     main()
